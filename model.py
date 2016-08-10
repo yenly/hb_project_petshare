@@ -63,22 +63,22 @@ class Pet_Seeker(User):
         return "<Seeker seeker_id=%s user_id=%s>" % (self.seeker_id, self.user_id)
 
 
-class User_Social_Media(db.Model):
-    """User's social media links."""
+# class User_Social_Media(db.Model):
+#     """User's social media links."""
 
-    __tablename__ = "user_social_medias"
+#     __tablename__ = "user_social_medias"
 
-    sm_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    social_media_type = db.Column(db.String(20), nullable=False)
-    url = db.Column(db.String(50), nullable=False)
+#     sm_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+#     social_media_type = db.Column(db.String(20), nullable=False)
+#     url = db.Column(db.String(50), nullable=False)
 
-    def __repr__(self):
-        """Provide user's social media links"""
+#     def __repr__(self):
+#         """Provide user's social media links"""
 
-        return "<USM user_id=%s social_media_type=%s url=%s>" % (self.user_id,
-                                                                 self.social_media_type,
-                                                                 self.url)
+#         return "<USM user_id=%s social_media_type=%s url=%s>" % (self.user_id,
+#                                                                  self.social_media_type,
+#                                                                  self.url)
 
 
 class Pet(db.Model):
@@ -99,6 +99,8 @@ class Pet(db.Model):
     character_details = db.Column(db.String(300), nullable=False)
     health_details = db.Column(db.String(100), nullable=True)
 
+    owner = db.relationship('Owner', backref='pets')
+
     def __repr__(self):
         """Provide Pet info."""
 
@@ -108,27 +110,43 @@ class Pet(db.Model):
                                                                        self.owner_id)
 
 
-class Pet_Available_Time(db.Model):
-    """When Pets are avaiable for connection."""
+# class Pet_Available_Time(db.Model):
+#     """When Pets are avaiable for connection."""
 
-    __tablename__ = "pet_available_times"
+#     __tablename__ = "pet_available_times"
 
-    timeslot_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     timeslot_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'))
+#     owner_id = db.Column(db.Integer, db.ForeignKey('pet_owners.owner_id'))
+#     available_start_at = db.Column(db.DateTime, nullable=False)
+#     available_end_at = db.Column(db.DateTime, nullable=False)
+
+#     def __repr__(self):
+#         """Provide time available range for pet and owner."""
+
+#         return "<Pet_Available pet_id=%s available_start_at=%s available_end_at=%s>" % (self.pet_id,
+#                                                                                         self.available_start_at,
+#                                                                                         self.available_end_at)
+
+
+class Connection(db.Model):
+    """Keeps track of connection request between pet seeker and owner."""
+
+    __tablename__ = "connections"
+
+    request_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'))
     owner_id = db.Column(db.Integer, db.ForeignKey('pet_owners.owner_id'))
-    available_start_at = db.Column(db.DateTime, nullable=False)
-    available_end_at = db.Column(db.DateTime, nullable=False)
+    seeker_id = db.Column(db.Integer, db.ForeignKey('pet_seekers.seeker_id'))
+    connection_status = db.Column(db.String, nullable=True)
 
     def __repr__(self):
-        """Provide time available range for pet and owner."""
+        """Provide info on connection."""
 
-        return "<Pet_Available pet_id=%s available_start_at=%s available_end_at=%s>" % (self.pet_id,
-                                                                                        self.available_start_at,
-                                                                                        self.available_end_at)
-
-
-# class Connection(db.Model):
-#     """Keeps track of connection request between pet seeker and owner."""
+        return "<Connection request_id=%s pet_id=%s owner_id=%s seeker_id=%s>" % (self.request_id,
+                                                                                  self.pet_id,
+                                                                                  self.owner_id,
+                                                                                  self.seeker_id)
 
 
 # Helper functions
