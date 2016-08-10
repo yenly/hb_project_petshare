@@ -108,6 +108,29 @@ class Pet(db.Model):
                                                                        self.owner_id)
 
 
+class Pet_Available_Time(db.Model):
+    """When Pets are avaiable for connection."""
+
+    __tablename__ = "pet_available_times"
+
+    timeslot_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('pet_owners.owner_id'))
+    available_start_at = db.Column(db.DateTime, nullable=False)
+    available_end_at = db.Column(db.DateTime, nullable=False)
+
+    def __repr__(self):
+        """Provide time available range for pet and owner."""
+
+        return "<Pet_Available pet_id=%s available_start_at=%s available_end_at=%s>" % (self.pet_id,
+                                                                                        self.available_start_at,
+                                                                                        self.available_end_at)
+
+
+# class Connection(db.Model):
+#     """Keeps track of connection request between pet seeker and owner."""
+
+
 # Helper functions
 def connect_to_db(app):
     """Connect to the database to our Flask app."""
