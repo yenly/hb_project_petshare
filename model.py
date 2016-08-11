@@ -11,17 +11,17 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    last_name = db.Column(db.String(50), nullable=False)
-    first_name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(64), nullable=False)
-    password = db.Column(db.String(64), nullable=False)
-    phone_number = db.Column(db.String(10), nullable=False)
-    birthdate = db.Column(db.DateTime, nullable=False)
-    occupation = db.Column(db.String(50), nullable=False)
-    address = db.Column(db.String(100), nullable=False)
-    city = db.Column(db.String(50), nullable=False)
-    state = db.Column(db.String(2), nullable=False)
-    zipcode = db.Column(db.String(15), nullable=False)
+    last_name = db.Column(db.String(50))
+    first_name = db.Column(db.String(50))
+    email = db.Column(db.String(64))
+    password = db.Column(db.String(64))
+    phone_number = db.Column(db.String(12))
+    birthdate = db.Column(db.DateTime)
+    occupation = db.Column(db.String(50))
+    address = db.Column(db.String(100))
+    city = db.Column(db.String(50))
+    state = db.Column(db.String(2))
+    zipcode = db.Column(db.String(15))
 
     def __repr__(self):
         """Provide basic info on user."""
@@ -32,13 +32,15 @@ class User(db.Model):
                                                                           self.email)
 
 
-class Pet_Owner(User):
+class Owner(db.Model):
     """Inherits User class. Define user type to be pet owner."""
 
-    __tablename__ = "pet_owners"
+    __tablename__ = "owners"
 
     owner_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+
+    user = db.relationship('User', backref='owners')
 
     def __repr__(self):
         """Provide help info on pet owner"""
@@ -46,16 +48,18 @@ class Pet_Owner(User):
         return "<Owner owner_id=%s user_id=%s>" % (self.owner_id, self.user_id)
 
 
-class Pet_Seeker(User):
+class Seeker(db.Model):
     """Inherits User class. Define user type to be pet seeker."""
 
-    __tablename__ = "pet_seekers"
+    __tablename__ = "seekers"
 
     seeker_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     household_size = db.Column(db.Integer, nullable=True)
     children = db.Column(db.Integer, nullable=True)
     pet_experience = db.Column(db.String(10), nullable=True)
+
+    user = db.relationship('User', backref='seekers')
 
     def __repr__(self):
         """Provide help info on pet seeker"""
@@ -87,17 +91,17 @@ class Pet(db.Model):
     __tablename__ = "pets"
 
     pet_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    age = db.Column(db.Integer, nullable=False)
-    gender = db.Column(db.String(1), nullable=False)
-    size = db.Column(db.String(10), nullable=False)
-    color = db.Column(db.String(50), nullable=False)
-    breed = db.Column(db.String(50), nullable=False)
-    animal_type = db.Column(db.String(3), nullable=False)
-    owner_id = db.Column(db.Integer, db.ForeignKey('pet_owners.owner_id'))
-    is_available = db.Column(db.Boolean, nullable=False, default=True)
-    character_details = db.Column(db.String(300), nullable=False)
-    health_details = db.Column(db.String(100), nullable=True)
+    name = db.Column(db.String(50))
+    age = db.Column(db.Integer)
+    gender = db.Column(db.String(1))
+    size = db.Column(db.String(10))
+    color = db.Column(db.String(50))
+    breed = db.Column(db.String(50))
+    animal_type = db.Column(db.String(3))
+    owner_id = db.Column(db.Integer, db.ForeignKey('owners.owner_id'))
+    is_available = db.Column(db.Boolean)
+    character_details = db.Column(db.String(300))
+    health_details = db.Column(db.String(100))
 
     owner = db.relationship('Owner', backref='pets')
 
@@ -136,8 +140,8 @@ class Connection(db.Model):
 
     request_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'))
-    owner_id = db.Column(db.Integer, db.ForeignKey('pet_owners.owner_id'))
-    seeker_id = db.Column(db.Integer, db.ForeignKey('pet_seekers.seeker_id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('owners.owner_id'))
+    seeker_id = db.Column(db.Integer, db.ForeignKey('seekers.seeker_id'))
     connection_status = db.Column(db.String, nullable=True)
 
     def __repr__(self):
