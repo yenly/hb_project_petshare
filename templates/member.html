@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Welcome back, Yenly!</h1>
+    <h1>Welcome back, {{ user.first_name }}!</h1>
 
-    <a href="/profile">Update My Profile</a><br />
-    <a href="/pet_profile">Pet Profile</a><br />
+    <a href="/user/{{ user.user_id }}">Update My Profile</a><br />
+    My Pet: <a href="/pet_profile/{{ pet.pet_id }}">{{ pet.name }}</a><br />
 {% endblock %}

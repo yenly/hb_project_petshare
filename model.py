@@ -22,6 +22,7 @@ class User(db.Model):
     city = db.Column(db.String(50))
     state = db.Column(db.String(2))
     zipcode = db.Column(db.String(15))
+    image_url = db.Column(db.String(200))
 
     def __repr__(self):
         """Provide basic info on user."""
@@ -102,6 +103,7 @@ class Pet(db.Model):
     is_available = db.Column(db.Boolean)
     character_details = db.Column(db.String(300))
     health_details = db.Column(db.String(100))
+    image_url = db.Column(db.String(200))
 
     owner = db.relationship('Owner', backref='pets')
 
@@ -131,6 +133,23 @@ class Pet(db.Model):
 #         return "<Pet_Available pet_id=%s available_start_at=%s available_end_at=%s>" % (self.pet_id,
 #                                                                                         self.available_start_at,
 #                                                                                         self.available_end_at)
+
+class Pet_Photo(db.Model):
+    """Pet photos for pet profile."""
+
+    __tablename__ = "pet_photos"
+
+    photo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'))
+    image_url = db.Column(db.String(200))
+    caption = db.Column(db.String(100))
+
+    pet = db.relationship('Pet', backref='photos')
+
+    def __repr__(self):
+        """Provide info on photo"""
+
+        return "<Photo pet_id=%s image_url=%s>" % (self.pet_id, self.image_url)
 
 
 class Connection(db.Model):

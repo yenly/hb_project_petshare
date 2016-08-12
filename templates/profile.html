@@ -1,11 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    User Profile: Yenly
+    User Profile: {{ user.first_name }} {{ user.last_name }}
 {% endblock %}
 
 {% block content %}
-    <h1>User Profile: Yenly</h1>
-    <p>YOLO letterpress blog tofu, tote bag beard iPhone synth fixie lumbersexual. Try-hard +1 mustache, banh mi portland dreamcatcher church-key actually man bun. Cold-pressed bitters kale chips chicharrones hashtag vegan. Street art gentrify vegan YOLO gluten-free knausgaard. Letterpress 3 wolf moon celiac, next level iPhone yuccie forage. Humblebrag offal intelligentsia, +1 drinking vinegar normcore microdosing. Cold-pressed locavore +1 franzen cronut, tote bag taxidermy put a bird on it try-hard microdosing.</p>
+    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+
+    {% if user.image_url == NULL %}
+    <img src="{{ user.image_url }}" alt="{{ user.first_name }} {{ user.last_name }}" />
+    {% endif %}
+
+    <h3>Contact Info:</h3>
+    <ul>
+        <li>Email: {{ user.email }}</li>
+        <li>Phone: {{ user.phone_number }}</li>
+        <li>{{ user.address }}, {{ user.city }}, {{ user.state }} {{ zipcode }}</li>
+    </ul>
+
+    <h3>More about me:</h3>
+    <p>Birthdate: {{ user.birthdate }}, <br />Job title: {{ user.occupation }}</p>
 
 {% endblock %}
