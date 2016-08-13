@@ -1,6 +1,6 @@
 """PetShare - Find your furry BFF!"""
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Seeker, Owner, Pet, Connection
@@ -56,6 +56,24 @@ def pet_profile(id):
     pet_photos = pet.photos
 
     return render_template("pet_profile.html", pet=pet, owner=owner, pet_photos=pet_photos)
+
+
+@app.route('/search', methods=['GET'])
+def search():
+    """Search for pet and return list of pet profiles."""
+    search_term = request.args.get("search_term")
+    pets = Pet.query.filter(Pet.animal_type == search_term).all()
+    print pets
+
+    # return redirect(url_for('/search_results'), pets=pets)
+    return render_template("search_results.html", pets=pets)
+
+
+@app.route('/search_results')
+def display_search_results():
+    """Display search results."""
+
+    pass
 
 
 if __name__ == "__main__":
