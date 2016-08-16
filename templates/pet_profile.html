@@ -19,11 +19,19 @@
 
     <h3>My owner is <a href="/user/{{ owner.user_id }}">{{ owner.first_name }} {{ owner.last_name }}</a>.</h3>
 
+    <form action="/connect_form" method="POST">
+        <input type="hidden" name="pet_id" value="{{ pet.pet_id }}">
+        <input type="hidden" name="owner_id" value="{{ pet.owner.owner_id }}">
+        <input type="hidden" name="seerker_id" value="7" >
+        <input type="submit" value="Connect with {{ pet.name }}">
+    </form>
+
     <h4>Here are some rocking photos of me:</h4>
     {% for photo in pet_photos %}
         <img src="{{ photo.image_url }}" alt="{{ photo.caption }}" /><br />
         <span>{{ photo.caption }}</span><br />
     {% endfor %}
+
 
 
 {% endblock %}
