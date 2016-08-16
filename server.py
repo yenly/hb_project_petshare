@@ -25,7 +25,7 @@ def login():
 
     user = User.query.get(1)
 
-    pet_owner = user.owners
+    pet_owner = user.owner
 
     for owner in pet_owner:
         for pet in owner.pets:
@@ -51,7 +51,6 @@ def pet_profile(id):
     pet = Pet.query.get(id)
 
     owner = pet.owner.user
-    print owner
 
     pet_photos = pet.photos
 
@@ -62,11 +61,18 @@ def pet_profile(id):
 def search():
     """Search for pet and return list of pet profiles."""
     search_term = request.args.get("search_term")
-    pets = Pet.query.filter(Pet.animal_type == search_term).all()
-    print pets
+    if search_term.isdigit():
+        users = User.query.filter(User.zipcode == str(search_term)).all()
+        for user in users:
+            for owner in user.owner:
+                search_results = owner.pets
+    else:
+        search_results = Pet.query.filter(Pet.animal_type == search_term).all()
 
-    # return redirect(url_for('/search_results'), pets=pets)
-    return render_template("search_results.html", pets=pets)
+    for pet in search_results:
+        print pet
+
+    return "good job"
 
 
 @app.route('/search_results')

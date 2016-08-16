@@ -41,7 +41,7 @@ class Owner(db.Model):
     owner_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-    user = db.relationship('User', backref='owners')
+    user = db.relationship('User', backref='owner')
 
     def __repr__(self):
         """Provide help info on pet owner"""
@@ -60,7 +60,7 @@ class Seeker(db.Model):
     children = db.Column(db.Integer, nullable=True)
     pet_experience = db.Column(db.String(10), nullable=True)
 
-    user = db.relationship('User', backref='seekers')
+    user = db.relationship('User', backref='seeker')
 
     def __repr__(self):
         """Provide help info on pet seeker"""
@@ -114,6 +114,13 @@ class Pet(db.Model):
                                                                        self.name,
                                                                        self.animal_type,
                                                                        self.owner_id)
+
+    # def __dict__(self):
+    #     """Converts class object to dictionary."""
+
+    #     pet_dict = {}
+
+        
 
 
 # class Pet_Available_Time(db.Model):

@@ -99,6 +99,41 @@ ALTER SEQUENCE owners_owner_id_seq OWNED BY owners.owner_id;
 
 
 --
+-- Name: pet_photos; Type: TABLE; Schema: public; Owner: vagrant; Tablespace: 
+--
+
+CREATE TABLE pet_photos (
+    photo_id integer NOT NULL,
+    pet_id integer,
+    image_url character varying(200),
+    caption character varying(100)
+);
+
+
+ALTER TABLE public.pet_photos OWNER TO vagrant;
+
+--
+-- Name: pet_photos_photo_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE pet_photos_photo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pet_photos_photo_id_seq OWNER TO vagrant;
+
+--
+-- Name: pet_photos_photo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE pet_photos_photo_id_seq OWNED BY pet_photos.photo_id;
+
+
+--
 -- Name: pets; Type: TABLE; Schema: public; Owner: vagrant; Tablespace: 
 --
 
@@ -114,7 +149,8 @@ CREATE TABLE pets (
     owner_id integer,
     is_available boolean,
     character_details character varying(300),
-    health_details character varying(100)
+    health_details character varying(100),
+    image_url character varying(200)
 );
 
 
@@ -193,7 +229,8 @@ CREATE TABLE users (
     address character varying(100),
     city character varying(50),
     state character varying(2),
-    zipcode character varying(15)
+    zipcode character varying(15),
+    image_url character varying(200)
 );
 
 
@@ -232,6 +269,13 @@ ALTER TABLE ONLY connections ALTER COLUMN request_id SET DEFAULT nextval('connec
 --
 
 ALTER TABLE ONLY owners ALTER COLUMN owner_id SET DEFAULT nextval('owners_owner_id_seq'::regclass);
+
+
+--
+-- Name: photo_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY pet_photos ALTER COLUMN photo_id SET DEFAULT nextval('pet_photos_photo_id_seq'::regclass);
 
 
 --
@@ -294,16 +338,37 @@ SELECT pg_catalog.setval('owners_owner_id_seq', 6, true);
 
 
 --
+-- Data for Name: pet_photos; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY pet_photos (photo_id, pet_id, image_url, caption) FROM stdin;
+1	1	https://howlingforjustice.files.wordpress.com/2012/06/ghost-with-jon-snow-got1.png?w=400	My human BFF and I ready for battle.
+2	1	https://cdn.cloudpix.co/images/jon-snow/jon-snow-on-the-iron-throne-with-ghost-game-of-thrones-and-ghost-34478429f2e282ab1f7d85393f0d2ede-large-388205.jpg	My human BFF and I on the iron throne.
+3	5	https://s-media-cache-ak0.pinimg.com/564x/82/33/02/8233028427798cc7bd701c70a6a02317.jpg	When I was a wee pup with my human BFF.
+4	6	http://img0007o.psstatic.com/115008713_calvin-and-hobbes-pajama-dancing-canvas-print-44-ebay.jpg	Dancing with my little buddy.
+5	6	http://images4.fanpop.com/image/photos/23700000/Calvin-Hobbes-calvin-and-hobbes-23762777-1280-800.jpg	We got moves!
+6	6	http://i.onionstatic.com/avclub/5449/21/16x9/960.jpg	Exploring with my little buddy.
+\.
+
+
+--
+-- Name: pet_photos_photo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('pet_photos_photo_id_seq', 6, true);
+
+
+--
 -- Data for Name: pets; Type: TABLE DATA; Schema: public; Owner: vagrant
 --
 
-COPY pets (pet_id, name, age, gender, size, color, breed, animal_type, owner_id, is_available, character_details, health_details) FROM stdin;
-1	Ghost	6	M	140lbs	white	direwolf	dog	1	t	Super loyal, badass warrior, independent traveler, and perfect right hand guard in battle.	Runt at birth but no longer now.
-2	Summer	6	M	138lbs	light beige and white	direwolf	dog	4	t	Super loyal and protector of Bran Stark. Always saving Bran and his friends from white walkers.	Sporting battle scars.
-3	Nymeria	6	F	139lbs	grey and white	direwolf	dog	2	t	Faithful to Arya and biter of Joffrey.	null
-4	Lady	6	F	128lbs	grey and white	direwolf	dog	3	t	Superfriendly and gullible. Saintly.	Bleeding stab wounds.
-5	Grey Wind	6	M	141	grey	direwolf	dog	5	t	Super loyal, badass warrior. Notorious reputation for fighting in battles. 	null
-6	Hobbes	3	M	14lbs	orange white stripes	tabby	cat	6	t	Precocious, mischievous, and adventurous. 	null
+COPY pets (pet_id, name, age, gender, size, color, breed, animal_type, owner_id, is_available, character_details, health_details, image_url) FROM stdin;
+1	Ghost	6	M	140lbs	white	direwolf	dog	1	t	Super loyal, badass warrior, independent traveler, and perfect right hand guard in battle.	Runt at birth but no longer now	http://45.media.tumblr.com/bffe4197139c20b9290544400ba80723/tumblr_o69pqtZRSn1s6bxzqo3_r2_540.gif
+2	Summer	6	M	138lbs	light beige and white	direwolf	dog	4	t	Super loyal and protector of Bran Stark. Always saving Bran and his friends from white walkers.	Sporting battle scars.	null
+3	Nymeria	6	F	139lbs	grey and white	direwolf	dog	2	t	Faithful to Arya and biter of Joffrey.	null	null
+4	Lady	6	F	128lbs	grey and white	direwolf	dog	3	t	Superfriendly and gullible. Saintly.	Bleeding stab wounds.	https://s-media-cache-ak0.pinimg.com/564x/ce/2f/76/ce2f76182c44d8cef10cdb1abc38fd56.jpg
+5	Grey Wind	6	M	141	grey	direwolf	dog	5	t	Super loyal, badass warrior. Notorious reputation for fighting in battles. 	null	http://vignette2.wikia.nocookie.net/gameofthrones/images/f/f8/GreyWindSeason2Debut.jpg/revision/latest?cb=20160716040036
+6	Hobbes	3	M	14lbs	orange white stripes	tabby	cat	6	t	Precocious, mischievous, and adventurous. 	null	https://somethingokay.files.wordpress.com/2012/11/hobbes-from-calvin-and-hobbes-7.gif
 \.
 
 
@@ -339,18 +404,18 @@ SELECT pg_catalog.setval('seekers_seeker_id_seq', 6, true);
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: vagrant
 --
 
-COPY users (user_id, last_name, first_name, email, password, phone_number, birthdate, occupation, address, city, state, zipcode) FROM stdin;
-1	Snow	John	jsnow@gmail.com	123xyz	415-555-5555	1980-12-01 00:00:00	King of the North	123 abc st	San Francisco	CA	94122
-2	Stark	Arya	astark@gmail.com	123xyz	415-555-5555	1986-01-01 00:00:00	No one assassin	123 abc st	San Francisco	CA	94110
-3	Stark	Sansa	sstark@gmail.com	123xyz	415-555-5555	1984-08-14 00:00:00	Wife of Ramsay Bolton	123 abc st	San Francisco	CA	94123
-4	Stark	Bran	bstark@gmail.com	123xyz	415-555-5555	1988-03-01 00:00:00	Raven	123 abc st	San Francisco	CA	94117
-5	Stark	Robb	rstark@gmail.com	123xyz	415-555-5555	1979-09-11 00:00:00	former King of the North	123 abc st	Colma	CA	94014
-6	Watterson	Calvin	cwatterson@gmail.com	123xyz	415-555-5555	1980-01-01 00:00:00	Comic book star	123 abc st	San Francisco	CA	94121
-7	Lannister	Tyrion	tlannister@gmail.com	123xyz	415-555-5555	1975-07-11 00:00:00	Queen's Hand	123 abc st	San Francisco	CA	94115
-8	Lannister	Jamie	tlannister@gmail.com	123xyz	415-555-5555	1972-10-31 00:00:00	King's Guard	123 abc st	San Francisco	CA	94109
-9	Lannister	Cersei	clannister@gmail.com	123xyz	415-555-5555	1972-10-31 00:00:00	Queen Mother	123 abc st	San Francisco	CA	94109
-10	Targaryen	Dani	dtargaryen@gmail.com	123xyz	415-555-5555	1980-02-29 00:00:00	Mother of Dragons	123 abc st	San Francisco	CA	94109
-11	Greyjoy	Theon	tgreyjoy@gmail.com	123xyz	415-555-5555	1980-08-29 00:00:00	Ramsay's Pet	123 abc st	San Francisco	CA	94123
+COPY users (user_id, last_name, first_name, email, password, phone_number, birthdate, occupation, address, city, state, zipcode, image_url) FROM stdin;
+1	Snow	John	jsnow@gmail.com	123xyz	415-555-5555	1980-12-01 00:00:00	King of the North	123 abc st	San Francisco	CA	94122	null
+2	Stark	Arya	astark@gmail.com	123xyz	415-555-5555	1986-01-01 00:00:00	No one assassin	123 abc st	San Francisco	CA	94110	null
+3	Stark	Sansa	sstark@gmail.com	123xyz	415-555-5555	1984-08-14 00:00:00	Wife of Ramsay Bolton	123 abc st	San Francisco	CA	94123	null
+4	Stark	Bran	bstark@gmail.com	123xyz	415-555-5555	1988-03-01 00:00:00	Raven	123 abc st	San Francisco	CA	94117	null
+5	Stark	Robb	rstark@gmail.com	123xyz	415-555-5555	1979-09-11 00:00:00	former King of the North	123 abc st	Colma	CA	94014	null
+6	Watterson	Calvin	cwatterson@gmail.com	123xyz	415-555-5555	1980-01-01 00:00:00	Comic book star	123 abc st	San Francisco	CA	94121	null
+7	Lannister	Tyrion	tlannister@gmail.com	123xyz	415-555-5555	1975-07-11 00:00:00	Queen's Hand	123 abc st	San Francisco	CA	94115	null
+8	Lannister	Jamie	tlannister@gmail.com	123xyz	415-555-5555	1972-10-31 00:00:00	King's Guard	123 abc st	San Francisco	CA	94109	null
+9	Lannister	Cersei	clannister@gmail.com	123xyz	415-555-5555	1972-10-31 00:00:00	Queen Mother	123 abc st	San Francisco	CA	94109	null
+10	Targaryen	Dani	dtargaryen@gmail.com	123xyz	415-555-5555	1980-02-29 00:00:00	Mother of Dragons	123 abc st	San Francisco	CA	94109	null
+11	Greyjoy	Theon	tgreyjoy@gmail.com	123xyz	415-555-5555	1980-08-29 00:00:00	Ramsay's Pet	123 abc st	San Francisco	CA	94123	null
 \.
 
 
@@ -375,6 +440,14 @@ ALTER TABLE ONLY connections
 
 ALTER TABLE ONLY owners
     ADD CONSTRAINT owners_pkey PRIMARY KEY (owner_id);
+
+
+--
+-- Name: pet_photos_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant; Tablespace: 
+--
+
+ALTER TABLE ONLY pet_photos
+    ADD CONSTRAINT pet_photos_pkey PRIMARY KEY (photo_id);
 
 
 --
@@ -431,6 +504,14 @@ ALTER TABLE ONLY connections
 
 ALTER TABLE ONLY owners
     ADD CONSTRAINT owners_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id);
+
+
+--
+-- Name: pet_photos_pet_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY pet_photos
+    ADD CONSTRAINT pet_photos_pet_id_fkey FOREIGN KEY (pet_id) REFERENCES pets(pet_id);
 
 
 --
