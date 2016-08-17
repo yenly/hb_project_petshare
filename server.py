@@ -1,6 +1,6 @@
 """PetShare - Find your furry BFF!"""
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Seeker, Owner, Pet, Connection
@@ -23,6 +23,8 @@ def index():
 def login():
     """User login."""
 
+    session['user_id'] = 7
+
     user = User.query.get(1)
 
     pet_owner = user.owner
@@ -33,6 +35,48 @@ def login():
     print user_pet
 
     return render_template("member.html", user=user, pet=user_pet)
+
+
+@app.route('/member')
+def member():
+    """Member dashboard."""
+
+    user_id = session['user_id']
+
+    user = User.query.get(user_id)
+
+    # pet_owner = user.owner
+
+    # for owner in pet_owner:
+    #     for pet in owner.pets:
+    #         user_pet = pet
+
+    user_type = []
+    user_pet = ""
+
+    #if user is owner
+    if len(user.owner) != 0:
+        #add user type as owner on user_type dict
+        user_type.append('owner')
+        #get owner_id and add to user_type dict
+        for owner in user.owner:
+            user_type.append(owner.owner_id)
+            for pet in owner.pets:
+                user_pet = pet
+    #else if user is seeker
+    elif len(user.seeker) != 0:
+        #add user type as seeker on user_type dict
+        user_type.append('seeker')
+        #get seeker_id and add to user_type dict
+        for seeker in user.seeker:
+            user_type.append(seeker.seeker_id)
+
+    #call get_connections passing user type
+    print user_type
+    request_list = get_connections(user_type)
+    print "Returned request_list from func call", request_list
+
+    return render_template("member.html", user=user, pet=user_pet, request_list=request_list)
 
 
 @app.route('/user/<int:id>')
@@ -81,6 +125,53 @@ def display_search_results():
 
     pass
 
+
+@app.route('/connect', methods=['POST'])
+def send_connection_request():
+    """Connect pet seeker to pet owner.
+
+    Stores connection request info in db.
+    """
+
+    seeker_id = session['user_id']
+
+    print "user id session cookie: ", seeker_id
+
+    seeker = Seeker.query.filter(Seeker.user_id == seeker_id).first()
+
+    seeker_id = seeker.seeker_id
+
+    print "after db query, should be seeker_id", seeker_id
+
+    pet_id = request.form.get("pet_id")
+    owner_id = request.form.get("owner_id")
+
+    QUERY = """INSERT INTO connections (pet_id, owner_id, seeker_id, connection_status)
+               VALUES (:pet_id, :owner_id, :seeker_id, :connection_status)"""
+    db.cursor = db.session.execute(QUERY, {'pet_id': pet_id,
+                                           'owner_id': owner_id,
+                                           'seeker_id': seeker_id,
+                                           'connection_status': 'Interested'})
+    db.session.commit()
+
+    print "Successfully created request for %s between %s and %s" % (pet_id, seeker_id, owner_id)
+
+    return jsonify({'connect': 'success'})
+
+
+def get_connections(user_info):
+    """Returns a list of connection request for a user"""
+
+    user_type, _id = user_info
+
+    if user_type == 'owner':
+        #query for request with owner_id == _id
+        request_list = Connection.query.filter(Connection.owner_id == _id).all()
+    elif user_type == 'seeker':
+        #query for request with seeker_id == _id
+        request_list = Connection.query.filter(Connection.seeker_id == _id).all()
+
+    return request_list
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

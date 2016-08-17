@@ -8,5 +8,14 @@
     <h1>Welcome back, {{ user.first_name }}!</h1>
 
     <a href="/user/{{ user.user_id }}">Update My Profile</a><br />
+    {% if pet %}
     My Pet: <a href="/pet_profile/{{ pet.pet_id }}">{{ pet.name }}</a><br />
+    {% endif %}
+
+    <h3>My Connection Requests</h3>
+    <ul>
+    {% for item in request_list %}
+        <li><a href="/pet_profile/{{ item.pet_id }}">{{ item.pet_id }}</a>: {{ item.connection_status }}</li>
+    {% endfor %}
+    </ul>
 {% endblock %}
