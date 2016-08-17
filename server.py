@@ -21,20 +21,9 @@ def index():
 
 @app.route('/login')
 def login():
-    """User login."""
+    """Handles user login."""
 
-    session['user_id'] = 7
-
-    user = User.query.get(1)
-
-    pet_owner = user.owner
-
-    for owner in pet_owner:
-        for pet in owner.pets:
-            user_pet = pet
-    print user_pet
-
-    return render_template("member.html", user=user, pet=user_pet)
+    pass
 
 
 @app.route('/member')
@@ -44,12 +33,6 @@ def member():
     user_id = session['user_id']
 
     user = User.query.get(user_id)
-
-    # pet_owner = user.owner
-
-    # for owner in pet_owner:
-    #     for pet in owner.pets:
-    #         user_pet = pet
 
     user_type = []
     user_pet = ""
@@ -72,9 +55,7 @@ def member():
             user_type.append(seeker.seeker_id)
 
     #call get_connections passing user type
-    print user_type
     request_list = get_connections(user_type)
-    print "Returned request_list from func call", request_list
 
     return render_template("member.html", user=user, pet=user_pet, request_list=request_list)
 
@@ -116,6 +97,8 @@ def search():
     for pet in search_results:
         print pet
 
+    # TO DO: convert list of objects to dictionary to jsonify
+
     return "good job"
 
 
@@ -135,13 +118,9 @@ def send_connection_request():
 
     seeker_id = session['user_id']
 
-    print "user id session cookie: ", seeker_id
-
     seeker = Seeker.query.filter(Seeker.user_id == seeker_id).first()
 
     seeker_id = seeker.seeker_id
-
-    print "after db query, should be seeker_id", seeker_id
 
     pet_id = request.form.get("pet_id")
     owner_id = request.form.get("owner_id")
@@ -155,6 +134,7 @@ def send_connection_request():
     db.session.commit()
 
     print "Successfully created request for %s between %s and %s" % (pet_id, seeker_id, owner_id)
+    # TO DO: need to notify owner of request
 
     return jsonify({'connect': 'success'})
 
