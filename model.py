@@ -120,7 +120,7 @@ class Pet(db.Model):
 
     #     pet_dict = {}
 
-        
+
 
 
 # class Pet_Available_Time(db.Model):
@@ -169,6 +169,10 @@ class Connection(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('owners.owner_id'))
     seeker_id = db.Column(db.Integer, db.ForeignKey('seekers.seeker_id'))
     connection_status = db.Column(db.String, nullable=True)
+
+    pet = db.relationship('Pet', backref='connections')
+    owner = db.relationship('Owner', backref='connections')
+    seeker = db.relationship('Seeker', backref='connections')
 
     def __repr__(self):
         """Provide info on connection."""
