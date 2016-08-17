@@ -6,6 +6,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 from model import User, Seeker, Owner, Pet, Connection
 from model import connect_to_db, db
 
+import dictalchemy
+
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
@@ -106,12 +108,15 @@ def search():
     else:
         search_results = Pet.query.filter(Pet.animal_type == search_term).all()
 
-    for pet in search_results:
-        print pet
+    pets_dict = {}
 
-    # TO DO: convert list of objects to dictionary to jsonify
+    for counter, value in enumerate(search_results, 1):
+        pet_info = dictalchemy.utils.asdict(value)
+        pets_dict['results' + str(counter)] = pet_info
 
-    return "good job"
+    print pets_dict
+
+    return jsonify(pets_dict)
 
 
 @app.route('/search_results')

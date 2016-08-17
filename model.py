@@ -1,6 +1,7 @@
 """Models and database functions for PetShare project."""
 
 from flask_sqlalchemy import SQLAlchemy
+import dictalchemy
 
 db = SQLAlchemy()
 
@@ -181,6 +182,12 @@ class Connection(db.Model):
                                                                                   self.pet_id,
                                                                                   self.owner_id,
                                                                                   self.seeker_id)
+dictalchemy.utils.make_class_dictable(User)
+dictalchemy.utils.make_class_dictable(Owner)
+dictalchemy.utils.make_class_dictable(Seeker)
+dictalchemy.utils.make_class_dictable(Pet)
+dictalchemy.utils.make_class_dictable(Pet_Photo)
+dictalchemy.utils.make_class_dictable(Connection)
 
 
 # Helper functions
