@@ -19,15 +19,17 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def login():
     """Handles user login."""
 
-    user_email = request.args.get("email")
-    user_password = request.args.get("password")
+    user_email = request.form.get('email')
+    user_password = request.form.get('password')
 
     user = User.query.filter(User.email == user_email).first()
     session['user_id'] = user.user_id
+
+    # TO DO: build out pasword testing logic
 
     print "Welcome back", user.first_name
 
