@@ -13,9 +13,28 @@
     {% endif %}
 
     <h3>My Connection Requests</h3>
-    <ul>
-    {% for item in request_list %}
-        <li><a href="/pet_profile/{{ item.pet_id }}">{{ item.pet_id }}</a>: {{ item.connection_status }}</li>
-    {% endfor %}
-    </ul>
+    {% if user.owner %}
+        <ul>
+        {% for item in request_list %}
+            <li>
+                <a href="/user/{{ item.seeker.user_id }}">{{ item.seeker.user.first_name }} {{ item.seeker.user.last_name }}</a> is interested in <a href="/pet_profile/{{ item.pet_id }}">{{ item.pet.name }}</a>:
+                <select name="connection_status">
+                    <option value="{{ item.connection_status }}">{{ item.connection_status }} </option>
+                    <option value="Pending Review">Pending Review</option>
+                    <option value="Decline">Decline</option>
+                </select>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% if user.seeker %}
+        <ul>
+        {% for item in request_list %}
+            <li>
+                Connection with <a href="/pet_profile/{{ item.pet_id }}">{{ item.pet.name }}</a>: {{ item.connection_status }} <br />
+                <a href="/pet_profile/{{ item.pet_id }}"><img src="{{ item.pet.image_url }}" alt="{{ item.pet.name }}" /></a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}

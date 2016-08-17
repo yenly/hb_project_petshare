@@ -31,9 +31,11 @@ def login():
 
     # TO DO: build out pasword testing logic
 
-    print "Welcome back", user.first_name
+    msg = "Welcome back", user.first_name
 
-    return "success"
+    flash(msg)
+
+    return redirect(url_for('member'))
 
 
 @app.route('/member')
