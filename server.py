@@ -19,11 +19,19 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET'])
 def login():
     """Handles user login."""
 
-    pass
+    user_email = request.args.get("email")
+    user_password = request.args.get("password")
+
+    user = User.query.filter(User.email == user_email).first()
+    session['user_id'] = user.user_id
+
+    print "Welcome back", user.first_name
+
+    return "success"
 
 
 @app.route('/member')
