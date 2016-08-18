@@ -37,7 +37,7 @@ def login():
 
     flash(msg)
 
-    return redirect(url_for('member'))
+    return redirect('/member')
 
 
 @app.route('/member')
@@ -119,7 +119,7 @@ def search():
     return jsonify(pets_dict)
 
 
-@app.route('/search_results')
+@app.route('/search.json')
 def display_search_results():
     """Display search results."""
 
@@ -150,10 +150,11 @@ def send_connection_request():
                                            'connection_status': 'Interested'})
     db.session.commit()
 
-    print "Successfully created request for %s between %s and %s" % (pet_id, seeker_id, owner_id)
     # TO DO: need to notify owner of request
+    flash('Successfully created connection request.')
 
     return jsonify({'connect': 'success'})
+    # return "Successfully created connection request."
 
 
 def get_connections(user_info):

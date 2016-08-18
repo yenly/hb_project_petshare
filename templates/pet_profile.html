@@ -19,11 +19,35 @@
 
     <h3>My owner is <a href="/user/{{ owner.user_id }}">{{ owner.first_name }} {{ owner.last_name }}</a>.</h3>
 
-    <form action="/connect" method="POST">
-        <input type="hidden" name="pet_id" value="{{ pet.pet_id }}">
-        <input type="hidden" name="owner_id" value="{{ pet.owner.owner_id }}">
-        <input type="submit" value="Connect with {{ pet.name }}">
+    <form id="connectForm" action="/connect" method="POST">
+        <input type="hidden" id="pet_id" name="pet_id" value="{{ pet.pet_id }}">
+        <input type="hidden" id="owner_id" name="owner_id" value="{{ pet.owner.owner_id }}">
+        <input type="submit" id="connect_request" value="Connect with {{ pet.name }}">
     </form>
+
+    <script>
+    "use strict";
+
+    function disableConnectBtn(result) {
+        $("#connect_request").attr('disabled','disabled');
+    }
+
+    function submitConnectRequest(evt) {
+        evt.preventDefault();
+
+        var requestInputs = {
+            "pet_id" : $("#pet_id").val(),
+            "owner_id" : $("#owner_id").val()
+        };
+
+        $.post("/connect", requestInputs, disableConnectBtn);
+
+    }
+
+    $("#connectForm").on("submit", submitConnectRequest);
+
+    </script>
+
 
     <h4>Here are some rocking photos of me:</h4>
     {% for photo in pet_photos %}
