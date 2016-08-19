@@ -15,10 +15,12 @@
     <h3>My Connection Requests</h3>
     {% if user.owner %}
         <ul>
+        <form id="connectStatusForm" method="POST">
         {% for item in request_list %}
             <li>
                 <a href="/user/{{ item.seeker.user_id }}">{{ item.seeker.user.first_name }} {{ item.seeker.user.last_name }}</a> is interested in {{ item.pet.name }}:
-                <form>
+
+                    <input type="hidden" name="request_id" value="{{ item.request_id }}">
                     <select name="connection_status">
                         <option value="{{ item.connection_status }}">{{ item.connection_status }} </option>
                         <option value="Pending Review">Pending Review</option>
@@ -26,9 +28,27 @@
                         <option value="Decline">Decline</option>
                     </select>
                     <input type="submit" value="Submit">
-                </form>
             </li>
         {% endfor %}
+        </form>
+        <script>
+            "user strict";
+
+            function statusChanged(result) {
+                alert(result);
+            }
+
+            function submitStatusChange(evt) {
+                evt.preventDefault();
+
+                var statusInput = {
+                    // "request_id": $("#request_id").val(),
+                    // "connection_status": $("#connection_status").val()
+                };
+
+                $.post("/change_connect_status", statusInput, statusChanged);
+            }
+        </script>
         </ul>
     {% endif %}
     {% if user.seeker %}

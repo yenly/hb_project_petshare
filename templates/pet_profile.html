@@ -27,27 +27,27 @@
     </form>
 
     <script>
-    "use strict";
+        "use strict";
 
-    function disableConnectBtn(result) {
-        if (result.connect === 'success') {
-            $("#connect_request").attr('disabled','disabled');
+        function disableConnectBtn(result) {
+            if (result.connect === 'success') {
+                $("#connect_request").attr('disabled','disabled');
+            }
         }
-    }
 
-    function submitConnectRequest(evt) {
-        evt.preventDefault();
+        function submitConnectRequest(evt) {
+            evt.preventDefault();
 
-        var requestInputs = {
-            "pet_id" : $("#pet_id").val(),
-            "owner_id" : $("#owner_id").val()
-        };
+            var requestInputs = {
+                "pet_id" : $("#pet_id").val(),
+                "owner_id" : $("#owner_id").val()
+            };
 
-        $.post("/connect", requestInputs, disableConnectBtn);
+            $.post("/connect", requestInputs, disableConnectBtn);
 
-    }
+        }
 
-    $("#connectForm").on("submit", submitConnectRequest);
+        $("#connectForm").on("submit", submitConnectRequest);
 
     </script>
     {% endif %}
