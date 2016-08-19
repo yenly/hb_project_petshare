@@ -150,15 +150,18 @@ def send_connection_request():
                                            'connection_status': 'Interested'})
     db.session.commit()
 
-    # TO DO: need to notify owner of request
     flash('Successfully created connection request.')
 
     return jsonify({'connect': 'success'})
-    # return "Successfully created connection request."
 
 
 def get_connections(user_info):
-    """Returns a list of connection request for a user"""
+    """Returns a list of connection request for a user
+
+        >>> user_info = ['owner', 1]
+        >>> get_connections(user_info)
+        [<Connection request_id=1 pet_id=1 owner_id=1 seeker_id=4>, <Connection request_id=2 pet_id=1 owner_id=1 seeker_id=5>, <Connection request_id=3 pet_id=1 owner_id=1 seeker_id=1>, <Connection request_id=12 pet_id=1 owner_id=1 seeker_id=6>]
+    """
 
     user_type, _id = user_info
 
@@ -170,6 +173,13 @@ def get_connections(user_info):
         request_list = Connection.query.filter(Connection.seeker_id == _id).all()
 
     return request_list
+
+@app.route('/change_connect_status', methods=['POST'])
+def change_connect_status():
+    """Update status on connection request."""
+
+    pass
+
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
