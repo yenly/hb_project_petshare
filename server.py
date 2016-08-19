@@ -1,7 +1,7 @@
 """PetShare - Find your furry BFF!"""
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Seeker, Owner, Pet, Connection
 from model import connect_to_db, db
@@ -158,9 +158,10 @@ def send_connection_request():
 def get_connections(user_info):
     """Returns a list of connection request for a user
 
-        >>> user_info = ['owner', 1]
-        >>> get_connections(user_info)
-        [<Connection request_id=1 pet_id=1 owner_id=1 seeker_id=4>, <Connection request_id=2 pet_id=1 owner_id=1 seeker_id=5>, <Connection request_id=3 pet_id=1 owner_id=1 seeker_id=1>, <Connection request_id=12 pet_id=1 owner_id=1 seeker_id=6>]
+        >>> connect_to_db(app)
+        >>> get_connections(['owner', 3])
+        [<Connection request_id=8 pet_id=4 owner_id=3 seeker_id=1>, <Connection request_id=16 pet_id=4 owner_id=3 seeker_id=6>]
+
     """
 
     user_type, _id = user_info
