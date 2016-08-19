@@ -1,7 +1,7 @@
 """PetShare - Find your furry BFF!"""
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
-# from flask_debugtoolbar import DebugToolbarExtension
+from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Seeker, Owner, Pet, Connection
 from model import connect_to_db, db
@@ -175,11 +175,30 @@ def get_connections(user_info):
 
     return request_list
 
+
 @app.route('/change_connect_status', methods=['POST'])
 def change_connect_status():
     """Update status on connection request."""
 
-    pass
+    connect_status_dict = {}
+
+    for item in request.form:
+        request_info = item.split("_")
+        connect_status_dict[request_info[-1]] = request.form.get(item)
+
+    for connect_request in connect_status_dict:
+        request_id = connect_request
+        connection_status = connect_status_dict[connect_request]
+        print request_id, connection_status
+
+        QUERY = """UPDATE connections SET connection_status = :connection_status
+                WHERE request_id = :request_id"""
+
+        db.cursor = db.session.execute(QUERY, {'request_id': request_id,
+                                               'connection_status': connection_status})
+    db.session.commit()
+
+    return "Connections table updated. Woohoo!"
 
 
 if __name__ == "__main__":

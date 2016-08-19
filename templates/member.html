@@ -20,8 +20,7 @@
             <li>
                 <a href="/user/{{ item.seeker.user_id }}">{{ item.seeker.user.first_name }} {{ item.seeker.user.last_name }}</a> is interested in {{ item.pet.name }}:
 
-                    <input type="hidden" name="request_id" value="{{ item.request_id }}">
-                    <select name="connection_status">
+                    <select name="connection_status_{{ item.request_id }}">
                         <option value="{{ item.connection_status }}">{{ item.connection_status }} </option>
                         <option value="Pending Review">Pending Review</option>
                         <option value="Accept">Accept</option>
@@ -29,6 +28,7 @@
                     </select>
             </li>
         {% endfor %}
+        <input type="submit" value="Update Connection Requests" >
         </form>
         <script>
             "user strict";
@@ -40,13 +40,12 @@
             function submitStatusChange(evt) {
                 evt.preventDefault();
 
-                var statusInput = {
-                    // "request_id": $("#request_id").val(),
-                    // "connection_status": $("#connection_status").val()
-                };
+                var statusInput = $("#connectStatusForm").serialize();
 
                 $.post("/change_connect_status", statusInput, statusChanged);
             }
+
+            $("#connectStatusForm").on("submit", submitStatusChange);
         </script>
         </ul>
     {% endif %}
