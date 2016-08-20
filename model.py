@@ -199,6 +199,11 @@ def connect_to_db(app):
     db.init_app(app)
 
 
+def test_data():
+    """Create example data to test databse."""
+
+    pass
+
 if __name__ == "__main__":
 
     from server import app
