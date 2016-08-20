@@ -202,7 +202,82 @@ def connect_to_db(app):
 def test_data():
     """Create example data to test databse."""
 
-    pass
+    test_user1 = User(last_name='Brown',
+                      first_name='Charlie',
+                      email='charlie@gmail.com',
+                      password='abc123',
+                      birthdate='1996-07-11',
+                      phone_number='415-555-555',
+                      occupation='cartoon character',
+                      address='123 Abc At',
+                      city='San Francisco',
+                      state='CA',
+                      zipcode='94121',
+                      image_url='http://emilypfreeman.com/wp-content/uploads/2015/11/easteregg11-2-1c.jpg')
+
+    test_user2 = User(last_name='Pelt',
+                      first_name='Linus',
+                      email='linus@gmail.com',
+                      password='abc123',
+                      birthdate='1996-08-11',
+                      phone_number='415-555-555',
+                      occupation='cartoon character',
+                      address='123 Def At',
+                      city='San Francisco',
+                      state='CA',
+                      zipcode='94121',
+                      image_url='https://eatingfastfood.files.wordpress.com/2011/07/linus.jpg')
+
+    db.session.add(test_user1)
+    db.session.add(test_user2)
+
+    # add users to use for next tables
+    db.session.commit()
+
+    charlie = Owner(user_id=1)
+    linus = Seeker(user_id=2)
+
+    # add owner and seeker to use for next tables
+    db.session.add(charlie)
+    db.session.add(linus)
+    db.session.commit()
+
+    snoopy = Pet(name='Snoopy',
+                 age=4,
+                 gender='M',
+                 size='48lbs',
+                 color='white with black spots',
+                 breed='beagle',
+                 animal_type='dog',
+                 owner_id=1,
+                 is_available=True,
+                 character_details='Snoopy is a loyal, innocent, imaginative and good-natured talking beagle who is prone to imagining fantasy lives',
+                 health_details='Snoopy can be selfish and/or lazy at times',
+                 image_url='https://pbs.twimg.com/profile_images/2256335229/snoopy-happy_400x400.gif')
+
+    db.session.add(snoopy)
+    # add pet to use for next table
+    db.session.commit()
+
+    photo1 = Pet_Photo(pet_id=1,
+                       image_url='https://s-media-cache-ak0.pinimg.com/564x/e1/b5/f5/e1b5f57f63e00a02b852ac6051f31741.jpg',
+                       caption='Group hug with my human BFF and little buddy woodstock')
+
+    photo2 = Pet_Photo(pet_id=1,
+                       image_url='http://www.picgifs.com/clip-art/cartoons/christmas-snoopy/clip-art-christmas-snoopy-938072.jpg',
+                       caption='I love Christmas time!')
+
+    db.session.add(photo1)
+    db.session.add(photo2)
+
+    connect = Connection(pet_id=1,
+                         owner_id=1,
+                         seeker_id=1,
+                         connection_status='Interested')
+
+    db.session.add(connect)
+    db.session.commit()
+
 
 if __name__ == "__main__":
 
