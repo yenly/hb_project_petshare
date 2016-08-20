@@ -114,8 +114,6 @@ def search():
         pet_info = dictalchemy.utils.asdict(value)
         pets_dict['results' + str(counter)] = pet_info
 
-    print pets_dict
-
     return jsonify(pets_dict)
 
 
@@ -189,7 +187,6 @@ def change_connect_status():
     for connect_request in connect_status_dict:
         request_id = connect_request
         connection_status = connect_status_dict[connect_request]
-        print request_id, connection_status
 
         QUERY = """UPDATE connections SET connection_status = :connection_status
                 WHERE request_id = :request_id"""

@@ -20,7 +20,7 @@
             <li>
                 <a href="/user/{{ item.seeker.user_id }}">{{ item.seeker.user.first_name }} {{ item.seeker.user.last_name }}</a> is interested in {{ item.pet.name }}:
 
-                    <select name="connection_status_{{ item.request_id }}">
+                    <select name="connect_request_{{ item.request_id }}">
                         <option value="{{ item.connection_status }}">{{ item.connection_status }} </option>
                         <option value="Pending Review">Pending Review</option>
                         <option value="Accept">Accept</option>
@@ -34,7 +34,7 @@
             "user strict";
 
             function statusChanged(result) {
-                alert(result);
+                alert("Changes to connection status saved!");
             }
 
             function submitStatusChange(evt) {
