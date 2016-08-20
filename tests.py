@@ -38,5 +38,13 @@ class ServerTestsDatabase(unittest.TestCase):
         db.session.close()
         db.drop_all()
 
+    def test_user_profile(self):
+        """Test User profile loads successfully."""
+
+        result = self.client.get('/user/1')
+        self.assertEquals(200, result.status_code)
+        self.assertIn("Contact Info:", result.data)
+
+
 if __name__ == "__main__":
     unittest.main()

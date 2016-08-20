@@ -191,10 +191,13 @@ dictalchemy.utils.make_class_dictable(Connection)
 
 
 # Helper functions
-def connect_to_db(app):
-    """Connect to the database to our Flask app."""
+def connect_to_db(app, db_uri="postgresql:///petshare"):
+    """Connect to the database to our Flask app.
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///petshare'
+    Default db_uri is our petshare db. if testing, pass in testdb url
+    """
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     db.app = app
     db.init_app(app)
 
