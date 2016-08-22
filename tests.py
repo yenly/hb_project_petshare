@@ -45,6 +45,13 @@ class ServerTestsDatabase(unittest.TestCase):
         self.assertEquals(200, result.status_code)
         self.assertIn("Charlie Brown", result.data)
 
+    def test_pet_profile(self):
+        """Test pet profile loads successfully."""
+
+        result = self.client.get('/pet_profile/1')
+        self.assertEquals(200, result.status_code)
+        self.assertIn("Snoopy", result.data)
+
 
 if __name__ == "__main__":
     unittest.main()
