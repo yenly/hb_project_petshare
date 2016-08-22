@@ -43,7 +43,7 @@ class ServerTestsDatabase(unittest.TestCase):
 
         result = self.client.get('/user/1')
         self.assertEquals(200, result.status_code)
-        self.assertIn("Contact Info:", result.data)
+        self.assertIn("Charlie Brown", result.data)
 
 
 if __name__ == "__main__":
