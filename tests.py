@@ -52,6 +52,17 @@ class ServerTestsDatabase(unittest.TestCase):
         self.assertEquals(200, result.status_code)
         self.assertIn("Snoopy", result.data)
 
+    def test_login(self):
+        """Test user logged and redirect to member dashboard."""
+
+        result = self.client.post('/login',
+                                  data={"email": "charlie@gmail.com",
+                                        "password": "123xyz"},
+                                  follow_redirects=True)
+
+        self.assertEquals(200, result.status_code)
+        self.assertIn("Welcome back, Charlie!", result.data)
+
 
 if __name__ == "__main__":
     unittest.main()
