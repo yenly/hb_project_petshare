@@ -117,11 +117,11 @@ def search():
     return jsonify(pets_dict)
 
 
-@app.route('/search.json')
-def display_search_results():
-    """Display search results."""
+@app.route('/pet_search')
+def pet_search():
+    """Dynamic search using angularjs."""
 
-    pass
+    return render_template("search.html")
 
 
 @app.route('/connect', methods=['POST'])

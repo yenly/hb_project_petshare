@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Find your furry BFF!</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="/static/petshare.js"></script>
+    </head>
+    <body>
+        <div ng-app="">
+            <label>Search: </label> <input type="text" ng-model="searchTerm">
+            <p>Search criteria: <span ng-bind="searchTerm"></span></p>
+
+        </div>
+    </body>
+</html>
