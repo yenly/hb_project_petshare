@@ -6,9 +6,21 @@
         <script src="/static/petshare.js"></script>
     </head>
     <body>
-        <div ng-app="">
+        <div ng-app="petShareApp" ng-controller="searchController" ng-init="searchTerm='direwolf'">
             <label>Search: </label> <input type="text" ng-model="searchTerm">
             <p>Search criteria: <span ng-bind="searchTerm"></span></p>
+            <div ng-init="pets= [
+            {pet_id:1, name:'Ghost', animal_type:'dog'},
+            {pet_id:2, name:'Summer', animal_type:'dog'},
+            {pet_id:3, name:'Hobbes', animal_type:'cat'}]">
+            {% raw %}
+                <ul>
+                    <li ng-repeat="pet in pets">
+                        {{pet.name}}
+                    </li>
+                </ul>
+            {% endraw %}
+            </div>
 
         </div>
     </body>
