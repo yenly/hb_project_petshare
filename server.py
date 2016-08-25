@@ -96,10 +96,11 @@ def pet_profile(id):
     return render_template("pet_profile.html", pet=pet, owner=owner, pet_photos=pet_photos)
 
 
-@app.route('/search', methods=['GET'])
+@app.route('/search')
 def search():
     """Search for pet and return list of pet profiles."""
     search_term = request.args.get("search_term")
+    print "Search function: ", search_term
     if search_term.isdigit():
         users = User.query.filter(User.zipcode == str(search_term)).all()
         for user in users:
@@ -115,6 +116,45 @@ def search():
         pets_dict['results' + str(counter)] = pet_info
 
     return jsonify(pets_dict)
+
+
+@app.route('/display_cats')
+def display_cats():
+    """Query db for all cats in user area and return list of profiles.
+
+    Returns cats profiles in json."""
+
+    search_term = "cat"
+    search_results = Pet.query.filter(Pet.animal_type == search_term).all()
+
+    cats_dict = {}
+
+    for counter, value in enumerate(search_results, 1):
+        pet_info = dictalchemy.utils.asdict(value)
+        cats_dict['results' + str(counter)] = pet_info
+
+    return jsonify(cats_dict)
+
+
+@app.route('/display_dogs')
+def display_dogs():
+    """Query db for all dogs in user area and return list of profiles.
+
+    Returns dog profiles in json.
+    """
+
+    # TO DO: use zipcode to filter search results
+
+    search_term = "dog"
+    search_results = Pet.query.filter(Pet.animal_type == search_term).all()
+
+    dog_dict = {}
+
+    for counter, value in enumerate(search_results, 1):
+        pet_info = dictalchemy.utils.asdict(value)
+        dog_dict['doggie' + str(counter)] = pet_info
+
+    return jsonify(dog_dict)
 
 
 @app.route('/pet_search')

@@ -2,24 +2,34 @@
 <html>
     <head>
         <title>Find your furry BFF!</title>
+        <script src="https://code.jquery.com/jquery.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
         <script src="/static/petshare.js"></script>
+
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <div ng-app="petShareApp" ng-controller="searchController" ng-init="searchTerm='direwolf'">
-            <label>Search: </label> <input type="text" ng-model="searchTerm">
-            <p>Search criteria: <span ng-bind="searchTerm"></span></p>
-            <div ng-init="pets= [
-            {pet_id:1, name:'Ghost', animal_type:'dog'},
-            {pet_id:2, name:'Summer', animal_type:'dog'},
-            {pet_id:3, name:'Hobbes', animal_type:'cat'}]">
-            {% raw %}
+        <div ng-app="petShareApp" ng-controller="searchController">
+            <button ng-click="DisplayCats()">Search for Cats</button>
+            <button ng-click="DisplayDogs()">Search for Dogs</button>
+            <!-- <p>Search criteria: <span ng-bind="searchTerm"></span></p> -->
+
+
+            <div>
+                {% raw %}
                 <ul>
-                    <li ng-repeat="pet in pets">
-                        {{pet.name}}
+                    <li ng-repeat="pet in cats">
+                        <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a> <br>
+                        <img src="{{pet.image_url}}" alt="{{pet.name}}" />
                     </li>
                 </ul>
-            {% endraw %}
+                <ul>
+                    <li ng-repeat="pet in dogs">
+                        <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a> <br>
+                        <img src="{{pet.image_url}}" alt="{{pet.name}}" />
+                    </li>
+                </ul>
+                {% endraw %}
             </div>
 
         </div>
