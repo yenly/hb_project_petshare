@@ -30,6 +30,7 @@ def login():
 
     user = User.query.filter(User.email == user_email).first()
     session['user_id'] = user.user_id
+    session['user_zipcode'] = user.zipcode
 
     # TO DO: build out pasword testing logic
 
