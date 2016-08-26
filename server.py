@@ -125,14 +125,11 @@ def display_cats():
 
     Returns cats profiles in json."""
 
-    search_term = "cat"
-    search_results = Pet.query.filter(Pet.animal_type == search_term).all()
+    cats_dict = find_pets('cat', '94121')
 
-    cats_dict = {}
-
-    for counter, value in enumerate(search_results, 1):
-        pet_info = dictalchemy.utils.asdict(value)
-        cats_dict['results' + str(counter)] = pet_info
+    # for counter, value in enumerate(search_results, 1):
+    #     pet_info = dictalchemy.utils.asdict(value)
+    #     cats_dict['results' + str(counter)] = pet_info
 
     return jsonify(cats_dict)
 
@@ -160,6 +157,26 @@ def display_dogs():
     print dog_dict
 
     return jsonify(dog_dict)
+
+
+def find_pets(ani_type, location):
+    """Query db for pets based on animal type and location.
+
+    Return dictionary of pets.
+
+        >>> find_pets('cat', '94121')
+        {'cat1': {'name': u'Hobbes', 'color': u'orange white stripes', 'gender': u'M', 'age': 3, 'breed': u'tabby', 'owner_id': 6, 'character_details': u'Precocious, mischievous, and adventurous. ', 'is_available': True, 'health_details': u'null', 'image_url': u'https://somethingokay.files.wordpress.com/2012/11/hobbes-from-calvin-and-hobbes-7.gif', 'pet_id': 6, 'animal_type': u'cat', 'size': u'14lbs'}}
+    """
+
+    search_results = Pet.query.filter(Pet.animal_type == ani_type).all()
+    pets_dict = {}
+
+    for counter, pet in enumerate(search_results, 1):
+        if pet.owner.user.zipcode == location:
+            pet_info = dictalchemy.utils.asdict(pet)
+            pets_dict[ani_type + str(counter)] = pet_info
+
+    return pets_dict
 
 
 @app.route('/pet_search')
