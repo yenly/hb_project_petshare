@@ -144,16 +144,20 @@ def display_dogs():
     Returns dog profiles in json.
     """
 
-    # TO DO: use zipcode to filter search results
+    # TO DO: use zipcode to filter search results, need bigger sample data
+    # user_zipcode = session['user_zipcode']
+    user_zipcode = '94122'
 
     search_term = "dog"
     search_results = Pet.query.filter(Pet.animal_type == search_term).all()
 
     dog_dict = {}
 
-    for counter, value in enumerate(search_results, 1):
-        pet_info = dictalchemy.utils.asdict(value)
-        dog_dict['doggie' + str(counter)] = pet_info
+    for counter, dog in enumerate(search_results, 1):
+        if dog.owner.user.zipcode == user_zipcode:
+            dog_info = dictalchemy.utils.asdict(dog)
+            dog_dict['dog' + str(counter)] = dog_info
+    print dog_dict
 
     return jsonify(dog_dict)
 
