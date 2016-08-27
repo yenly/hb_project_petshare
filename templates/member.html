@@ -50,12 +50,7 @@
         </ul>
     {% endif %}
     {% if user.seeker %}
-        <form action="/search">
-            <label for="field-search-term">
-                Search by animal type or zipcode:
-            </label>
-            <input type="input" name="search_term" id="field-search-term"/> <input type="submit" value="Search">
-        </form>
+        <a href="/pet_search">Find pets in your area.</a>
 
         <ul>
         {% for item in request_list %}

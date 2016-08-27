@@ -304,8 +304,25 @@ ALTER TABLE ONLY users ALTER COLUMN user_id SET DEFAULT nextval('users_user_id_s
 --
 
 COPY connections (request_id, pet_id, owner_id, seeker_id, connection_status) FROM stdin;
-1	1	1	4	Interested
-2	1	1	5	Interested
+8	4	3	1	Interested
+9	5	5	1	Interested
+10	6	6	6	Interested
+13	2	4	6	Interested
+14	6	6	6	Interested
+15	5	5	6	Interested
+16	4	3	6	Interested
+17	6	6	6	Interested
+18	6	6	6	Interested
+19	6	6	6	Interested
+4	6	6	1	Interested
+5	6	6	1	Decline
+6	2	4	1	Pending Review
+1	1	1	4	Decline
+2	1	1	5	Pending Review
+3	1	1	1	Pending Review
+12	1	1	6	Decline
+11	1	1	6	Pending Review
+7	3	2	1	Decline
 \.
 
 
@@ -313,7 +330,7 @@ COPY connections (request_id, pet_id, owner_id, seeker_id, connection_status) FR
 -- Name: connections_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('connections_request_id_seq', 2, true);
+SELECT pg_catalog.setval('connections_request_id_seq', 19, true);
 
 
 --

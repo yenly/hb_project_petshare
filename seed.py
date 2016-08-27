@@ -3,31 +3,47 @@ from model import connect_to_db, db
 
 from server import app
 from datetime import datetime
+import csv
 
-def load_users():
-    """Load users into database """
 
-    print "Loading users..."
+def load_users_csv():
+    """Load users in from csv file."""
+
+    print "Loading users from csv file..."
 
     User.query.delete()
 
-    for row in open("seed_data/user.data"):
-        row = row.rstrip()
-        last_name, first_name, email, password, birthdate, phone, occupation, address, city, state, zipcode, image = row.split("|")
+    with open('seed_data/users.csv') as user_csvfile:
+        readUsers = csv.reader(user_csvfile, delimiter=',')
+        for row in readUsers:
+            last_name = row[0]
+            first_name = row[1]
+            email = row[2]
+            password = hash(row[3])
+            phone_number = row[4]
+            birthdate = row[5]
+            occupation = row[6]
+            address = row[7]
+            city = row[8]
+            state = row[9]
+            zipcode = row[10]
+            image_url = row[11]
 
-        user = User(last_name=last_name,
-                    first_name=first_name,
-                    email=email,
-                    password=password,
-                    birthdate=birthdate,
-                    phone_number=phone,
-                    occupation=occupation,
-                    address=address,
-                    city=city,
-                    state=state,
-                    zipcode=zipcode,
-                    image_url=image)
-        db.session.add(user)
+            user = User(last_name=last_name,
+                        first_name=first_name,
+                        email=email,
+                        password=password,
+                        phone_number=phone_number,
+                        birthdate=birthdate,
+                        occupation=occupation,
+                        address=address,
+                        city=city,
+                        state=state,
+                        zipcode=zipcode,
+                        image_url=image_url)
+
+            db.session.add(user)
+
     db.session.commit()
 
 
@@ -38,9 +54,11 @@ def load_owners():
 
     Owner.query.delete()
 
-    # Auto making first 5 users pet owners for testing
-    for i in range(6):
-        user_id = i + 1
+    owners = [1, 2, 3, 4, 5, 6, 7, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21]
+
+    # add user_ids from owners list to db table
+    for user in owners:
+        user_id = user
         owner = Owner(user_id=user_id)
         db.session.add(owner)
 
@@ -62,6 +80,7 @@ def load_seekers():
                         household_size=household_size,
                         children=children,
                         pet_experience=pet_experience)
+
         db.session.add(seeker)
 
     db.session.commit()
@@ -96,10 +115,51 @@ def load_pets():
     db.session.commit()
 
 
+def load_pets_csv():
+    """Load pets into database from csv file."""
+
+    print "Loading pets..."
+
+    Pet.query.delete()
+
+    with open('seed_data/pets.csv') as pet_csvfile:
+        readPets = csv.reader(pet_csvfile, delimiter=',')
+        for row in readPets:
+            name = row[0]
+            age = row[1]
+            gender = row[2]
+            size = row[3]
+            color = row[4]
+            breed = row[5]
+            animal_type = row[6]
+            owner_id = row[7]
+            is_available = row[8]
+            character_details = row[9]
+            health_details = row[10]
+            image_url = row[11]
+
+            pet = Pet(name=name,
+                      age=age,
+                      gender=gender,
+                      size=size,
+                      color=color,
+                      breed=breed,
+                      animal_type=animal_type,
+                      owner_id=owner_id,
+                      is_available=is_available,
+                      character_details=character_details,
+                      health_details=health_details,
+                      image_url=image_url)
+
+            db.session.add(pet)
+
+    db.session.commit()
+
+
 def load_connections():
     """Load sample connection."""
 
-    print "Loading one connection..."
+    print "Loading connections..."
 
     Connection.query.delete()
 
@@ -110,7 +170,7 @@ def load_connections():
 
     connect2 = Connection(pet_id=1,
                           owner_id=1,
-                          seeker_id=5,
+                          seeker_id=2,
                           connection_status='Interested')
 
     db.session.add(connect)
@@ -118,43 +178,26 @@ def load_connections():
 
     db.session.commit()
 
-def load_pet_photos():
-    """Load sample photos for pets to test db."""
+
+def load_pet_photos_csv():
+    """Load photos from csv file."""
 
     print "Loading pet photos..."
 
     Pet_Photo.query.delete()
 
-    ghost = Pet_Photo(pet_id=1,
-                      image_url='https://howlingforjustice.files.wordpress.com/2012/06/ghost-with-jon-snow-got1.png?w=400',
-                      caption='My human BFF and I ready for battle.')
+    with open('seed_data/pet_photos.csv') as pet_photo_csvfile:
+        readPhotos = csv.reader(pet_photo_csvfile, delimiter=',')
+        for row in readPhotos:
+            pet_id = row[0]
+            image_url = row[1]
+            caption = row[2]
 
-    ghost2 = Pet_Photo(pet_id=1,
-                       image_url='https://cdn.cloudpix.co/images/jon-snow/jon-snow-on-the-iron-throne-with-ghost-game-of-thrones-and-ghost-34478429f2e282ab1f7d85393f0d2ede-large-388205.jpg',
-                       caption='My human BFF and I on the iron throne.')
+            pet_photo = Pet_Photo(pet_id=pet_id,
+                                  image_url=image_url,
+                                  caption=caption)
 
-    grey_wind = Pet_Photo(pet_id=5,
-                          image_url='https://s-media-cache-ak0.pinimg.com/564x/82/33/02/8233028427798cc7bd701c70a6a02317.jpg',
-                          caption='When I was a wee pup with my human BFF.')
-
-    hobbes = Pet_Photo(pet_id=6,
-                       image_url='http://img0007o.psstatic.com/115008713_calvin-and-hobbes-pajama-dancing-canvas-print-44-ebay.jpg',
-                       caption='Dancing with my little buddy.')
-
-    hobbes2 = Pet_Photo(pet_id=6,
-                        image_url='http://images4.fanpop.com/image/photos/23700000/Calvin-Hobbes-calvin-and-hobbes-23762777-1280-800.jpg',
-                        caption='We got moves!')
-
-    hobbes3 = Pet_Photo(pet_id=6,
-                        image_url='http://i.onionstatic.com/avclub/5449/21/16x9/960.jpg',
-                        caption='Exploring with my little buddy.')
-
-    db.session.add(ghost)
-    db.session.add(ghost2)
-    db.session.add(grey_wind)
-    db.session.add(hobbes)
-    db.session.add(hobbes2)
-    db.session.add(hobbes3)
+            db.session.add(pet_photo)
 
     db.session.commit()
 
@@ -162,9 +205,9 @@ def load_pet_photos():
 if __name__ == "__main__":
     connect_to_db(app)
     db.create_all()
-    load_users()
+    load_users_csv()
     load_owners()
     load_seekers()
-    load_pets()
+    load_pets_csv()
     load_connections()
-    load_pet_photos()
+    load_pet_photos_csv()

@@ -103,7 +103,7 @@ class Pet(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('owners.owner_id'))
     is_available = db.Column(db.Boolean)
     character_details = db.Column(db.String(300))
-    health_details = db.Column(db.String(100))
+    health_details = db.Column(db.String(300))
     image_url = db.Column(db.String(200))
 
     owner = db.relationship('Owner', backref='pets')
