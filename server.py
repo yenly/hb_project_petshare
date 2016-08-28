@@ -1,6 +1,6 @@
 """PetShare - Find your furry BFF!"""
 
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from flask import Flask, render_template, request, redirect, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Seeker, Owner, Pet, Connection
@@ -30,7 +30,7 @@ def login():
 
     user = User.query.filter(User.email == user_email).first()
     session['user_id'] = user.user_id
-    session['user_zipcode'] = user.zipcode
+    session['user_city'] = user.city
 
     # TO DO: build out pasword testing logic
 
@@ -104,8 +104,9 @@ def display_cats():
     Returns cats profiles in json."""
 
     # TO DO: change hard code zipcode to take from user session
+    user_city = session['user_city']
 
-    cats_dict = find_pets('cat', '94121')
+    cats_dict = find_pets('cat', user_city)
 
     return jsonify(cats_dict)
 
@@ -119,9 +120,10 @@ def display_dogs():
 
     # TO DO: use zipcode to filter search results, need bigger sample data
     # user_zipcode = session['user_zipcode']
-    user_zipcode = '94122'
+    user_city = session['user_city']
+    print user_city
 
-    dog_dict = find_pets('dog', user_zipcode)
+    dog_dict = find_pets('dog', user_city)
 
     return jsonify(dog_dict)
 
@@ -139,7 +141,7 @@ def find_pets(ani_type, location):
     pets_dict = {}
 
     for counter, pet in enumerate(search_results, 1):
-        if pet.owner.user.zipcode == location:
+        if pet.owner.user.city == location:
             pet_info = dictalchemy.utils.asdict(pet)
             pets_dict[ani_type + str(counter)] = pet_info
 

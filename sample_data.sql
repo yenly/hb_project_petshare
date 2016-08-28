@@ -149,7 +149,7 @@ CREATE TABLE pets (
     owner_id integer,
     is_available boolean,
     character_details character varying(300),
-    health_details character varying(100),
+    health_details character varying(300),
     image_url character varying(200)
 );
 
@@ -304,25 +304,8 @@ ALTER TABLE ONLY users ALTER COLUMN user_id SET DEFAULT nextval('users_user_id_s
 --
 
 COPY connections (request_id, pet_id, owner_id, seeker_id, connection_status) FROM stdin;
-8	4	3	1	Interested
-9	5	5	1	Interested
-10	6	6	6	Interested
-13	2	4	6	Interested
-14	6	6	6	Interested
-15	5	5	6	Interested
-16	4	3	6	Interested
-17	6	6	6	Interested
-18	6	6	6	Interested
-19	6	6	6	Interested
-4	6	6	1	Interested
-5	6	6	1	Decline
-6	2	4	1	Pending Review
-1	1	1	4	Decline
-2	1	1	5	Pending Review
-3	1	1	1	Pending Review
-12	1	1	6	Decline
-11	1	1	6	Pending Review
-7	3	2	1	Decline
+1	1	1	4	Interested
+2	1	1	2	Interested
 \.
 
 
@@ -330,7 +313,7 @@ COPY connections (request_id, pet_id, owner_id, seeker_id, connection_status) FR
 -- Name: connections_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('connections_request_id_seq', 19, true);
+SELECT pg_catalog.setval('connections_request_id_seq', 2, true);
 
 
 --
@@ -344,6 +327,19 @@ COPY owners (owner_id, user_id) FROM stdin;
 4	4
 5	5
 6	6
+7	7
+8	11
+9	12
+10	14
+11	15
+12	16
+13	17
+14	18
+15	19
+16	20
+17	21
+18	22
+19	23
 \.
 
 
@@ -351,7 +347,7 @@ COPY owners (owner_id, user_id) FROM stdin;
 -- Name: owners_owner_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('owners_owner_id_seq', 6, true);
+SELECT pg_catalog.setval('owners_owner_id_seq', 19, true);
 
 
 --
@@ -359,12 +355,31 @@ SELECT pg_catalog.setval('owners_owner_id_seq', 6, true);
 --
 
 COPY pet_photos (photo_id, pet_id, image_url, caption) FROM stdin;
-1	1	https://howlingforjustice.files.wordpress.com/2012/06/ghost-with-jon-snow-got1.png?w=400	My human BFF and I ready for battle.
-2	1	https://cdn.cloudpix.co/images/jon-snow/jon-snow-on-the-iron-throne-with-ghost-game-of-thrones-and-ghost-34478429f2e282ab1f7d85393f0d2ede-large-388205.jpg	My human BFF and I on the iron throne.
-3	5	https://s-media-cache-ak0.pinimg.com/564x/82/33/02/8233028427798cc7bd701c70a6a02317.jpg	When I was a wee pup with my human BFF.
-4	6	http://img0007o.psstatic.com/115008713_calvin-and-hobbes-pajama-dancing-canvas-print-44-ebay.jpg	Dancing with my little buddy.
-5	6	http://images4.fanpop.com/image/photos/23700000/Calvin-Hobbes-calvin-and-hobbes-23762777-1280-800.jpg	We got moves!
-6	6	http://i.onionstatic.com/avclub/5449/21/16x9/960.jpg	Exploring with my little buddy.
+1	1	/static/images/pet_photos/ghost01.gif	When I was a wee pup.
+2	1	/static/images/pet_photos/ghost02.jpg	On the iron throne with my badass BFF.
+3	9	/static/images/pet_photos/gingerale01.jpg	With my mom.
+4	9	/static/images/pet_photos/gingerale02.jpg	Chilling on my favorite throw
+5	9	/static/images/pet_photos/gingerale03.jpg	I love Santa.
+6	6	/static/images/pet_photos/hobbes01.jpg	I like to hold hands while napping.
+7	6	/static/images/pet_photos/hobbes02.jpg	
+8	6	/static/images/pet_photos/hobbes03.jpg	Rub my cheeks.=)
+9	6	/static/images/pet_photos/hobbes04.jpg	I love belly rubs.
+10	11	/static/images/pet_photos/junior01.jpg	
+11	12	/static/images/pet_photos/rusty01.jpg	Chillin'
+12	12	/static/images/pet_photos/rusty02.jpg	I love to climb.
+13	4	/static/images/pet_photos/lady01.jpg	With my human BFF.
+14	13	/static/images/pet_photos/marley01.jpg	I love Christmas time treats.
+15	13	/static/images/pet_photos/marley02.jpg	Hanging with my mom.
+16	13	/static/images/pet_photos/marley03.jpg	Hanging with my mom.
+17	10	/static/images/pet_photos/peenutbutter01.jpg	
+18	10	/static/images/pet_photos/peenutbutter02.jpg	I love walks.
+19	10	/static/images/pet_photos/peenutbutter03.jpg	
+20	2	/static/images/pet_photos/summer01.jpg	I watch over my human BFF every night.
+21	2	/static/images/pet_photos/summer02.jpg	OMG! I am adorable as a pup.
+22	5	/static/images/pet_photos/greywind01.jpg	We are fierce!
+23	5	/static/images/pet_photos/greywind02.jpg	Me as a pup.
+24	14	/static/images/pet_photos/emmalucy01.jpg	Hanging with my buddy.
+25	15	/static/images/pet_photos/emmalucy01.jpg	Hanging with my buddy.
 \.
 
 
@@ -372,7 +387,7 @@ COPY pet_photos (photo_id, pet_id, image_url, caption) FROM stdin;
 -- Name: pet_photos_photo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('pet_photos_photo_id_seq', 6, true);
+SELECT pg_catalog.setval('pet_photos_photo_id_seq', 25, true);
 
 
 --
@@ -380,12 +395,21 @@ SELECT pg_catalog.setval('pet_photos_photo_id_seq', 6, true);
 --
 
 COPY pets (pet_id, name, age, gender, size, color, breed, animal_type, owner_id, is_available, character_details, health_details, image_url) FROM stdin;
-1	Ghost	6	M	140lbs	white	direwolf	dog	1	t	Super loyal, badass warrior, independent traveler, and perfect right hand guard in battle.	Runt at birth but no longer now	http://45.media.tumblr.com/bffe4197139c20b9290544400ba80723/tumblr_o69pqtZRSn1s6bxzqo3_r2_540.gif
-2	Summer	6	M	138lbs	light beige and white	direwolf	dog	4	t	Super loyal and protector of Bran Stark. Always saving Bran and his friends from white walkers.	Sporting battle scars.	null
-3	Nymeria	6	F	139lbs	grey and white	direwolf	dog	2	t	Faithful to Arya and biter of Joffrey.	null	null
-4	Lady	6	F	128lbs	grey and white	direwolf	dog	3	t	Superfriendly and gullible. Saintly.	Bleeding stab wounds.	https://s-media-cache-ak0.pinimg.com/564x/ce/2f/76/ce2f76182c44d8cef10cdb1abc38fd56.jpg
-5	Grey Wind	6	M	141	grey	direwolf	dog	5	t	Super loyal, badass warrior. Notorious reputation for fighting in battles. 	null	http://vignette2.wikia.nocookie.net/gameofthrones/images/f/f8/GreyWindSeason2Debut.jpg/revision/latest?cb=20160716040036
-6	Hobbes	3	M	14lbs	orange white stripes	tabby	cat	6	t	Precocious, mischievous, and adventurous. 	null	https://somethingokay.files.wordpress.com/2012/11/hobbes-from-calvin-and-hobbes-7.gif
+1	Ghost	6	M	140lbs	white	direwolf	dog	1	t	Super loyal, badass warrior, independent traveler, and perfect right hand guard in battle.	Runt at birth but no longer now	/static/images/pet_profiles/ghost.gif
+2	Summer	6	M	138lbs	light beige and white	direwolf	dog	4	t	Super loyal and protector of Bran Stark. Always saving Bran and his friends from white walkers.	Sporting battle scars.	/static/images/pet_profiles/summer.jpg
+3	Nymeria	6	F	139lbs	grey and white	direwolf	dog	2	t	Faithful to Arya, biter of Joffrey		/static/images/pet_profiles/nymeria.jpg
+4	Lady	6	F	128lbs	grey and white	direwolf	dog	3	t	Superfriendly and gullible. Saintly.	Bleeding stab wounds.	/static/images/pet_profiles/lady.jpg
+5	Grey Wind	6	M	141lbs	grey and white	direwolf	dog	5	t	Super loyal, badass warrior. Notorious reputation for fighting in battles.	Bleeding stab wounds.	/static/images/pet_profiles/greywind.jpg
+6	Hobbes	3	M	14lbs	orange with black stripes	tabby	cat	6	t	Snuggle master, purring machine. Loves all humans and wants to play all the time. Highly motivated by food and is always hungry. Loves to welcome my favorite humans at the door.		/static/images/pet_profiles/hobbes.jpg
+7	Choe	7	F	12lbs	brown	tabby	cat	12	t	Diva. Catitude level high. Really independent.		/static/images/pet_profiles/choe.jpg
+8	Jiao Jiao	5	F	11lbs	parti	Pomeranian	dog	15	t	catlike	splendid	/static/images/pet_profiles/jiaojiao.jpg
+9	Ginger Ale	15	F	18lbs	brown and white	dachshund/beagle	dog	8	t	Loves to sleep. Likes to be tucked in to her bed. She has a heating pad in her bed so she loves napping even more. She loves eating cucumbers as a snack. Loves car rides. She loves to roll around. She's horrible and always gets in my purse.	Poor thing is old but she's actually pretty healthy. A slight heart murmur and hearing is kind of going but otherwise she's really healthy.	/static/images/pet_profiles/gingerale.jpg
+10	Peenut Butter	4	M	12lbs	golden brown	Chihuahua/Pomeranian Mix	dog	9	t	Trained, calm, sweet, enjoys going for runs		/static/images/pet_profiles/peenutbutter.jpg
+11	Junior	7	M	100lbs	yellow	Labrador	dog	11	t	exuberant, friendly, likes to play ball	walks under 3 miles long are better and he doesn't like to walk on hot surfaces	/static/images/pet_profiles/junior.jpg
+12	Rusty	13	F	16.8lbs	orange and white	maine coon	cat	11	t	good hunter	healthy	/static/images/pet_profiles/rusty.jpg
+13	Marley	4	M	88lbs	black	labradoodle	dog	17	t	Lots of energy and loves to play. Wants to be everyone's best friend.	healthy	/static/images/pet_profiles/marley.jpg
+14	Emma	10	F	67lbs	ginger with white markings	pitbull	dog	18	t	very affectionate with people. Loves walks, belly rubs and sitting next to you on the sofa. Also likes a good game of tug and wrestling. Only likes dogs she's been properly introduced to. She and Emma get along great and if you take them both they're good entertainment.		/static/images/pet_profiles/emma.jpg
+15	Lucy	2	F	15lbs	white and tan	longhair chihuahua	dog	18	t	ery sweet. Good for jogs and loves to chase the ball. She and Emma get along great and if you take them both they're good entertainment.		/static/images/pet_profiles/lucy.jpg
 \.
 
 
@@ -393,7 +417,7 @@ COPY pets (pet_id, name, age, gender, size, color, breed, animal_type, owner_id,
 -- Name: pets_pet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('pets_pet_id_seq', 6, true);
+SELECT pg_catalog.setval('pets_pet_id_seq', 15, true);
 
 
 --
@@ -401,12 +425,10 @@ SELECT pg_catalog.setval('pets_pet_id_seq', 6, true);
 --
 
 COPY seekers (seeker_id, user_id, household_size, children, pet_experience) FROM stdin;
-1	7	5	3	False
-2	8	6	3	False
-3	6	0	0	False
-4	9	99	0	True
-5	10	7	0	True
-6	11	2	0	True
+1	13	5	3	True
+2	8	0	0	False
+3	10	9	3	True
+4	9	0	0	True
 \.
 
 
@@ -414,7 +436,7 @@ COPY seekers (seeker_id, user_id, household_size, children, pet_experience) FROM
 -- Name: seekers_seeker_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('seekers_seeker_id_seq', 6, true);
+SELECT pg_catalog.setval('seekers_seeker_id_seq', 4, true);
 
 
 --
@@ -422,17 +444,29 @@ SELECT pg_catalog.setval('seekers_seeker_id_seq', 6, true);
 --
 
 COPY users (user_id, last_name, first_name, email, password, phone_number, birthdate, occupation, address, city, state, zipcode, image_url) FROM stdin;
-1	Snow	John	jsnow@gmail.com	123xyz	415-555-5555	1980-12-01 00:00:00	King of the North	123 abc st	San Francisco	CA	94122	null
-2	Stark	Arya	astark@gmail.com	123xyz	415-555-5555	1986-01-01 00:00:00	No one assassin	123 abc st	San Francisco	CA	94110	null
-3	Stark	Sansa	sstark@gmail.com	123xyz	415-555-5555	1984-08-14 00:00:00	Wife of Ramsay Bolton	123 abc st	San Francisco	CA	94123	null
-4	Stark	Bran	bstark@gmail.com	123xyz	415-555-5555	1988-03-01 00:00:00	Raven	123 abc st	San Francisco	CA	94117	null
-5	Stark	Robb	rstark@gmail.com	123xyz	415-555-5555	1979-09-11 00:00:00	former King of the North	123 abc st	Colma	CA	94014	null
-6	Watterson	Calvin	cwatterson@gmail.com	123xyz	415-555-5555	1980-01-01 00:00:00	Comic book star	123 abc st	San Francisco	CA	94121	null
-7	Lannister	Tyrion	tlannister@gmail.com	123xyz	415-555-5555	1975-07-11 00:00:00	Queen's Hand	123 abc st	San Francisco	CA	94115	null
-8	Lannister	Jamie	tlannister@gmail.com	123xyz	415-555-5555	1972-10-31 00:00:00	King's Guard	123 abc st	San Francisco	CA	94109	null
-9	Lannister	Cersei	clannister@gmail.com	123xyz	415-555-5555	1972-10-31 00:00:00	Queen Mother	123 abc st	San Francisco	CA	94109	null
-10	Targaryen	Dani	dtargaryen@gmail.com	123xyz	415-555-5555	1980-02-29 00:00:00	Mother of Dragons	123 abc st	San Francisco	CA	94109	null
-11	Greyjoy	Theon	tgreyjoy@gmail.com	123xyz	415-555-5555	1980-08-29 00:00:00	Ramsay's Pet	123 abc st	San Francisco	CA	94123	null
+1	Snow	John	jsnow@gmail.com	484529593079221494	415-555-5555	1980-12-01 00:00:00	King of the North	123 Lake St	San Francisco	CA	94121	/static/images/users/johnsnow.jpg
+2	Stark	Arya	astark@gmail.com	484529593079221494	415-555-5555	1986-01-01 00:00:00	Assassin	123 Lake St	San Francisco	CA	94121	/static/images/users/aryastark.jpg
+3	Stark	Sansa	sstark@gmail.com	484529593079221494	415-555-5555	1984-08-14 00:00:00	Heir to Winterfell	123 Lake St	San Francisco	CA	94121	/static/images/users/sansastark.jpg
+4	Stark	Bran	bstark@gmail.com	484529593079221494	415-555-5555	1988-03-01 00:00:00	The Raven	123 Lake St	San Francisco	CA	94121	/static/images/users/branstark.jpg
+5	Stark	Robb	rstark@gmail.com	484529593079221494	415-555-5555	1979-09-11 00:00:00	former King of the North	123 Lake St	San Francisco	CA	94121	/static/images/users/robbstark.jpg
+6	Ma	Yenly	ymmisc@gmail.com	484529593079221494	415-555-5555	1978-12-04 00:00:00	Software Engineering Fellow	456 Geary St	San Francisco	CA	94121	/static/images/users/yen.jpg
+7	White	Walter	wwhite@gmail.com	484529593079221494	415-555-5555	1949-10-04 00:00:00	Chemistry Teacher	123 Mission St	San Francisco	CA	94110	/static/images/users/walterwhite.jpg
+8	Pinkman	Jesse	jpinkman@gmail.com	484529593079221494	415-555-5555	1998-04-01 00:00:00	college student	456 Mission St	San Francisco	CA	94110	/static/images/users/jessepinkman.jpg
+9	Lannister	Tyrion	tyrion@gmail.com	484529593079221494	415-555-5555	1975-07-11 00:00:00	Queen's Hand	123 Heartwood Drive	Oakland	CA	94611	/static/images/users/tyrion.jpg
+10	Targaryen	Dani	dtargaryen@gmail.com	484529593079221494	415-555-5555	1995-01-01 00:00:00	Mother of Dragons	123 Heartwood Drive	Oakland	CA	94611	/static/images/users/dani.jpg
+11	Tayaran	Taraneh	tara@gmail.com	484529593079221494	415-555-5555	1995-02-14 00:00:00	Software Engineer	123 Howard St	San Francisco	CA	94103	/static/images/users/taraneh.jpg
+12	Hoang	Vivian	vivian@gmailc.om	484529593079221494	415-555-5555	1995-05-29 00:00:00	Software Engineer	789 Mission St	San Francisco	CA	94110	/static/images/users/vivian.jpg
+13	Lannister	Cersei	cersei@gmail.com	484529593079221494	415-555-5555	1972-10-31 00:00:00	Queen Mother	123 Valencia St	San Francisco	CA	94110	/static/images/users/cersei.png
+14	Lannister	Jamie	jamie@gmail.com	484529593079221494	415-555-5555	1972-10-31 00:00:00	King's Guard	123 Valencia St	San Francisco	CA	94110	/static/images/users/jamiel.jpg
+15	Bard	Lori	lori@gmail.com	484529593079221494	415-555-5555	1995-08-08 00:00:00	Software Engineer	123 Mountain Ave	Oakland	CA	94611	/static/images/users/lori.jpg
+16	Parr	Bob	bob@gmail.com	484529593079221494	415-555-5555	1973-09-18 00:00:00	Mr. Incredible	234 Mountain Ave	Oakland	CA	94611	/static/images/users/mrincredible.jpg
+17	Best	Lucius	lbest@gmail.com	484529593079221494	415-555-5555	1977-06-03 00:00:00	Frozone	345 Mountain Ave	Oakland	CA	94611	/static/images/users/frozon.jpg
+18	Parr	Violet	violet@gmail.com	484529593079221494	415-555-5555	2000-12-25 00:00:00	student	234 Mountain Ave	Oakland	CA	94611	/static/images/users/violet.jpg
+19	Liu	Francis	francis@gmail.com	484529593079221494	415-555-5555	1995-11-04 00:00:00	Software Engineer	123 Howard St	San Francisco	CA	94103	/static/images/users/francis.jpg
+20	Foundation	Nine Lives	ninelives@gmail.com	484529593079221494	415-555-5555	2000-06-15 00:00:00	Cat Shelter	234 Howard St	San Francisco	CA	94103	/static/images/users/ninelives.jpg
+21	Shih	Jessica	jessica@gmail.com	484529593079221494	415-555-5555	1985-08-16 00:00:00	PR Manager	234 Lake St	San Francisco	CA	94121	/static/images/users/jessica.jpg
+22	Patel	Manisha	manisha@gmail.com	484529593079221494	415-555-5555	1995-05-28 00:00:00	Software Engineer	123 Lakeshore Ave	Oakland	CA	94612	/static/images/users/manisha.jpg
+23	Rescue	Rocket Dog	rocketdog@gmail.com	484529593079221494	415-555-5555	2001-03-01 00:00:00	Dog Shelter	456 Mountain Ave	Oakland	CA	94611	/static/images/users/rocketdog.png
 \.
 
 
@@ -440,7 +474,7 @@ COPY users (user_id, last_name, first_name, email, password, phone_number, birth
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('users_user_id_seq', 11, true);
+SELECT pg_catalog.setval('users_user_id_seq', 23, true);
 
 
 --
