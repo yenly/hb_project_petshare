@@ -4,6 +4,7 @@
         <title>Find your furry BFF!</title>
         <script src="https://code.jquery.com/jquery.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
         <script src="/static/petshare.js"></script>
 
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -12,25 +13,39 @@
         <div ng-app="petShareApp" ng-controller="searchController">
             <button ng-click="DisplayCats()">Search for Cats</button>
             <button ng-click="DisplayDogs()">Search for Dogs</button>
+
             <!-- <p>Search criteria: <span ng-bind="searchTerm"></span></p> -->
+            <ul class="nav navbar-nav">
+            <li><a href="#/pet">Pet Profile</a></li>
+            <li><a href="#/find_dog">Find Dog</a></li>
+        </ul>
 
 
             <div>
                 {% raw %}
-                <ul>
-                    <li ng-repeat="pet in cats">
-                        <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a> <br>
-                        <img src="{{pet.image_url}}" alt="{{pet.name}}" />
-                    </li>
-                </ul>
-                <ul>
-                    <li ng-repeat="pet in dogs">
-                        <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a> <br>
-                        <img src="{{pet.image_url}}" alt="{{pet.name}}" />
-                    </li>
-                </ul>
+                <table>
+                  <tr ng-repeat="pet in cats">
+                    <td><a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a></td>
+                    <td><a href="/pet_profile/{{pet.pet_id}}"><img src="{{pet.image_url}}" alt="{{pet.name}}" /></a></td>
+                    <td>{{pet.age}}</td>
+                    <td>{{pet.gender}}</td>
+                    <td>{{pet.zipcode}}</td>
+                  </tr>
+                </table>
+                <table>
+                  <tr ng-repeat="pet in dogs">
+                    <td><a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a></td>
+                    <td><a href="/pet_profile/{{pet.pet_id}}"><img src="{{pet.image_url}}" alt="{{pet.name}}" /></a></td>
+                    <td>{{pet.age}}</td>
+                    <td>{{pet.gender}}</td>
+                    <td>{{pet.zipcode}}</td>
+                  </tr>
+                </table>
                 {% endraw %}
             </div>
+
+
+
 
         </div>
     </body>

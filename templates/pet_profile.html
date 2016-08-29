@@ -17,7 +17,6 @@
     <h4>Health Details</h4>
     <p>{{ pet.health_details }}</p>
 
-    {% if owner.seeker %}
     <h3>My owner is <a href="/user/{{ owner.user_id }}">{{ owner.first_name }} {{ owner.last_name }}</a>.</h3>
 
     <form id="connectForm" action="/connect" method="POST">
@@ -50,7 +49,7 @@
         $("#connectForm").on("submit", submitConnectRequest);
 
     </script>
-    {% endif %}
+
 
     <h4>Here are some rocking photos of me:</h4>
     {% for photo in pet_photos %}

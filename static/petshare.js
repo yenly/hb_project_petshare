@@ -1,6 +1,6 @@
 "use strict";
 
-var app = angular.module('petShareApp', []);
+var app = angular.module('petShareApp', ["ngRoute"]);
 
 app.controller('searchController', function ($scope, $http) {
 
@@ -17,3 +17,4 @@ app.controller('searchController', function ($scope, $http) {
     };
 
 });
+

@@ -1,14 +1,25 @@
 """PetShare - Find your furry BFF!"""
 
 from flask import Flask, render_template, request, redirect, flash, session, jsonify
+from flask_mail import Mail, Message
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Seeker, Owner, Pet, Connection
 from model import connect_to_db, db
 
 import dictalchemy
+import os
 
 app = Flask(__name__)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_DEFAULT_SENDER'] = 'petshare@gmail.com'
+app.config['MAIL_USERNAME'] = os.environ['MAIL_USERNAME']
+app.config['MAIL_PASSWORD'] = os.environ['MAIL_PASSWORD']
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail = Mail(app)
 
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "NinjaSkillz531"
@@ -124,6 +135,7 @@ def display_dogs():
     print user_city
 
     dog_dict = find_pets('dog', user_city)
+    print dog_dict
 
     return jsonify(dog_dict)
 
@@ -143,6 +155,7 @@ def find_pets(ani_type, location):
     for counter, pet in enumerate(search_results, 1):
         if pet.owner.user.city == location:
             pet_info = dictalchemy.utils.asdict(pet)
+            pet_info['zipcode'] = pet.owner.user.zipcode
             pets_dict[ani_type + str(counter)] = pet_info
 
     return pets_dict
@@ -179,9 +192,26 @@ def send_connection_request():
                                            'connection_status': 'Interested'})
     db.session.commit()
 
-    flash('Successfully created connection request.')
+    pet = Pet.query.filter(Pet.pet_id == pet_id).first()
+
+    seeker_name = seeker.user.first_name + " " + seeker.user.last_name
+
+    send_email_notification(seeker_name, pet.name, pet.owner.user.email)
 
     return jsonify({'connect': 'success'})
+
+
+def send_email_notification(seeker_name, pet_name, owner_email):
+    """Send pet owner email notification of connection request by seeker."""
+
+    # hardcode owner_email for demo purposes
+    owner_email = "ymmisc@gmail.com"
+
+    msg = Message('Request to Connect', recipients=[owner_email])
+    msg.body = "%s would like to connect with your pet, %s! Log in to find out more." % (seeker_name, pet_name)
+    mail.send(msg)
+
+    return True
 
 
 def get_connections(user_info):

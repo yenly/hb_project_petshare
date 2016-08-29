@@ -116,31 +116,6 @@ class Pet(db.Model):
                                                                        self.animal_type,
                                                                        self.owner_id)
 
-    # def __dict__(self):
-    #     """Converts class object to dictionary."""
-
-    #     pet_dict = {}
-
-
-
-
-# class Pet_Available_Time(db.Model):
-#     """When Pets are avaiable for connection."""
-
-#     __tablename__ = "pet_available_times"
-
-#     timeslot_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'))
-#     owner_id = db.Column(db.Integer, db.ForeignKey('pet_owners.owner_id'))
-#     available_start_at = db.Column(db.DateTime, nullable=False)
-#     available_end_at = db.Column(db.DateTime, nullable=False)
-
-#     def __repr__(self):
-#         """Provide time available range for pet and owner."""
-
-#         return "<Pet_Available pet_id=%s available_start_at=%s available_end_at=%s>" % (self.pet_id,
-#                                                                                         self.available_start_at,
-#                                                                                         self.available_end_at)
 
 class Pet_Photo(db.Model):
     """Pet photos for pet profile."""
