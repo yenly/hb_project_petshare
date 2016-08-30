@@ -135,7 +135,6 @@ def display_dogs():
     print user_city
 
     dog_dict = find_pets('dog', user_city)
-    print dog_dict
 
     return jsonify(dog_dict)
 

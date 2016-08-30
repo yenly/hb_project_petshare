@@ -1,4 +1,4 @@
-from model import User, Seeker, Owner, Pet, Pet_Photo, Connection
+from model import User, Seeker, Owner, Pet, Pet_Photo, Connection, Connect_Messages
 from model import connect_to_db, db
 
 from server import app
@@ -179,6 +179,21 @@ def load_connections():
     db.session.commit()
 
 
+def load_messages():
+    """Load messages for connections."""
+
+    print "Loading sample message..."
+
+    Connect_Messages.query.delete()
+
+    message = Connect_Messages(request_id=1,
+                               user_id=9,
+                               message='Your dog sounds badass!')
+
+    db.session.add(message)
+    db.session.commit()
+
+
 def load_pet_photos_csv():
     """Load photos from csv file."""
 
@@ -210,4 +225,5 @@ if __name__ == "__main__":
     load_seekers()
     load_pets_csv()
     load_connections()
+    load_messages()
     load_pet_photos_csv()

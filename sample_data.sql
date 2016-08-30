@@ -30,6 +30,42 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: connect_messages; Type: TABLE; Schema: public; Owner: vagrant; Tablespace: 
+--
+
+CREATE TABLE connect_messages (
+    message_id integer NOT NULL,
+    request_id integer,
+    message_at timestamp without time zone DEFAULT now(),
+    user_id integer,
+    message character varying(400)
+);
+
+
+ALTER TABLE public.connect_messages OWNER TO vagrant;
+
+--
+-- Name: connect_messages_message_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE connect_messages_message_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.connect_messages_message_id_seq OWNER TO vagrant;
+
+--
+-- Name: connect_messages_message_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE connect_messages_message_id_seq OWNED BY connect_messages.message_id;
+
+
+--
 -- Name: connections; Type: TABLE; Schema: public; Owner: vagrant; Tablespace: 
 --
 
@@ -38,6 +74,7 @@ CREATE TABLE connections (
     pet_id integer,
     owner_id integer,
     seeker_id integer,
+    request_at timestamp without time zone DEFAULT now(),
     connection_status character varying
 );
 
@@ -258,6 +295,13 @@ ALTER SEQUENCE users_user_id_seq OWNED BY users.user_id;
 
 
 --
+-- Name: message_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY connect_messages ALTER COLUMN message_id SET DEFAULT nextval('connect_messages_message_id_seq'::regclass);
+
+
+--
 -- Name: request_id; Type: DEFAULT; Schema: public; Owner: vagrant
 --
 
@@ -300,12 +344,28 @@ ALTER TABLE ONLY users ALTER COLUMN user_id SET DEFAULT nextval('users_user_id_s
 
 
 --
+-- Data for Name: connect_messages; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY connect_messages (message_id, request_id, message_at, user_id, message) FROM stdin;
+1	1	2016-08-30 00:19:54.974329	9	Your dog sounds badass!
+\.
+
+
+--
+-- Name: connect_messages_message_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('connect_messages_message_id_seq', 1, true);
+
+
+--
 -- Data for Name: connections; Type: TABLE DATA; Schema: public; Owner: vagrant
 --
 
-COPY connections (request_id, pet_id, owner_id, seeker_id, connection_status) FROM stdin;
-1	1	1	4	Interested
-2	1	1	2	Interested
+COPY connections (request_id, pet_id, owner_id, seeker_id, request_at, connection_status) FROM stdin;
+1	1	1	4	2016-08-30 00:19:54.970306	Interested
+2	1	1	2	2016-08-30 00:19:54.970306	Interested
 \.
 
 
@@ -374,7 +434,7 @@ COPY pet_photos (photo_id, pet_id, image_url, caption) FROM stdin;
 17	10	/static/images/pet_photos/peenutbutter01.jpg	
 18	10	/static/images/pet_photos/peenutbutter02.jpg	I love walks.
 19	10	/static/images/pet_photos/peenutbutter03.jpg	
-20	2	/static/images/pet_photos/summer01.jpg	I watch over my human BFF every night.
+20	2	/static/images/pet_photos/summer01.gif	I watch over my human BFF every night.
 21	2	/static/images/pet_photos/summer02.jpg	OMG! I am adorable as a pup.
 22	5	/static/images/pet_photos/greywind01.jpg	We are fierce!
 23	5	/static/images/pet_photos/greywind02.jpg	Me as a pup.
@@ -444,7 +504,7 @@ SELECT pg_catalog.setval('seekers_seeker_id_seq', 4, true);
 --
 
 COPY users (user_id, last_name, first_name, email, password, phone_number, birthdate, occupation, address, city, state, zipcode, image_url) FROM stdin;
-1	Snow	John	jsnow@gmail.com	484529593079221494	415-555-5555	1980-12-01 00:00:00	King of the North	123 Lake St	San Francisco	CA	94121	/static/images/users/johnsnow.jpg
+1	Snow	John	jsnow@gmail.com	484529593079221494	415-555-5555	1980-12-01 00:00:00	King of the North	123 Lake St	San Francisco	CA	94121	/static/images/users/johnsnow.png
 2	Stark	Arya	astark@gmail.com	484529593079221494	415-555-5555	1986-01-01 00:00:00	Assassin	123 Lake St	San Francisco	CA	94121	/static/images/users/aryastark.jpg
 3	Stark	Sansa	sstark@gmail.com	484529593079221494	415-555-5555	1984-08-14 00:00:00	Heir to Winterfell	123 Lake St	San Francisco	CA	94121	/static/images/users/sansastark.jpg
 4	Stark	Bran	bstark@gmail.com	484529593079221494	415-555-5555	1988-03-01 00:00:00	The Raven	123 Lake St	San Francisco	CA	94121	/static/images/users/branstark.jpg
@@ -475,6 +535,14 @@ COPY users (user_id, last_name, first_name, email, password, phone_number, birth
 --
 
 SELECT pg_catalog.setval('users_user_id_seq', 23, true);
+
+
+--
+-- Name: connect_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant; Tablespace: 
+--
+
+ALTER TABLE ONLY connect_messages
+    ADD CONSTRAINT connect_messages_pkey PRIMARY KEY (message_id);
 
 
 --
@@ -523,6 +591,22 @@ ALTER TABLE ONLY seekers
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: connect_messages_request_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY connect_messages
+    ADD CONSTRAINT connect_messages_request_id_fkey FOREIGN KEY (request_id) REFERENCES connections(request_id);
+
+
+--
+-- Name: connect_messages_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY connect_messages
+    ADD CONSTRAINT connect_messages_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id);
 
 
 --

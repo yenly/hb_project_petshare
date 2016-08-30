@@ -144,6 +144,7 @@ class Connection(db.Model):
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'))
     owner_id = db.Column(db.Integer, db.ForeignKey('owners.owner_id'))
     seeker_id = db.Column(db.Integer, db.ForeignKey('seekers.seeker_id'))
+    request_at = db.Column(db.DateTime, server_default=db.func.now())
     connection_status = db.Column(db.String, nullable=True)
 
     pet = db.relationship('Pet', backref='connections')
@@ -157,12 +158,37 @@ class Connection(db.Model):
                                                                                   self.pet_id,
                                                                                   self.owner_id,
                                                                                   self.seeker_id)
+
+
+class Connect_Messages(db.Model):
+    """Messages between pet seeker and pet owner regarding connection request."""
+
+    __tablename__ = "connect_messages"
+
+    message_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    request_id = db.Column(db.Integer, db.ForeignKey('connections.request_id'))
+    message_at = db.Column(db.DateTime, server_default=db.func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    message = db.Column(db.String(400))
+
+    connection = db.relationship('Connection', backref='messages')
+    user = db.relationship('User', backref='messages')
+
+    def __repr__(self):
+        """Provide info on connection messages."""
+
+        return "<Connect_Msg message_id=%s request_id=%s user_id=%s>" % (self.message_id,
+                                                                         self.request_id,
+                                                                         self.user_id)
+
+
 dictalchemy.utils.make_class_dictable(User)
 dictalchemy.utils.make_class_dictable(Owner)
 dictalchemy.utils.make_class_dictable(Seeker)
 dictalchemy.utils.make_class_dictable(Pet)
 dictalchemy.utils.make_class_dictable(Pet_Photo)
 dictalchemy.utils.make_class_dictable(Connection)
+dictalchemy.utils.make_class_dictable(Connect_Messages)
 
 
 # Helper functions
