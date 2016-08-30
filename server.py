@@ -10,16 +10,24 @@ from model import connect_to_db, db
 import dictalchemy
 import os
 
+from twilio.rest import TwilioRestClient
+
 app = Flask(__name__)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_DEFAULT_SENDER'] = 'petshare@gmail.com'
 app.config['MAIL_USERNAME'] = os.environ['MAIL_USERNAME']
 app.config['MAIL_PASSWORD'] = os.environ['MAIL_PASSWORD']
+app.config['MAIL_DEFAULT_SENDER'] = 'thepetshare@gmail.com'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
 mail = Mail(app)
+
+# for twilio
+account_sid = os.environ['TWILIO_ACCOUNT_SID']
+auth_token = os.environ['TWILIO_AUTH_TOKEN']
+
+client = TwilioRestClient(account_sid, auth_token)
 
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "NinjaSkillz531"
@@ -196,6 +204,7 @@ def send_connection_request():
     seeker_name = seeker.user.first_name + " " + seeker.user.last_name
 
     send_email_notification(seeker_name, pet.name, pet.owner.user.email)
+    send_txt(pet.name)
 
     return jsonify({'connect': 'success'})
 
@@ -209,6 +218,20 @@ def send_email_notification(seeker_name, pet_name, owner_email):
     msg = Message('Request to Connect', recipients=[owner_email])
     msg.body = "%s would like to connect with your pet, %s! Log in to find out more." % (seeker_name, pet_name)
     mail.send(msg)
+
+    return True
+
+
+def send_txt(pet_name):
+    """Send text notification using Twilio."""
+
+    txt_msg = "PetShare: Connection request for %s received! Log in your account to find out more." % (pet_name)
+
+    message = client.messages.create(body=txt_msg,
+                                     to="+14154845338",  # Hardcode for demo
+                                     from_="+14156108596")
+
+    print(message.sid)
 
     return True
 

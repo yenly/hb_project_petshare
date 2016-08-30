@@ -27,7 +27,7 @@ class ServerTestsDatabase(unittest.TestCase):
         app.config['SECRET_KEY'] = 'key'
         self.client = app.test_client()
 
-        # Connect to test database (uncomment when testing database)
+        # Connect to test database
         connect_to_db(app, "postgresql:///testdb")
         db.create_all()
         test_data()
