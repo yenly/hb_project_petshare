@@ -12,6 +12,11 @@ class ServerTests(unittest.TestCase):
         self.client = app.test_client()
         app.config['TESTING'] = True
 
+        with self.client as c:
+            with c.session_transaction() as session:
+                session['user_id'] = 1
+                session['user_city'] = "San Francisco"
+
     def test_index(self):
         """Test index page loads correctly."""
 
@@ -43,6 +48,11 @@ class ServerTestsDatabase(unittest.TestCase):
         app.config['TESTING'] = True
         app.config['SECRET_KEY'] = 'key'
         self.client = app.test_client()
+
+        with self.client as c:
+            with c.session_transaction() as session:
+                session['user_id'] = 1
+                session['user_city'] = "San Francisco"
 
         # Connect to test database
         connect_to_db(app, "postgresql:///testdb")
