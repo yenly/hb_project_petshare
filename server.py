@@ -180,6 +180,13 @@ def pet_search():
     return render_template("search.html")
 
 
+@app.route('/search_map')
+def search_map():
+    """Display search results as markers on google map."""
+
+    return render_template("search_map.html")
+
+
 @app.route('/connect', methods=['POST'])
 def send_connection_request():
     """Connect pet seeker to pet owner.
