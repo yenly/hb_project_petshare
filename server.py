@@ -214,9 +214,23 @@ def send_connection_request():
                                            'connection_status': 'Interested'})
     db.session.commit()
 
-    connection = Connection.query.filter(Connection.pet_id == pet_id).first()
+    add_message(user_id, pet_id, seeker_id, connect_message)
+
+    pet = Pet.query.filter(Pet.pet_id == pet_id).first()
+
+    seeker_name = seeker.user.first_name + " " + seeker.user.last_name
+
+    send_email_notification(seeker_name, pet.name, pet.owner.user.email)
+    send_txt(pet.name)
+
+    return jsonify({'connect': 'success'})
+
+
+def add_message(user_id, pet_id, seeker_id, connect_message):
+    """Add message attached to connection request to db."""
+
+    connection = Connection.query.filter(Connection.pet_id == pet_id and Connection.seeker_id == seeker_id).first()
     request_id = connection.request_id
-    print connect_message, request_id
 
     QUERY = """INSERT INTO connect_messages (request_id, user_id, message)
                VALUES (:request_id, :user_id, :message)"""
@@ -226,13 +240,6 @@ def send_connection_request():
                                            'message': connect_message})
 
     db.session.commit()
-
-    pet = Pet.query.filter(Pet.pet_id == pet_id).first()
-
-    seeker_name = seeker.user.first_name + " " + seeker.user.last_name
-
-    send_email_notification(seeker_name, pet.name, pet.owner.user.email)
-    send_txt(pet.name)
 
     return jsonify({'connect': 'success'})
 
@@ -256,7 +263,7 @@ def send_txt(pet_name):
     txt_msg = "PetShare: Connection request for %s received! Log in your account to find out more." % (pet_name)
 
     message = client.messages.create(body=txt_msg,
-                                     to="+14155316383",  # Hardcode for demo
+                                     to="+14154845338",  # Hardcode for demo
                                      from_="+14156108596")
 
     return True
@@ -311,7 +318,7 @@ def change_connect_status():
 def display_connect_request(id):
     """Display connection request information"""
 
-    c_request = Connection.query.filter(Connection.request_id == 11).first()
+    c_request = Connection.query.filter(Connection.request_id == id).first()
     pet = c_request.pet
     print pet
 

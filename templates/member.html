@@ -12,10 +12,11 @@
     My Pet: <a href="/pet_profile/{{ pet.pet_id }}">{{ pet.name }}</a><br />
     {% endif %}
 
-    <h3>My Connection Requests</h3>
+
     {% if user.owner %}
+    <h3>My Connection Requests</h3>
         {% for item in request_list %}
-            <a href="/connect_request/{{item.request_id}}">{{ item.seeker.user.first_name }} {{ item.seeker.user.last_name }} is interested in {{ item.pet.name }}.</a>
+            <a href="/connect_request/{{item.request_id}}">{{ item.seeker.user.first_name }} {{ item.seeker.user.last_name }} is interested in {{ item.pet.name }}.</a><br>
         {% endfor %}
 
         <!-- <ul>
@@ -54,12 +55,13 @@
         </ul> -->
     {% endif %}
     {% if user.seeker %}
-        <a href="/pet_search">Find pets in your area.</a>
 
+        <a href="/pet_search">Find pets in your area.</a>
+<h3>My Connection Requests</h3>
         <ul>
         {% for item in request_list %}
             <li>
-                Connection with <a href="/pet_profile/{{ item.pet_id }}">{{ item.pet.name }}</a>: {{ item.connection_status }} <br />
+                <a href="/connect_request/{{item.request_id}}">Connection</a> with <a href="/pet_profile/{{ item.pet_id }}">{{ item.pet.name }}</a>: {{ item.connection_status }} <br />
                 <a href="/pet_profile/{{ item.pet_id }}"><img src="{{ item.pet.image_url }}" alt="{{ item.pet.name }}" /></a>
             </li>
         {% endfor %}
