@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Connection Requests
+{% endblock %}
+
+{% block content %}
+    <h1>Request Connection for {{pet.name}}</h1>
+    <h3>Pet Seeker: <a href="/user/{{c_request.seeker.user.user_id}}">{{c_request.seeker.user.first_name}} {{c_request.seeker.user.last_name}}</a></h3>
+
+    <p>Connection status:  {{c_request.connection_status}} | <small><a href="">Update Status</a></small></p>
+    {% if c_request.messages %}
+        <ul>
+        {% for msg in c_request.messages: %}
+            <li>{{msg.message_at}} <br>
+            <blockquote>{{msg.message}} </blockquote>~{{msg.user.first_name}}</li>
+        {% endfor %}
+        <label>Add message:</label><br />
+        <textarea cols="60" rows="8" id="connect_message" name="connect_message"></textarea><br/>
+        <input type="submit" id="add_msg" value="Submit">
+        </ul>
+    {% endif %}
+
+
+{% endblock %}

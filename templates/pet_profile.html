@@ -23,8 +23,9 @@
     <form id="connectForm" action="/connect" method="POST">
         <input type="hidden" id="pet_id" name="pet_id" value="{{ pet.pet_id }}">
         <input type="hidden" id="owner_id" name="owner_id" value="{{ pet.owner.owner_id }}">
-        <label>Request to Connect: <small>What is your story? Why did you want to connect?</small></label><br>
-        <textarea id="connect_message" name="connect_message">Dogs are awesome!</textarea><br/>
+        <label>Request to Connect: </label><br>
+        <small>What is your story? Share a little about your self to {{ owner.first_name }}.</small><br />
+        <textarea cols="60" rows="8" id="connect_message" name="connect_message"></textarea><br/>
         <input type="submit" id="connect_request" value="Connect with {{ pet.name }}">
     </form>
     </div>

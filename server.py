@@ -307,6 +307,17 @@ def change_connect_status():
     return "Connections table updated. Woohoo!"
 
 
+@app.route('/connect_request/<int:id>')
+def display_connect_request(id):
+    """Display connection request information"""
+
+    c_request = Connection.query.filter(Connection.request_id == 11).first()
+    pet = c_request.pet
+    print pet
+
+    return render_template("connection.html", c_request=c_request, pet=pet)
+
+
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension

@@ -14,7 +14,11 @@
 
     <h3>My Connection Requests</h3>
     {% if user.owner %}
-        <ul>
+        {% for item in request_list %}
+            <a href="/connect_request/{{item.request_id}}">{{ item.seeker.user.first_name }} {{ item.seeker.user.last_name }} is interested in {{ item.pet.name }}.</a>
+        {% endfor %}
+
+        <!-- <ul>
         <form id="connectStatusForm" method="POST">
         {% for item in request_list %}
             <li>
@@ -47,7 +51,7 @@
 
             $("#connectStatusForm").on("submit", submitStatusChange);
         </script>
-        </ul>
+        </ul> -->
     {% endif %}
     {% if user.seeker %}
         <a href="/pet_search">Find pets in your area.</a>
