@@ -2,6 +2,7 @@ import unittest
 
 from server import app
 from model import db, connect_to_db, test_data
+from flask_mail import Mail
 
 
 class ServerTests(unittest.TestCase):
@@ -16,6 +17,17 @@ class ServerTests(unittest.TestCase):
 
         result = self.client.get("/")
         self.assertIn("Find your furry BFF", result.data)
+
+    # def test_send_email_notification(self):
+    #     """."""
+    #     with mail.record_messages() as outbox:
+
+    #         mail.send_message(subject='testing',
+    #                           body='test',
+    #                           recipients='yencodes@gmail.com')
+
+    #     assert len(outbox) == 1
+    #     assert outbox[0].subject == "testing"
 
 
 class ServerTestsDatabase(unittest.TestCase):

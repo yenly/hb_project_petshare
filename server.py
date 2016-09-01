@@ -163,6 +163,7 @@ def find_pets(ani_type, location):
         if pet.owner.user.city == location:
             pet_info = dictalchemy.utils.asdict(pet)
             pet_info['zipcode'] = pet.owner.user.zipcode
+            pet_info['city'] = pet.owner.user.city
             pets_dict[ani_type + str(counter)] = pet_info
 
     return pets_dict
@@ -292,4 +293,4 @@ if __name__ == "__main__":
     # Use the DebugToolbar
     DebugToolbarExtension(app)
 
-    app.run(host="0.0.0.0")
+    app.run(host='0.0.0.0')
