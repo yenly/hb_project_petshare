@@ -19,11 +19,16 @@
 
     <h3>My owner is <a href="/user/{{ owner.user_id }}">{{ owner.first_name }} {{ owner.last_name }}</a>.</h3>
 
+    <div>
     <form id="connectForm" action="/connect" method="POST">
         <input type="hidden" id="pet_id" name="pet_id" value="{{ pet.pet_id }}">
         <input type="hidden" id="owner_id" name="owner_id" value="{{ pet.owner.owner_id }}">
+        <label>Request to Connect: <small>What is your story? Why did you want to connect?</small></label><br>
+        <textarea id="connect_message" name="connect_message">Dogs are awesome!</textarea><br/>
         <input type="submit" id="connect_request" value="Connect with {{ pet.name }}">
     </form>
+    </div>
+
 
     <script>
         "use strict";
@@ -31,6 +36,7 @@
         function disableConnectBtn(result) {
             if (result.connect === 'success') {
                 $("#connect_request").attr('disabled','disabled');
+                alert("Your request to connect has been sent!");
             }
         }
 
@@ -39,7 +45,8 @@
 
             var requestInputs = {
                 "pet_id" : $("#pet_id").val(),
-                "owner_id" : $("#owner_id").val()
+                "owner_id" : $("#owner_id").val(),
+                "connect_message" : $("#connect_message").val()
             };
 
             $.post("/connect", requestInputs, disableConnectBtn);

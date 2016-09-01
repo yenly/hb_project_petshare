@@ -19,7 +19,7 @@
                 {% raw %}
                 <ul>
                     <li ng-repeat="pet in cats">
-                        <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a>, {{pet.zipcode}}, {{pet.gender}}<br>
+                        <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a>, {{pet.zipcode}}, {{pet.gender}}, {{pet.city}}<br>
                         <img ng-src="{{pet.image_url}}" alt="{{pet.name}}" />
                     </li>
                 </ul>

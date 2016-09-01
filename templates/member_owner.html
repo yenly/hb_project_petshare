@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Member Dashboard
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome back, {{ user.first_name }}!</h1>
+
+    <a href="/user/{{ user.user_id }}">Update My Profile</a><br />
+    {% if pet %}
+    My Pet: <a href="/pet_profile/{{ pet.pet_id }}">{{ pet.name }}</a><br />
+    {% endif %}
+
+    <h3>My Connection Requests</h3>
+    {% if user.owner %}
+        <ul>
+        <form id="connectStatusForm" method="POST">
+        {% for item in request_list %}
+            <li>
+                <a href="/user/{{ item.seeker.user_id }}">{{ item.seeker.user.first_name }} {{ item.seeker.user.last_name }}</a> is interested in {{ item.pet.name }}:
+
+                    <select name="connect_request_{{ item.request_id }}">
+                        <option value="{{ item.connection_status }}">{{ item.connection_status }} </option>
+                        <option value="Pending Review">Pending Review</option>
+                        <option value="Accept">Accept</option>
+                        <option value="Decline">Decline</option>
+                    </select>
+            </li>
+        {% endfor %}
+        <input type="submit" value="Update Connection Requests" >
+        </form>
+        <script>
+            "user strict";
+
+            function statusChanged(result) {
+                alert("Changes to connection status saved!");
+            }
+
+            function submitStatusChange(evt) {
+                evt.preventDefault();
+
+                var statusInput = $("#connectStatusForm").serialize();
+
+                $.post("/change_connect_status", statusInput, statusChanged);
+            }
+
+            $("#connectStatusForm").on("submit", submitStatusChange);
+        </script>
+        </ul>
+    {% endif %}
+
+{% endblock %}

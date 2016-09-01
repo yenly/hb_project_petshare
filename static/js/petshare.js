@@ -6,7 +6,7 @@ var app = angular.module('petShareApp', []);
 // order of $scope, $http, and $log matters
 app.controller('searchController', ['$scope', '$http', '$log', function ($scope, $http, $log) {
     $scope.searchTerm = "";
-    $scope.city = "";
+    $scope.city = "Oakland";
     $scope.$log = $log;
     // $log.log("TEST");
 
@@ -19,6 +19,7 @@ app.controller('searchController', ['$scope', '$http', '$log', function ($scope,
             $scope.dogs = response.data;
 
             $scope.city = $scope.dogs.dog1.city;
+            $log.log($scope.city);
         });
     };
 
@@ -30,9 +31,9 @@ app.controller('searchController', ['$scope', '$http', '$log', function ($scope,
             $scope.cats = response.data;
 
             $scope.city = $scope.cats.cat1.city;
+            $log.log($scope.city);
         });
     };
-
 
 }]);
 

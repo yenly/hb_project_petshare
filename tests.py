@@ -18,6 +18,11 @@ class ServerTests(unittest.TestCase):
         result = self.client.get("/")
         self.assertIn("Find your furry BFF", result.data)
 
+    def text_member(self):
+        """Test member dashboard displays logged in user name."""
+        pass
+
+
     # def test_send_email_notification(self):
     #     """."""
     #     with mail.record_messages() as outbox:

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Member Dashboard
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome back, {{ user.first_name }}!</h1>
+
+    <a href="/user/{{ user.user_id }}">Update My Profile</a><br />
+    {% if pet %}
+    My Pet: <a href="/pet_profile/{{ pet.pet_id }}">{{ pet.name }}</a><br />
+    {% endif %}
+
+    <h3>My Connection Requests</h3>
+
+    {% if user.seeker %}
+        <a href="/pet_search">Find pets in your area.</a>
+
+        <ul>
+        {% for item in request_list %}
+            <li>
+                Connection with <a href="/pet_profile/{{ item.pet_id }}">{{ item.pet.name }}</a>: {{ item.connection_status }} <br />
+                <a href="/pet_profile/{{ item.pet_id }}"><img src="{{ item.pet.image_url }}" alt="{{ item.pet.name }}" /></a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

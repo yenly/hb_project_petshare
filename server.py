@@ -88,6 +88,7 @@ def member():
         for seeker in user.seeker:
             user_type.append(seeker.seeker_id)
 
+    print user_type
     #call get_connections passing user type
     request_list = get_connections(user_type)
 
@@ -124,8 +125,10 @@ def display_cats():
 
     # TO DO: change hard code zipcode to take from user session
     user_city = session['user_city']
+    print user_city
 
     cats_dict = find_pets('cat', user_city)
+    print cats_dict
 
     return jsonify(cats_dict)
 
@@ -143,6 +146,7 @@ def display_dogs():
     print user_city
 
     dog_dict = find_pets('dog', user_city)
+    print dog_dict
 
     return jsonify(dog_dict)
 
@@ -183,14 +187,17 @@ def send_connection_request():
     Stores connection request info in db.
     """
 
-    seeker_id = session['user_id']
+    user_id = session['user_id']
 
-    seeker = Seeker.query.filter(Seeker.user_id == seeker_id).first()
+    seeker = Seeker.query.filter(Seeker.user_id == user_id).first()
 
     seeker_id = seeker.seeker_id
 
     pet_id = request.form.get("pet_id")
     owner_id = request.form.get("owner_id")
+    connect_message = request.form.get("connect_message")
+
+    print pet_id, owner_id, connect_message
 
     QUERY = """INSERT INTO connections (pet_id, owner_id, seeker_id, connection_status)
                VALUES (:pet_id, :owner_id, :seeker_id, :connection_status)"""
@@ -200,12 +207,25 @@ def send_connection_request():
                                            'connection_status': 'Interested'})
     db.session.commit()
 
+    connection = Connection.query.filter(Connection.pet_id == pet_id).first()
+    request_id = connection.request_id
+    print connect_message, request_id
+
+    QUERY = """INSERT INTO connect_messages (request_id, user_id, message)
+               VALUES (:request_id, :user_id, :message)"""
+
+    db.cursor = db.session.execute(QUERY, {'request_id': request_id,
+                                           'user_id': user_id,
+                                           'message': connect_message})
+
+    db.session.commit()
+
     pet = Pet.query.filter(Pet.pet_id == pet_id).first()
 
     seeker_name = seeker.user.first_name + " " + seeker.user.last_name
 
-    send_email_notification(seeker_name, pet.name, pet.owner.user.email)
-    send_txt(pet.name)
+    # send_email_notification(seeker_name, pet.name, pet.owner.user.email)
+    # send_txt(pet.name)
 
     return jsonify({'connect': 'success'})
 
@@ -231,8 +251,6 @@ def send_txt(pet_name):
     message = client.messages.create(body=txt_msg,
                                      to="+14154845338",  # Hardcode for demo
                                      from_="+14156108596")
-
-    print(message.sid)
 
     return True
 
