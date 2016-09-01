@@ -231,8 +231,8 @@ def send_connection_request():
 
     seeker_name = seeker.user.first_name + " " + seeker.user.last_name
 
-    # send_email_notification(seeker_name, pet.name, pet.owner.user.email)
-    # send_txt(pet.name)
+    send_email_notification(seeker_name, pet.name, pet.owner.user.email)
+    send_txt(pet.name)
 
     return jsonify({'connect': 'success'})
 
@@ -256,7 +256,7 @@ def send_txt(pet_name):
     txt_msg = "PetShare: Connection request for %s received! Log in your account to find out more." % (pet_name)
 
     message = client.messages.create(body=txt_msg,
-                                     to="+14154845338",  # Hardcode for demo
+                                     to="+14155316383",  # Hardcode for demo
                                      from_="+14156108596")
 
     return True

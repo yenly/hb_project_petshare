@@ -6,7 +6,8 @@ var app = angular.module('petShareApp', []);
 // order of $scope, $http, and $log matters
 app.controller('searchController', ['$scope', '$http', '$log', function ($scope, $http, $log) {
     $scope.searchTerm = "";
-    $scope.city = "Oakland";
+    $scope.city = " ";
+    $scope.resultsURL = "";
     $scope.$log = $log;
     // $log.log("TEST");
 
@@ -14,6 +15,7 @@ app.controller('searchController', ['$scope', '$http', '$log', function ($scope,
 
     $scope.DisplayDogs = function () {
         $scope.searchTerm = "dogs in";
+        $scope.resultsURL = "/search_map";
 
         $http.get('/display_dogs').then(function(response) {
             $scope.dogs = response.data;

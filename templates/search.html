@@ -12,20 +12,23 @@
         <div ng-controller="searchController">
             <button ng-click="DisplayCats()">Search for Cats</button>
             <button ng-click="DisplayDogs()">Search for Dogs</button>
-            <p>Search criteria: <span ng-bind="searchTerm"></span> <span ng-bind="city"></span></p>
+            <p>Search criteria: <span ng-bind="searchTerm"></span> <span ng-bind="city"></span>
+
+                <a href="/search_map">Map View</a>
+            </p>
 
 
             <div>
                 {% raw %}
                 <ul>
                     <li ng-repeat="pet in cats">
-                        <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a>, {{pet.zipcode}}, {{pet.gender}}, {{pet.city}}<br>
+                        <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a>, {{pet.gender}}, {{pet.breed}}, {{pet.zipcode}}<br>
                         <img ng-src="{{pet.image_url}}" alt="{{pet.name}}" />
                     </li>
                 </ul>
                 <ul>
                     <li ng-repeat="pet in dogs">
-                        <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a>, {{pet.zipcode}}, {{pet.gender}}<br>
+                        <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a>, {{pet.gender}}, {{pet.breed}}, {{pet.zipcode}}<br>
                         <img ng-src="{{pet.image_url}}" alt="{{pet.name}}" />
                     </li>
                 </ul>
