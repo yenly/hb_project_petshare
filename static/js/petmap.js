@@ -8,8 +8,8 @@ var zipcode = {
             '94121':{lat: 37.7726, lng: -122.497668}
 };
 
-var shiftDelta = 0.002;
-var zipcount = {};
+var shiftDelta = 0.001;
+var zipCount = {};
 
 
 // create map obj
@@ -31,6 +31,23 @@ $.get('/petmap.json', function (pets) {
 
     for (var key in pets) {
         pet = pets[key];
+
+        if (pet.zipcode in zipCount) {
+            zipCount[pet.zipcode]++;
+        }
+        else{
+            zipCount[pet.zipcode] = 1;
+        }
+
+        if (zipCount[pet.zipcode] % 2 === 0){
+            zipcode[pet.zipcode].lng = zipcode[pet.zipcode].lng + (zipCount[pet.zipcode] * shiftDelta);
+        }
+        else{
+            zipcode[pet.zipcode].lat = zipcode[pet.zipcode].lat + (zipCount[pet.zipcode] * shiftDelta);
+        }
+
+
+
 
         marker = new google.maps.Marker({
             position: zipcode[pet.zipcode],
