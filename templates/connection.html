@@ -15,10 +15,43 @@
             <li>{{msg.message_at}} <br>
             <blockquote>{{msg.message}} </blockquote>~{{msg.user.first_name}}</li>
         {% endfor %}
-        <label>Add message:</label><br />
-        <textarea cols="60" rows="8" id="connect_message" name="connect_message"></textarea><br/>
-        <input type="submit" id="add_msg" value="Submit">
+            <form id="msgForm" action="/add_message" method="POST">
+                <input type="hidden" id="request_id" name="request_id" value="{{ c_request.request_id }}">
+<!--                 <input type="hidden" id="pet_id" name="pet_id" value="{{ c_request.pet.pet_id }}">
+                <input type="hidden" id="seeker_id" name="seeker_id" value="{{ c_request.seeker_id }}"> -->
+
+                <label>Message:</label><br />
+                <textarea cols="60" rows="8" id="message" name="message"></textarea><br/>
+                <input type="submit" id="add_msg" value="Add Message">
+            </form>
         </ul>
+        <script>
+        "use strict";
+
+        function disableConnectBtn(result) {
+            if (result.connect === 'success') {
+
+                alert("Your message is added.");
+            }
+        }
+
+        function submitConnectRequest(evt) {
+            evt.preventDefault();
+
+            var requestInputs = {
+                // "pet_id" : $("#pet_id").val(),
+                "request_id" : $("#request_id").val(),
+                // "seeker_id" : $("#seeker_id").val(),
+                "message" : $("#message").val()
+            };
+
+            $.post("/add_message", requestInputs, disableConnectBtn);
+
+        }
+
+        $("#msgForm").on("submit", submitConnectRequest);
+
+    </script>
     {% endif %}
 
 

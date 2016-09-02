@@ -123,9 +123,7 @@ def display_cats():
 
     Returns cats profiles in json."""
 
-    # TO DO: change hard code zipcode to take from user session
     user_city = session['user_city']
-    print user_city
 
     cats_dict = find_pets('cat', user_city)
     print cats_dict
@@ -140,10 +138,7 @@ def display_dogs():
     Returns dog profiles in json.
     """
 
-    # TO DO: use zipcode to filter search results, need bigger sample data
-    # user_zipcode = session['user_zipcode']
     user_city = session['user_city']
-    print user_city
 
     dog_dict = find_pets('dog', user_city)
     print dog_dict
@@ -220,8 +215,9 @@ def send_connection_request():
 
     seeker_name = seeker.user.first_name + " " + seeker.user.last_name
 
-    send_email_notification(seeker_name, pet.name, pet.owner.user.email)
-    send_txt(pet.name)
+    # uncomment for demo
+    # send_email_notification(seeker_name, pet.name, pet.owner.user.email)
+    # send_txt(pet.name)
 
     return jsonify({'connect': 'success'})
 
@@ -238,6 +234,28 @@ def add_message(user_id, pet_id, seeker_id, connect_message):
     db.cursor = db.session.execute(QUERY, {'request_id': request_id,
                                            'user_id': user_id,
                                            'message': connect_message})
+
+    db.session.commit()
+
+    return jsonify({'connect': 'success'})
+
+
+@app.route('/add_message', methods=['POST'])
+def add_message_by_request_id():
+    """User adds message to connection request by using request_id."""
+
+    user_id = session['user_id']
+    # pet_id = request.form.get("pet_id")
+    # seeker_id = request.form.get("seeker_id")
+    request_id = request.form.get("request_id")
+    message = request.form.get("message")
+
+    QUERY = """INSERT INTO connect_messages (request_id, user_id, message)
+               VALUES (:request_id, :user_id, :message)"""
+
+    db.cursor = db.session.execute(QUERY, {'request_id': request_id,
+                                           'user_id': user_id,
+                                           'message': message})
 
     db.session.commit()
 
@@ -320,9 +338,11 @@ def display_connect_request(id):
 
     c_request = Connection.query.filter(Connection.request_id == id).first()
     pet = c_request.pet
-    print pet
+    user_id = session['user_id']
 
-    return render_template("connection.html", c_request=c_request, pet=pet)
+    user = User.query.filter(User.user_id == user_id).first()
+
+    return render_template("connection.html", c_request=c_request, pet=pet, user=user)
 
 
 if __name__ == "__main__":
