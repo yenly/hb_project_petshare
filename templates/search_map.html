@@ -4,7 +4,8 @@
         <title>Find your furry BFF!</title>
         <script src="https://code.jquery.com/jquery.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
-        <script src="/static/js/petshare.js"></script>
+        <script src="/static/js/petmap.js"></script>
+
 
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
         <style>
@@ -18,66 +19,9 @@
           }
         </style>
     </head>
-    <body ng-app="">
+    <body>
         <div id="map"></div>
 
-        <script>
-            "use strict";
-
-            var sf = {lat: 37.7749, lng: -122.431297}
-            // var oak = {lat: 37.801239, lng: --122.258301}
-            var pet_location = {lat: 37.781345, lng: -122.497668}
-            var pet_location2 = {lat: 37.748582, lng: -122.418411}
-
-            var pets = [
-                ['Ghost', 37.781345, -122.497668, "/static/images/pet_profiles/hobbes.jpg"],
-                ['Nymeria', 37.748582, -122.418411, "/static/images/pet_profiles/nymeria.jpg"],
-                ['Ginger Ale', 37.772640, -122.409915, "/static/images/pet_profiles/gingerale.jpg"]
-            ]
-
-            var map;
-            function initMap() {
-                map = new google.maps.Map(document.getElementById('map'), {
-                    center: sf,
-                    zoom: 13
-                });
-
-                setMarkers(map);
-            }
-
-            function setMarkers(map) {
-                for (var i = 0; i < pets.length; i++) {
-                    var pet = pets[i];
-
-                    var contentString = '<div id="content">'+
-                        '<div id="siteNotice">'+
-                        '</div>'+
-                        '<h2><a href="/pet_profile/9">'+ pet[0] +
-                        '</a></h2>'+
-                        '<div id="bodyContent">'+
-                        '<img src="'+ pet[3] +'">'+
-                        '</div>'+
-                        '</div>';
-
-                    var infowindow = new google.maps.InfoWindow({
-                      content: contentString
-                    });
-
-                  var marker = new google.maps.Marker({
-                    position: {lat: pet[1], lng: pet[2]},
-                    map: map,
-                    title: pet[0],
-                    zIndex: i
-                  });
-
-                  marker.addListener('click', function() {
-                  infowindow.open(map, marker);
-                });
-                }
-            }
-
-        </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_S3nVEBAYCnmkO2R2gDPgUueJC89uSjs&callback=initMap"
-    async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_S3nVEBAYCnmkO2R2gDPgUueJC89uSjs&callback=initMap" async defer></script>
     </body>
 </html>

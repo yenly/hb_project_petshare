@@ -182,6 +182,15 @@ def search_map():
     return render_template("search_map.html")
 
 
+@app.route('/petmap.json')
+def get_pet_results():
+    """Return pet results in json for google map."""
+
+    pets = find_pets("dog", "San Francisco")
+
+    return jsonify(pets)
+
+
 @app.route('/connect', methods=['POST'])
 def send_connection_request():
     """Connect pet seeker to pet owner.

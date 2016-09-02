@@ -8,7 +8,22 @@
     <h1>Request Connection for {{pet.name}}</h1>
     <h3>Pet Seeker: <a href="/user/{{c_request.seeker.user.user_id}}">{{c_request.seeker.user.first_name}} {{c_request.seeker.user.last_name}}</a></h3>
 
-    <p>Connection status:  {{c_request.connection_status}} | <small><a href="">Update Status</a></small></p>
+    <p>Connection status:  {{c_request.connection_status}}</p>
+
+    <div>
+        <form>
+            <select name="">
+                <option value="">Interested</option>
+                <option value="Pending Review">Pending Review</option>
+                <option value="Accept">Accept</option>
+                <option value="Decline">Decline</option>
+            </select>
+            <button>Update status</button>
+        </form>
+    </div>
+
+    <br>
+
     {% if c_request.messages %}
         <ul>
         {% for msg in c_request.messages: %}
