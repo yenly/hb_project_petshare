@@ -88,7 +88,6 @@ def member():
         for seeker in user.seeker:
             user_type.append(seeker.seeker_id)
 
-    print user_type
     #call get_connections passing user type
     request_list = get_connections(user_type)
 
@@ -151,7 +150,7 @@ def find_pets(ani_type, location):
 
     Return dictionary of pets.
 
-        >>> find_pets('cat', '94121')
+        >>> find_pets('cat', 'San Francisco')
         {'cat1': {'name': u'Hobbes', 'color': u'orange white stripes', 'gender': u'M', 'age': 3, 'breed': u'tabby', 'owner_id': 6, 'character_details': u'Precocious, mischievous, and adventurous. ', 'is_available': True, 'health_details': u'null', 'image_url': u'https://somethingokay.files.wordpress.com/2012/11/hobbes-from-calvin-and-hobbes-7.gif', 'pet_id': 6, 'animal_type': u'cat', 'size': u'14lbs'}}
     """
 
@@ -186,7 +185,9 @@ def search_map():
 def get_pet_results():
     """Return pet results in json for google map."""
 
-    pets = find_pets("dog", "San Francisco")
+    user_city = session['user_city']
+
+    pets = find_pets("dog", user_city)
 
     return jsonify(pets)
 

@@ -259,7 +259,21 @@ def test_data():
                  health_details='Snoopy can be selfish and/or lazy at times',
                  image_url='https://pbs.twimg.com/profile_images/2256335229/snoopy-happy_400x400.gif')
 
+    heathcliff = Pet(name='HeathCliff',
+                     age=7,
+                     gender='M',
+                     size='18lbs',
+                     color='orange',
+                     breed='tabby',
+                     animal_type='cat',
+                     owner_id=1,
+                     is_available=True,
+                     character_details='Heathcliff is a street cat who loves to fight anyone but will not fight girls, He will also lie, cheat and steal to get himself some food, but beneath it all, he is a good guy.',
+                     health_details='Super active.',
+                     image_url='https://i1.ytimg.com/sh/rFSGy6sxOv8/showposter.jpg?')
+
     db.session.add(snoopy)
+    db.session.add(heathcliff)
     # add pet to use for next table
     db.session.commit()
 

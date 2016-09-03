@@ -1,8 +1,11 @@
 import unittest
+# import doctest
+import server
 
 from server import app
 from model import db, connect_to_db, test_data
-from flask_mail import Mail
+# from flask import Flask
+# from flask_mail import Mail, Message
 
 
 class ServerTests(unittest.TestCase):
@@ -10,6 +13,8 @@ class ServerTests(unittest.TestCase):
 
     def setUp(self):
         self.client = app.test_client()
+        # self.app = Flask(__name__)
+        # self.mail = Mail(self.app)
         app.config['TESTING'] = True
 
         with self.client as c:
@@ -22,22 +27,6 @@ class ServerTests(unittest.TestCase):
 
         result = self.client.get("/")
         self.assertIn("Find your furry BFF", result.data)
-
-    def text_member(self):
-        """Test member dashboard displays logged in user name."""
-        pass
-
-
-    # def test_send_email_notification(self):
-    #     """."""
-    #     with mail.record_messages() as outbox:
-
-    #         mail.send_message(subject='testing',
-    #                           body='test',
-    #                           recipients='yencodes@gmail.com')
-
-    #     assert len(outbox) == 1
-    #     assert outbox[0].subject == "testing"
 
 
 class ServerTestsDatabase(unittest.TestCase):
@@ -89,6 +78,27 @@ class ServerTestsDatabase(unittest.TestCase):
 
         self.assertEquals(200, result.status_code)
         self.assertIn("Welcome back, Charlie!", result.data)
+
+    def test_display_dogs(self):
+        """Test db query for dogs in pet seeker's city."""
+
+        result = self.client.get('/display_dogs')
+        self.assertEquals(200, result.status_code)
+        self.assertIn("Snoopy", result.data)
+
+    def test_petmapjson(self):
+        """Test db query for dogs in pet seeker's city."""
+
+        result = self.client.get('/petmap.json')
+        self.assertEquals(200, result.status_code)
+        self.assertIn("94121", result.data)
+
+    def test_display_cats(self):
+        """Test db query for cats in pet seeker's city."""
+
+        result = self.client.get('/display_cats')
+        self.assertEquals(200, result.status_code)
+        self.assertIn("Heathcliff", result.data)
 
 
 if __name__ == "__main__":
