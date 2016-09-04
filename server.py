@@ -151,7 +151,21 @@ def find_pets(ani_type, location):
     Return dictionary of pets.
 
         >>> find_pets('cat', 'San Francisco')
-        {'cat1': {'name': u'Hobbes', 'color': u'orange white stripes', 'gender': u'M', 'age': 3, 'breed': u'tabby', 'owner_id': 6, 'character_details': u'Precocious, mischievous, and adventurous. ', 'is_available': True, 'health_details': u'null', 'image_url': u'https://somethingokay.files.wordpress.com/2012/11/hobbes-from-calvin-and-hobbes-7.gif', 'pet_id': 6, 'animal_type': u'cat', 'size': u'14lbs'}}
+        {'cat1': {'age': 3,
+          'animal_type': u'cat',
+          'breed': u'tabby',
+          'character_details': u'Snuggle master, purring machine. Loves all humans and wants to play all the time. Highly motivated by food and is always hungry. Loves to welcome my favorite humans at the door.',
+          'city': u'San Francisco',
+          'color': u'orange with black stripes',
+          'gender': u'M',
+          'health_details': u'',
+          'image_url': u'/static/images/pet_profiles/hobbes.jpg',
+          'is_available': True,
+          'name': u'Hobbes',
+          'owner_id': 6,
+          'pet_id': 6,
+          'size': u'14lbs',
+          'zipcode': u'94121'}}
     """
 
     search_results = Pet.query.filter(Pet.animal_type == ani_type).all()
@@ -299,8 +313,12 @@ def get_connections(user_info):
     """Returns a list of connection request for a user
 
         >>> connect_to_db(app)
-        >>> get_connections(['owner', 3])
-        [<Connection request_id=8 pet_id=4 owner_id=3 seeker_id=1>, <Connection request_id=16 pet_id=4 owner_id=3 seeker_id=6>]
+        >>> get_connections(['owner', 1])
+        [<Connection request_id=1 pet_id=1 owner_id=1 seeker_id=4>,<Connection request_id=2 pet_id=1 owner_id=1 seeker_id=2>]
+
+        >>> connect_to_db(app)
+        >>> get_connections(['seeker', 2])
+        [<Connection request_id=2 pet_id=1 owner_id=1 seeker_id=2>]
 
     """
 

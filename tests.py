@@ -142,5 +142,14 @@ class ServerTestsDatabase(unittest.TestCase):
         self.assertIn("success", result.data)
 
 
+# def load_tests(loader, tests, ignore):
+#     """Also run our doctests and file-based doctests.
+
+#     This function name, ``load_tests``, is required.
+#     """
+
+#     tests.addTests(doctest.DocTestSuite(server))
+#     return tests
+
 if __name__ == "__main__":
     unittest.main()
