@@ -100,6 +100,47 @@ class ServerTestsDatabase(unittest.TestCase):
         self.assertEquals(200, result.status_code)
         self.assertIn("Heathcliff", result.data)
 
+    def test_add_message(self):
+        """Test adding messages to connection request."""
+
+        result = self.client.post('/add_message',
+                                  data={"request_id": 1,
+                                        "message": "Snoopy is cool!"},
+                                  follow_redirects=True)
+
+        self.assertEquals(200, result.status_code)
+        self.assertIn("success", result.data)
+
+    def test_member_dashboard(self):
+        """Test member dashboard displays."""
+
+        result = self.client.get('/member')
+        self.assertEquals(200, result.status_code)
+        self.assertIn("Welcome back, Charlie!", result.data)
+
+    def test_connect_request(self):
+        """Test to see connection request displays all information."""
+
+        result = self.client.get('/connect_request/1')
+        self.assertEquals(200, result.status_code)
+        self.assertIn("Snoopy", result.data)
+
+    def test_send_connection_request(self):
+        """Test sending connection request saves to db."""
+
+        with self.client as c:
+            with c.session_transaction() as session:
+                session['user_id'] = 2
+
+        result = self.client.post('/connect',
+                                  data={"pet_id": 1,
+                                        "owner_id": 1,
+                                        "connect_message": "Snoopy is too cute!"},
+                                  follow_redirects=True)
+
+        self.assertEquals(200, result.status_code)
+        self.assertIn("success", result.data)
+
 
 if __name__ == "__main__":
     unittest.main()

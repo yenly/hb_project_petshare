@@ -296,6 +296,13 @@ def test_data():
     db.session.add(connect)
     db.session.commit()
 
+    message = Connect_Messages(request_id=1,
+                               user_id=2,
+                               message='Would love to get to spend time with Snoopy!')
+
+    db.session.add(message)
+    db.session.commit()
+
 
 if __name__ == "__main__":
 

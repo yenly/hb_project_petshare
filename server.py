@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, request, redirect, flash, session, jsonify
 from flask_mail import Mail, Message
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Seeker, Owner, Pet, Connection
 from model import connect_to_db, db
@@ -209,8 +209,6 @@ def send_connection_request():
     owner_id = request.form.get("owner_id")
     connect_message = request.form.get("connect_message")
 
-    print pet_id, owner_id, connect_message
-
     QUERY = """INSERT INTO connections (pet_id, owner_id, seeker_id, connection_status)
                VALUES (:pet_id, :owner_id, :seeker_id, :connection_status)"""
     db.cursor = db.session.execute(QUERY, {'pet_id': pet_id,
@@ -364,6 +362,6 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # Use the DebugToolbar
-    DebugToolbarExtension(app)
+    # DebugToolbarExtension(app)
 
     app.run(host='0.0.0.0')

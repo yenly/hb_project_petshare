@@ -30,8 +30,8 @@
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
 
         <h2 class="stats">
-            126 statements &nbsp;
-            <span class="run hide_run shortkey_r button_toggle_run">116 run</span>
+            129 statements &nbsp;
+            <span class="run hide_run shortkey_r button_toggle_run">119 run</span>
             <span class="mis shortkey_m button_toggle_mis">10 missing</span>
             <span class="exc shortkey_x button_toggle_exc">0 excluded</span>
 
@@ -365,12 +365,19 @@
 <p id="n296" class="stm run hide_run"><a href="#n296">296</a></p>
 <p id="n297" class="stm run hide_run"><a href="#n297">297</a></p>
 <p id="n298" class="pln"><a href="#n298">298</a></p>
-<p id="n299" class="pln"><a href="#n299">299</a></p>
-<p id="n300" class="stm run hide_run"><a href="#n300">300</a></p>
+<p id="n299" class="stm run hide_run"><a href="#n299">299</a></p>
+<p id="n300" class="pln"><a href="#n300">300</a></p>
 <p id="n301" class="pln"><a href="#n301">301</a></p>
-<p id="n302" class="stm mis"><a href="#n302">302</a></p>
-<p id="n303" class="stm mis"><a href="#n303">303</a></p>
-<p id="n304" class="stm mis"><a href="#n304">304</a></p>
+<p id="n302" class="pln"><a href="#n302">302</a></p>
+<p id="n303" class="stm run hide_run"><a href="#n303">303</a></p>
+<p id="n304" class="stm run hide_run"><a href="#n304">304</a></p>
+<p id="n305" class="pln"><a href="#n305">305</a></p>
+<p id="n306" class="pln"><a href="#n306">306</a></p>
+<p id="n307" class="stm run hide_run"><a href="#n307">307</a></p>
+<p id="n308" class="pln"><a href="#n308">308</a></p>
+<p id="n309" class="stm mis"><a href="#n309">309</a></p>
+<p id="n310" class="stm mis"><a href="#n310">310</a></p>
+<p id="n311" class="stm mis"><a href="#n311">311</a></p>
 
             </td>
             <td class="text">
@@ -672,12 +679,19 @@
 <p id="t296" class="stm run hide_run">    <span class="nam">db</span><span class="op">.</span><span class="nam">session</span><span class="op">.</span><span class="nam">add</span><span class="op">(</span><span class="nam">connect</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t297" class="stm run hide_run">    <span class="nam">db</span><span class="op">.</span><span class="nam">session</span><span class="op">.</span><span class="nam">commit</span><span class="op">(</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t298" class="pln"><span class="strut">&nbsp;</span></p>
-<p id="t299" class="pln"><span class="strut">&nbsp;</span></p>
-<p id="t300" class="stm run hide_run"><span class="key">if</span> <span class="nam">__name__</span> <span class="op">==</span> <span class="str">"__main__"</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
-<p id="t301" class="pln"><span class="strut">&nbsp;</span></p>
-<p id="t302" class="stm mis">    <span class="key">from</span> <span class="nam">server</span> <span class="key">import</span> <span class="nam">app</span><span class="strut">&nbsp;</span></p>
-<p id="t303" class="stm mis">    <span class="nam">connect_to_db</span><span class="op">(</span><span class="nam">app</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
-<p id="t304" class="stm mis">    <span class="key">print</span> <span class="str">"Connected to DB."</span><span class="strut">&nbsp;</span></p>
+<p id="t299" class="stm run hide_run">    <span class="nam">message</span> <span class="op">=</span> <span class="nam">Connect_Messages</span><span class="op">(</span><span class="nam">request_id</span><span class="op">=</span><span class="num">1</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t300" class="pln">                               <span class="nam">user_id</span><span class="op">=</span><span class="num">2</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t301" class="pln">                               <span class="nam">message</span><span class="op">=</span><span class="str">'Would love to get to spend time with Snoopy!'</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t302" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t303" class="stm run hide_run">    <span class="nam">db</span><span class="op">.</span><span class="nam">session</span><span class="op">.</span><span class="nam">add</span><span class="op">(</span><span class="nam">message</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t304" class="stm run hide_run">    <span class="nam">db</span><span class="op">.</span><span class="nam">session</span><span class="op">.</span><span class="nam">commit</span><span class="op">(</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t305" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t306" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t307" class="stm run hide_run"><span class="key">if</span> <span class="nam">__name__</span> <span class="op">==</span> <span class="str">"__main__"</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
+<p id="t308" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t309" class="stm mis">    <span class="key">from</span> <span class="nam">server</span> <span class="key">import</span> <span class="nam">app</span><span class="strut">&nbsp;</span></p>
+<p id="t310" class="stm mis">    <span class="nam">connect_to_db</span><span class="op">(</span><span class="nam">app</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t311" class="stm mis">    <span class="key">print</span> <span class="str">"Connected to DB."</span><span class="strut">&nbsp;</span></p>
 
             </td>
         </tr>
@@ -688,7 +702,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.2</a>,
-            created at 2016-09-03 16:51
+            created at 2016-09-04 03:58
         </p>
     </div>
 </div>
