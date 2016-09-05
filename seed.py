@@ -54,7 +54,7 @@ def load_owners():
 
     Owner.query.delete()
 
-    owners = [1, 2, 3, 4, 5, 6, 7, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+    owners = [1, 2, 3, 4, 5, 6, 7, 11, 12, 14, 15, 16, 17, 19, 20, 21, 22, 23]
 
     # add user_ids from owners list to db table
     for user in owners:

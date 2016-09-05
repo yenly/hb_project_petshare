@@ -204,7 +204,9 @@ def pet_search():
 def search_map(ani_type):
     """Display search results as markers on google map."""
 
-    return render_template("search_map.html", ani_type=ani_type)
+    user_city = session['user_city']
+
+    return render_template("search_map.html", ani_type=ani_type, user_city=user_city)
 
 
 @app.route('/petmap.json')
