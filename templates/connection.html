@@ -5,11 +5,18 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Request Connection for {{pet.name}}</h1>
-    <h3>Pet Seeker: <a href="/user/{{c_request.seeker.user.user_id}}">{{c_request.seeker.user.first_name}} {{c_request.seeker.user.last_name}}</a></h3>
+    <h1>Request Connection for {{ pet.name }}</h1>
 
-    <p>Connection status:  <span id="c_status">{{c_request.connection_status}}</span></p>
+    {% if user.owner %}
+    <h3>Pet Seeker: <a href="/user/{{c_request.seeker.user.user_id}}">{{ c_request.seeker.user.first_name }} {{ c_request.seeker.user.last_name }}</a></h3>
+    {% endif %}
 
+    {% if user.seeker %}
+    <h3>Pet Owner: <a href="/user/{{c_request.owner.user.user_id}}">{{ c_request.owner.user.first_name }} {{ c_request.owner.user.last_name }}</a></h3>
+    {% endif %}
+
+    <p>Connection status:  <span id="c_status">{{ c_request.connection_status }}</span></p>
+    {% if user.owner %}
     <div>
         <form id="chgStatusForm" action="/change_connect_status" method="POST">
             <input type="hidden" id="request_id" name="request_id" value="{{ c_request.request_id }}">
@@ -47,13 +54,14 @@
 
         </script>
     </div>
+    {% endif %}
 
     <br>
     <ul>
         {% if c_request.messages %}
             {% for msg in c_request.messages: %}
-            <li>{{msg.message_at}} <br>
-            <blockquote>{{msg.message}} </blockquote>~{{msg.user.first_name}}</li>
+            <li>{{ msg.message_at }} <br>
+            <blockquote>{{ msg.message }} </blockquote>~{{ msg.user.first_name }}</li>
             {% endfor %}
         {% endif %}
         <form id="msgForm" action="/add_message" method="POST">

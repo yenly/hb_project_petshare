@@ -10,8 +10,8 @@
     </head>
     <body ng-app="petShareApp">
         <div ng-controller="searchController">
-            <button ng-click="DisplayCats()">Search for Cats</button>
-            <button ng-click="DisplayDogs()">Search for Dogs</button>
+            <button ng-click="DisplayPets('cat')">Search for Cats</button>
+            <button ng-click="DisplayPets('dog')">Search for Dogs</button>
             <p>Search criteria: <span ng-bind="searchTerm"></span> <span ng-bind="city"></span>
 
                 <a href="/search_map">Map View</a>
@@ -21,13 +21,7 @@
             <div>
                 {% raw %}
                 <ul>
-                    <li ng-repeat="pet in cats">
-                        <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a>, {{pet.gender}}, {{pet.breed}}, {{pet.zipcode}}<br>
-                        <img ng-src="{{pet.image_url}}" alt="{{pet.name}}" />
-                    </li>
-                </ul>
-                <ul>
-                    <li ng-repeat="pet in dogs">
+                    <li ng-repeat="pet in pets">
                         <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a>, {{pet.gender}}, {{pet.breed}}, {{pet.zipcode}}<br>
                         <img ng-src="{{pet.image_url}}" alt="{{pet.name}}" />
                     </li>

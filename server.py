@@ -122,10 +122,11 @@ def display_cats():
 
     Returns cats profiles in json."""
 
-    user_city = session['user_city']
+    # user_city = session['user_city']
+
+    user_city = "Oakland"
 
     cats_dict = find_pets('cat', user_city)
-    print cats_dict
 
     return jsonify(cats_dict)
 
@@ -140,9 +141,20 @@ def display_dogs():
     user_city = session['user_city']
 
     dog_dict = find_pets('dog', user_city)
-    print dog_dict
 
     return jsonify(dog_dict)
+
+
+@app.route('/display_pets/<ani_type>')
+def display_pets(ani_type):
+    """Testing """
+
+    user_city = session['user_city']
+    print ani_type
+
+    pet_dict = find_pets(ani_type, user_city)
+
+    return jsonify(pet_dict)
 
 
 def find_pets(ani_type, location):
@@ -176,7 +188,7 @@ def find_pets(ani_type, location):
             pet_info = dictalchemy.utils.asdict(pet)
             pet_info['zipcode'] = pet.owner.user.zipcode
             pet_info['city'] = pet.owner.user.city
-            pets_dict[ani_type + str(counter)] = pet_info
+            pets_dict['pet' + str(counter)] = pet_info
 
     return pets_dict
 
@@ -245,7 +257,11 @@ def send_connection_request():
 
 
 def add_message(user_id, pet_id, seeker_id, connect_message):
-    """Add message attached to connection request to db."""
+    """Add message attached to connection request to db.
+
+    Called after connection request is created. Takes in parameters:
+    pet_id, seeker_id to query for newly generated request_id from creating connection request row in db.
+    """
 
     connection = Connection.query.filter(Connection.pet_id == pet_id and Connection.seeker_id == seeker_id).first()
     request_id = connection.request_id

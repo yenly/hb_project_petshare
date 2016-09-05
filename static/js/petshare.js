@@ -13,27 +13,21 @@ app.controller('searchController', ['$scope', '$http', '$log', function ($scope,
 
     // console.log($scope.searchTerm);
 
-    $scope.DisplayDogs = function () {
-        $scope.searchTerm = "dogs in";
+    $scope.DisplayPets = function (type) {
+        $scope.searchTerm = type;
+        $scope.ani_type = type;
         $scope.resultsURL = "/search_map";
+        $log.log($scope.searchTerm);
 
-        $http.get('/display_dogs').then(function(response) {
-            $scope.dogs = response.data;
+        var url = "/display_pets/" + $scope.ani_type;
 
-            $scope.city = $scope.dogs.dog1.city;
-            $log.log($scope.city);
-        });
-    };
+        $http.get(url).then(function(response) {
+            $scope.pets = response.data;
+            $log.log($scope.pets);
 
-    $scope.DisplayCats = function () {
-        $scope.searchTerm = "cats in";
+            $scope.pet_key = Object.keys($scope.pets);
 
-
-        $http.get('/display_cats').then(function(response) {
-            $scope.cats = response.data;
-
-            $scope.city = $scope.cats.cat1.city;
-            $log.log($scope.city);
+            $scope.city = $scope.pets[$scope.pet_key[0]].city;
         });
     };
 
