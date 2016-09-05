@@ -2,9 +2,10 @@
 function initMap() {
 
 var userLocation = {
-                'San Franciscio': {lat: 37.7749, lng: -122.4194},
+                'San Francisco': {lat: 37.7749, lng: -122.4194},
                 'Oakland': {lat: 37.8280, lng: -122.2501}
 };
+
 var zipcode = {
             '94103':{lat: 37.7726, lng: -122.4099},
             '94110':{lat: 37.7486, lng: -122.4184},

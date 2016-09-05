@@ -348,7 +348,7 @@ ALTER TABLE ONLY users ALTER COLUMN user_id SET DEFAULT nextval('users_user_id_s
 --
 
 COPY connect_messages (message_id, request_id, message_at, user_id, message) FROM stdin;
-1	1	2016-08-30 00:19:54.974329	9	Your dog sounds badass!
+1	1	2016-09-05 18:44:42.103733	9	Your dog sounds badass!
 \.
 
 
@@ -364,8 +364,8 @@ SELECT pg_catalog.setval('connect_messages_message_id_seq', 1, true);
 --
 
 COPY connections (request_id, pet_id, owner_id, seeker_id, request_at, connection_status) FROM stdin;
-1	1	1	4	2016-08-30 00:19:54.970306	Interested
-2	1	1	2	2016-08-30 00:19:54.970306	Interested
+1	1	1	4	2016-09-05 18:44:42.09987	Interested
+2	1	1	2	2016-09-05 18:44:42.09987	Interested
 \.
 
 
@@ -394,12 +394,11 @@ COPY owners (owner_id, user_id) FROM stdin;
 11	15
 12	16
 13	17
-14	18
-15	19
-16	20
-17	21
-18	22
-19	23
+14	19
+15	20
+16	21
+17	22
+18	23
 \.
 
 
@@ -407,7 +406,7 @@ COPY owners (owner_id, user_id) FROM stdin;
 -- Name: owners_owner_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('owners_owner_id_seq', 19, true);
+SELECT pg_catalog.setval('owners_owner_id_seq', 18, true);
 
 
 --
@@ -440,6 +439,17 @@ COPY pet_photos (photo_id, pet_id, image_url, caption) FROM stdin;
 23	5	/static/images/pet_photos/greywind02.jpg	Me as a pup.
 24	14	/static/images/pet_photos/emmalucy01.jpg	Hanging with my buddy.
 25	15	/static/images/pet_photos/emmalucy01.jpg	Hanging with my buddy.
+26	14	/static/images/pet_photos/emma01.jpg	Hanging with my buddy.
+27	18	/static/images/pet_photos/hosico01.jpg	This box is so comfortable!
+28	18	/static/images/pet_photos/hosico02.jpg	I had a long day of napping.
+29	18	/static/images/pet_photos/hosico03.jpg	I love looking out the window.
+30	16	/static/images/pet_photos/jesus01.png	I'm styling my cool sunglasses.
+31	16	/static/images/pet_photos/jesus02.png	Happy with my mom!
+32	16	/static/images/pet_photos/jesus03.png	What a camera hog!
+33	19	/static/images/pet_photos/waffles01.jpg	Adventure cat, ready to hike.
+34	19	/static/images/pet_photos/waffles02.jpg	No dogs allow on this sign.
+35	19	/static/images/pet_photos/waffles03.jpg	You can always find me on the trail.
+36	19	/static/images/pet_photos/waffles02.jpg	I love the outdoors.
 \.
 
 
@@ -447,7 +457,7 @@ COPY pet_photos (photo_id, pet_id, image_url, caption) FROM stdin;
 -- Name: pet_photos_photo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('pet_photos_photo_id_seq', 25, true);
+SELECT pg_catalog.setval('pet_photos_photo_id_seq', 36, true);
 
 
 --
@@ -455,11 +465,11 @@ SELECT pg_catalog.setval('pet_photos_photo_id_seq', 25, true);
 --
 
 COPY pets (pet_id, name, age, gender, size, color, breed, animal_type, owner_id, is_available, character_details, health_details, image_url) FROM stdin;
-1	Ghost	6	M	140lbs	white	direwolf	dog	1	t	Super loyal, badass warrior, independent traveler, and perfect right hand guard in battle.	Runt at birth but no longer now	/static/images/pet_profiles/ghost.gif
+1	Ghost	6	M	140lbs	white	direwolf	dog	1	t	Super loyal, badass warrior, independent traveler, and perfect right hand guard in battle.	Runt at birth, achieved warrior beast status after many battles.	/static/images/pet_profiles/ghost.gif
 2	Summer	6	M	138lbs	light beige and white	direwolf	dog	4	t	Super loyal and protector of Bran Stark. Always saving Bran and his friends from white walkers.	Sporting battle scars.	/static/images/pet_profiles/summer.jpg
 3	Nymeria	6	F	139lbs	grey and white	direwolf	dog	2	t	Faithful to Arya, biter of Joffrey		/static/images/pet_profiles/nymeria.jpg
-4	Lady	6	F	128lbs	grey and white	direwolf	dog	3	t	Superfriendly and gullible. Saintly.	Bleeding stab wounds.	/static/images/pet_profiles/lady.jpg
-5	Grey Wind	6	M	141lbs	grey and white	direwolf	dog	5	t	Super loyal, badass warrior. Notorious reputation for fighting in battles.	Bleeding stab wounds.	/static/images/pet_profiles/greywind.jpg
+4	Lady	6	F	128lbs	grey and white	direwolf	dog	3	t	Superfriendly and gullible. Saintly.		/static/images/pet_profiles/lady.jpg
+5	Grey Wind	6	M	141lbs	grey and white	direwolf	dog	5	t	Super loyal, badass warrior. Notorious reputation for fighting in battles.		/static/images/pet_profiles/greywind.jpg
 6	Hobbes	3	M	14lbs	orange with black stripes	tabby	cat	6	t	Snuggle master, purring machine. Loves all humans and wants to play all the time. Highly motivated by food and is always hungry. Loves to welcome my favorite humans at the door.		/static/images/pet_profiles/hobbes.jpg
 7	Choe	7	F	12lbs	brown	tabby	cat	12	t	Diva. Catitude level high. Really independent.		/static/images/pet_profiles/choe.jpg
 8	Jiao Jiao	5	F	11lbs	parti	Pomeranian	dog	15	t	catlike	splendid	/static/images/pet_profiles/jiaojiao.jpg
@@ -470,6 +480,11 @@ COPY pets (pet_id, name, age, gender, size, color, breed, animal_type, owner_id,
 13	Marley	4	M	88lbs	black	labradoodle	dog	17	t	Lots of energy and loves to play. Wants to be everyone's best friend.	healthy	/static/images/pet_profiles/marley.jpg
 14	Emma	10	F	67lbs	ginger with white markings	pitbull	dog	18	t	very affectionate with people. Loves walks, belly rubs and sitting next to you on the sofa. Also likes a good game of tug and wrestling. Only likes dogs she's been properly introduced to. She and Emma get along great and if you take them both they're good entertainment.		/static/images/pet_profiles/emma.jpg
 15	Lucy	2	F	15lbs	white and tan	longhair chihuahua	dog	18	t	ery sweet. Good for jogs and loves to chase the ball. She and Emma get along great and if you take them both they're good entertainment.		/static/images/pet_profiles/lucy.jpg
+16	Jesus	13	M	70lbs	brindle (brown tiger)	pit bull mix	dog	13	t	Will lay with any human as if they were his own. for the most part happy-go-lucky and carefree. Tends to like female and small to medium dogs more than large energetic young male puppies. Loves romantic walks on the beach and stopping to smell the roses (and pizza crusts in the park).	Starting to show his age, but very fit for a 13 year old. most people think he is closer to 9 years old.	/static/images/pet_profiles/jesus.png
+17	Penny	7	F	40lbs	yellow	lab/beagle	dog	12	t	Lots of energy, so she needs plenty of exercise; LOVES meeting new people	Needs moisturizing cream on her paw pads before hiking in dry areas - otherwise she gets tears in her pads	/static/images/pet_profiles/penny.jpg
+18	Hosico	2	M	17lbs	orange	Scottish	cat	15	t	I am 2 years old. I live in Moscow. I like to sleep , eat and play , a bit cowardly		/static/images/pet_profiles/hosico.jpg
+19	Waffles	2	F	13lbs	grey with black stripes	tabby	cat	15	t	Likes to hike, camp and sit and shake on command	Super fit	/static/images/pet_profiles/waffles.jpg
+20	Orange	8	M	13lbs	tan and black	pug	dog	7	t	Loves to chill on the couch and snack on orange treats.	Cold all the time so wears doggies sweaters around the house.	/static/images/pet_profiles/orange.jpg
 \.
 
 
@@ -477,7 +492,7 @@ COPY pets (pet_id, name, age, gender, size, color, breed, animal_type, owner_id,
 -- Name: pets_pet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('pets_pet_id_seq', 15, true);
+SELECT pg_catalog.setval('pets_pet_id_seq', 20, true);
 
 
 --
@@ -489,6 +504,7 @@ COPY seekers (seeker_id, user_id, household_size, children, pet_experience) FROM
 2	8	0	0	False
 3	10	9	3	True
 4	9	0	0	True
+5	18	5	0	True
 \.
 
 
@@ -496,7 +512,7 @@ COPY seekers (seeker_id, user_id, household_size, children, pet_experience) FROM
 -- Name: seekers_seeker_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('seekers_seeker_id_seq', 4, true);
+SELECT pg_catalog.setval('seekers_seeker_id_seq', 5, true);
 
 
 --
@@ -518,7 +534,7 @@ COPY users (user_id, last_name, first_name, email, password, phone_number, birth
 12	Hoang	Vivian	vivian@gmailc.om	484529593079221494	415-555-5555	1995-05-29 00:00:00	Software Engineer	789 Mission St	San Francisco	CA	94110	/static/images/users/vivian.jpg
 13	Lannister	Cersei	cersei@gmail.com	484529593079221494	415-555-5555	1972-10-31 00:00:00	Queen Mother	123 Valencia St	San Francisco	CA	94110	/static/images/users/cersei.png
 14	Lannister	Jamie	jamie@gmail.com	484529593079221494	415-555-5555	1972-10-31 00:00:00	King's Guard	123 Valencia St	San Francisco	CA	94110	/static/images/users/jamiel.jpg
-15	Bard	Lori	lori@gmail.com	484529593079221494	415-555-5555	1995-08-08 00:00:00	Software Engineer	123 Mountain Ave	Oakland	CA	94611	/static/images/users/lori.jpg
+15	Bard	Lori	lori@gmail.com	484529593079221494	415-555-5555	1995-08-08 00:00:00	Software Engineer	123 Mountain Ave	San Francisco	CA	94110	/static/images/users/lori.jpg
 16	Parr	Bob	bob@gmail.com	484529593079221494	415-555-5555	1973-09-18 00:00:00	Mr. Incredible	234 Mountain Ave	Oakland	CA	94611	/static/images/users/mrincredible.jpg
 17	Best	Lucius	lbest@gmail.com	484529593079221494	415-555-5555	1977-06-03 00:00:00	Frozone	345 Mountain Ave	Oakland	CA	94611	/static/images/users/frozon.jpg
 18	Parr	Violet	violet@gmail.com	484529593079221494	415-555-5555	2000-12-25 00:00:00	student	234 Mountain Ave	Oakland	CA	94611	/static/images/users/violet.jpg

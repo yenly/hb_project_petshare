@@ -1,8 +1,8 @@
-Ghost,6,M,140lbs,white,direwolf,dog,1,TRUE,"Super loyal, badass warrior, independent traveler, and perfect right hand guard in battle.",Runt at birth but no longer now,/static/images/pet_profiles/ghost.gif
+Ghost,6,M,140lbs,white,direwolf,dog,1,TRUE,"Super loyal, badass warrior, independent traveler, and perfect right hand guard in battle.","Runt at birth, achieved warrior beast status after many battles.",/static/images/pet_profiles/ghost.gif
 Summer,6,M,138lbs,light beige and white,direwolf,dog,4,TRUE,Super loyal and protector of Bran Stark. Always saving Bran and his friends from white walkers.,Sporting battle scars.,/static/images/pet_profiles/summer.jpg
 Nymeria,6,F,139lbs,grey and white,direwolf,dog,2,TRUE,"Faithful to Arya, biter of Joffrey",,/static/images/pet_profiles/nymeria.jpg
-Lady,6,F,128lbs,grey and white,direwolf,dog,3,TRUE,Superfriendly and gullible. Saintly.,Bleeding stab wounds.,/static/images/pet_profiles/lady.jpg
-Grey Wind,6,M,141lbs,grey and white,direwolf,dog,5,TRUE,"Super loyal, badass warrior. Notorious reputation for fighting in battles.",Bleeding stab wounds.,/static/images/pet_profiles/greywind.jpg
+Lady,6,F,128lbs,grey and white,direwolf,dog,3,TRUE,Superfriendly and gullible. Saintly.,,/static/images/pet_profiles/lady.jpg
+Grey Wind,6,M,141lbs,grey and white,direwolf,dog,5,TRUE,"Super loyal, badass warrior. Notorious reputation for fighting in battles.",,/static/images/pet_profiles/greywind.jpg
 Hobbes,3,M,14lbs,orange with black stripes,tabby,cat,6,TRUE,"Snuggle master, purring machine. Loves all humans and wants to play all the time. Highly motivated by food and is always hungry. Loves to welcome my favorite humans at the door.",,/static/images/pet_profiles/hobbes.jpg
 Choe,7,F,12lbs,brown,tabby,cat,12,TRUE,Diva. Catitude level high. Really independent.,,/static/images/pet_profiles/choe.jpg
 Jiao Jiao,5,F,11lbs,parti,Pomeranian,dog,15,TRUE,catlike,splendid,/static/images/pet_profiles/jiaojiao.jpg
@@ -13,3 +13,8 @@ Rusty,13,F,16.8lbs,orange and white,maine coon,cat,11,TRUE,good hunter,healthy,/
 Marley,4,M,88lbs,black,labradoodle,dog,17,TRUE,Lots of energy and loves to play. Wants to be everyone's best friend.,healthy,/static/images/pet_profiles/marley.jpg
 Emma,10,F,67lbs,ginger with white markings,pitbull,dog,18,TRUE,"very affectionate with people. Loves walks, belly rubs and sitting next to you on the sofa. Also likes a good game of tug and wrestling. Only likes dogs she's been properly introduced to. She and Emma get along great and if you take them both they're good entertainment.",,/static/images/pet_profiles/emma.jpg
 Lucy,2,F,15lbs,white and tan,longhair chihuahua,dog,18,TRUE,ery sweet. Good for jogs and loves to chase the ball. She and Emma get along great and if you take them both they're good entertainment.,,/static/images/pet_profiles/lucy.jpg
+Jesus,13,M,70lbs,brindle (brown tiger),pit bull mix,dog,13,TRUE,Will lay with any human as if they were his own. for the most part happy-go-lucky and carefree. Tends to like female and small to medium dogs more than large energetic young male puppies. Loves romantic walks on the beach and stopping to smell the roses (and pizza crusts in the park).,"Starting to show his age, but very fit for a 13 year old. most people think he is closer to 9 years old.",/static/images/pet_profiles/jesus.png
+Penny,7,F,40lbs,yellow,lab/beagle,dog,12,TRUE,"Lots of energy, so she needs plenty of exercise; LOVES meeting new people",Needs moisturizing cream on her paw pads before hiking in dry areas - otherwise she gets tears in her pads,/static/images/pet_profiles/penny.jpg
+Hosico,2,M,17lbs,orange,Scottish,cat,15,TRUE,"I am 2 years old. I live in Moscow. I like to sleep , eat and play , a bit cowardly",,/static/images/pet_profiles/hosico.jpg
+Waffles,2,F,13lbs,grey with black stripes,tabby,cat,15,TRUE,"Likes to hike, camp and sit and shake on command",Super fit,/static/images/pet_profiles/waffles.jpg
+Orange,8,M,13lbs,tan and black,pug,dog,7,TRUE,Loves to chill on the couch and snack on orange treats.,Cold all the time so wears doggies sweaters around the house.,/static/images/pet_profiles/orange.jpg
