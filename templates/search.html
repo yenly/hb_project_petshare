@@ -14,12 +14,12 @@
             <button ng-click="DisplayPets('dog')">Search for Dogs</button>
             <p>Search criteria: <span ng-bind="searchTerm"></span> <span ng-bind="city"></span>
 
-                <a href="/search_map">Map View</a>
+
             </p>
 
 
             <div>
-                {% raw %}
+                {% raw %}<a href="/search_map/{{ani_type}}">Map View</a>
                 <ul>
                     <li ng-repeat="pet in pets">
                         <a href="/pet_profile/{{pet.pet_id}}">{{pet.name}}</a>, {{pet.gender}}, {{pet.breed}}, {{pet.zipcode}}<br>

@@ -200,11 +200,11 @@ def pet_search():
     return render_template("search.html")
 
 
-@app.route('/search_map')
-def search_map():
+@app.route('/search_map/<ani_type>')
+def search_map(ani_type):
     """Display search results as markers on google map."""
 
-    return render_template("search_map.html")
+    return render_template("search_map.html", ani_type=ani_type)
 
 
 @app.route('/petmap.json')
@@ -212,8 +212,9 @@ def get_pet_results():
     """Return pet results in json for google map."""
 
     user_city = session['user_city']
+    ani_type = request.args.get("ani_type")
 
-    pets = find_pets("dog", user_city)
+    pets = find_pets(ani_type, user_city)
 
     return jsonify(pets)
 

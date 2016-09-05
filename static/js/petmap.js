@@ -24,8 +24,10 @@ var infoWindow = new google.maps.InfoWindow({
     height: 150
 });
 
+var jsonUrl = "/petmap.json?ani_type=" + ani_type;
+
 // Retrieving the information with AJAX
-$.get('/petmap.json', function (pets) {
+$.get(jsonUrl, function (pets) {
 
     var pet, marker, html;
 

@@ -7,7 +7,7 @@ var app = angular.module('petShareApp', []);
 app.controller('searchController', ['$scope', '$http', '$log', function ($scope, $http, $log) {
     $scope.searchTerm = "";
     $scope.city = " ";
-    $scope.resultsURL = "";
+    // $scope.resultsURL = "";
     $scope.$log = $log;
     // $log.log("TEST");
 
@@ -16,7 +16,6 @@ app.controller('searchController', ['$scope', '$http', '$log', function ($scope,
     $scope.DisplayPets = function (type) {
         $scope.searchTerm = type;
         $scope.ani_type = type;
-        $scope.resultsURL = "/search_map";
         $log.log($scope.searchTerm);
 
         var url = "/display_pets/" + $scope.ani_type;
