@@ -5,18 +5,22 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+    {% include 'nav_top.html' %}
+    <div class="container">
+        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
 
-    <img src="{{ user.image_url }}" alt="{{ user.first_name }} {{ user.last_name }}" />
+        <img src="{{ user.image_url }}" alt="{{ user.first_name }} {{ user.last_name }}" />
 
-    <h3>Contact Info:</h3>
-    <ul>
-        <li>Email: {{ user.email }}</li>
-        <li>Phone: {{ user.phone_number }}</li>
-        <li>{{ user.address }}, {{ user.city }}, {{ user.state }} {{ zipcode }}</li>
-    </ul>
+        <h3>Contact Info:</h3>
+        <ul>
+            <li>Email: {{ user.email }}</li>
+            <li>Phone: {{ user.phone_number }}</li>
+            <li>{{ user.address }}, {{ user.city }}, {{ user.state }} {{ zipcode }}</li>
+        </ul>
 
-    <h3>More about me:</h3>
-    <p>Birthdate: {{ user.birthdate }}, <br />Job title: {{ user.occupation }}</p>
+        <h3>More about me:</h3>
+        <p>Birthdate: {{ user.birthdate }}, <br />Job title: {{ user.occupation }}</p>
+
+    </div>
 
 {% endblock %}

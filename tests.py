@@ -80,23 +80,30 @@ class ServerTestsDatabase(unittest.TestCase):
         self.assertIn("Welcome back, Charlie!", result.data)
 
     def test_display_dogs(self):
-        """Test db query for dogs in pet seeker's city."""
+        """Test db query for dogs in pet seeker's city. -TODO: fix"""
 
         result = self.client.get('/display_dogs')
         self.assertEquals(200, result.status_code)
         self.assertIn("Snoopy", result.data)
 
     def test_petmapjson(self):
-        """Test db query for dogs in pet seeker's city."""
+        """Test db query for dogs in pet seeker's city. -TODO: fix"""
 
         result = self.client.get('/petmap.json')
         self.assertEquals(200, result.status_code)
         self.assertIn("94121", result.data)
 
     def test_display_cats(self):
-        """Test db query for cats in pet seeker's city."""
+        """Test db query for cats in pet seeker's city. -TODO: fix"""
 
         result = self.client.get('/display_cats')
+        self.assertEquals(200, result.status_code)
+        self.assertIn("Heathcliff", result.data)
+
+    def test_display_pets(self):
+        """Test db query for cats in pet seeker's city."""
+
+        result = self.client.get('/display_pets/cat')
         self.assertEquals(200, result.status_code)
         self.assertIn("Heathcliff", result.data)
 

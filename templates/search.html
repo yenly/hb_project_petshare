@@ -2,6 +2,13 @@
 <html>
     <head>
         <title>Find your furry BFF!</title>
+        <!-- Bootstrap -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/css/carousel.css" rel="stylesheet">
+
+        <!-- PetShare styles -->
+        <link href="/static/css/petshare.css" rel="stylesheet">
+
         <script src="https://code.jquery.com/jquery.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
         <script src="/static/js/petshare.js"></script>
@@ -9,9 +16,10 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body ng-app="petShareApp">
-        <div ng-controller="searchController">
-            <button ng-click="DisplayPets('cat')">Search for Cats</button>
-            <button ng-click="DisplayPets('dog')">Search for Dogs</button>
+        {% include 'nav_top.html' %}
+        <div class="container" ng-controller="searchController">
+            <button class="btn btn-primary" ng-click="DisplayPets('cat')">Search for Cats</button>
+            <button class="btn btn-primary" ng-click="DisplayPets('dog')">Search for Dogs</button>
             <p>Search criteria: <span ng-bind="searchTerm"></span> <span ng-bind="city"></span>
 
 

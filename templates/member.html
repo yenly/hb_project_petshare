@@ -5,66 +5,35 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Welcome back, {{ user.first_name }}!</h1>
+    {% include 'nav_top.html' %}
+    <div class="container">
+        <h1>Welcome back, {{ user.first_name }}!</h1>
 
-    <a href="/user/{{ user.user_id }}">Update My Profile</a><br />
-    {% if pet %}
-    My Pet: <a href="/pet_profile/{{ pet.pet_id }}">{{ pet.name }}</a><br />
-    {% endif %}
+        <a href="/user/{{ user.user_id }}">Update My Profile</a><br />
+        {% if pet %}
+        My Pet: <a href="/pet_profile/{{ pet.pet_id }}">{{ pet.name }}</a><br />
+        {% endif %}
 
 
-    {% if user.owner %}
-    <h3>My Connection Requests</h3>
-        {% for item in request_list %}
-            <a href="/connect_request/{{item.request_id}}">{{ item.seeker.user.first_name }} {{ item.seeker.user.last_name }} is interested in {{ item.pet.name }}.</a><br>
-        {% endfor %}
+        {% if user.owner %}
+        <h3>My Connection Requests</h3>
+            {% for item in request_list %}
+                <a href="/connect_request/{{item.request_id}}">{{ item.seeker.user.first_name }} {{ item.seeker.user.last_name }} is interested in {{ item.pet.name }}.</a><br>
+            {% endfor %}
 
-        <!-- <ul>
-        <form id="connectStatusForm" method="POST">
-        {% for item in request_list %}
-            <li>
-                <a href="/user/{{ item.seeker.user_id }}">{{ item.seeker.user.first_name }} {{ item.seeker.user.last_name }}</a> is interested in {{ item.pet.name }}:
+        {% endif %}
+        {% if user.seeker %}
 
-                    <select name="connect_request_{{ item.request_id }}">
-                        <option value="{{ item.connection_status }}">{{ item.connection_status }} </option>
-                        <option value="Pending Review">Pending Review</option>
-                        <option value="Accept">Accept</option>
-                        <option value="Decline">Decline</option>
-                    </select>
-            </li>
-        {% endfor %}
-        <input type="submit" value="Update Connection Requests" >
-        </form>
-        <script>
-            "user strict";
-
-            function statusChanged(result) {
-                alert("Changes to connection status saved!");
-            }
-
-            function submitStatusChange(evt) {
-                evt.preventDefault();
-
-                var statusInput = $("#connectStatusForm").serialize();
-
-                $.post("/change_connect_status", statusInput, statusChanged);
-            }
-
-            $("#connectStatusForm").on("submit", submitStatusChange);
-        </script>
-        </ul> -->
-    {% endif %}
-    {% if user.seeker %}
-
-        <a href="/pet_search">Find pets in your area.</a>
-<h3>My Connection Requests</h3>
-        <ul>
-        {% for item in request_list %}
-            <li>
-                <a href="/connect_request/{{item.request_id}}">Connection</a> with <a href="/pet_profile/{{ item.pet_id }}">{{ item.pet.name }}</a>: {{ item.connection_status }} <br />
-                <a href="/pet_profile/{{ item.pet_id }}"><img src="{{ item.pet.image_url }}" alt="{{ item.pet.name }}" /></a>
-            </li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+            <a href="/pet_search">Find pets in your area.</a>
+            <h3>My Connection Requests</h3>
+            <ul>
+            {% for item in request_list %}
+                <li>
+                    <a href="/connect_request/{{item.request_id}}">Connection</a> with <a href="/pet_profile/{{ item.pet_id }}">{{ item.pet.name }}</a>: {{ item.connection_status }} <br />
+                    <a href="/pet_profile/{{ item.pet_id }}"><img src="{{ item.pet.image_url }}" alt="{{ item.pet.name }}" /></a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
 {% endblock %}

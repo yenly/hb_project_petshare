@@ -150,7 +150,6 @@ def display_pets(ani_type):
     """Testing """
 
     user_city = session['user_city']
-    print ani_type
 
     pet_dict = find_pets(ani_type, user_city)
 
