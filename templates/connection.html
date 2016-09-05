@@ -8,38 +8,61 @@
     <h1>Request Connection for {{pet.name}}</h1>
     <h3>Pet Seeker: <a href="/user/{{c_request.seeker.user.user_id}}">{{c_request.seeker.user.first_name}} {{c_request.seeker.user.last_name}}</a></h3>
 
-    <p>Connection status:  {{c_request.connection_status}}</p>
+    <p>Connection status:  <span id="c_status">{{c_request.connection_status}}</span></p>
 
     <div>
-        <form>
-            <select name="">
-                <option value="">Interested</option>
+        <form id="chgStatusForm" action="/change_connect_status" method="POST">
+            <input type="hidden" id="request_id" name="request_id" value="{{ c_request.request_id }}">
+            <select id="connection_status" name="connection_status">
+                <option value="Interested">Interested</option>
                 <option value="Pending Review">Pending Review</option>
                 <option value="Accept">Accept</option>
                 <option value="Decline">Decline</option>
             </select>
-            <button>Update status</button>
+            <input type="submit" value="Update status">
         </form>
+        <script>
+        "use strict";
+
+        function confirmUpdate(result) {
+            if (result.connect === 'success') {
+                $("#c_status").html(result.connection_status);
+                alert("Connection status updated.");
+            }
+        }
+
+        function updateConnectStatus(evt) {
+            evt.preventDefault();
+
+            var requestInputs = {
+                "request_id" : $("#request_id").val(),
+                "connection_status" : $("#connection_status").val()
+            };
+
+            $.post("/change_connect_status", requestInputs, confirmUpdate);
+
+        }
+
+        $("#chgStatusForm").on("submit", updateConnectStatus);
+
+        </script>
     </div>
 
     <br>
-
-    {% if c_request.messages %}
-        <ul>
-        {% for msg in c_request.messages: %}
+    <ul>
+        {% if c_request.messages %}
+            {% for msg in c_request.messages: %}
             <li>{{msg.message_at}} <br>
             <blockquote>{{msg.message}} </blockquote>~{{msg.user.first_name}}</li>
-        {% endfor %}
-            <form id="msgForm" action="/add_message" method="POST">
-                <input type="hidden" id="request_id" name="request_id" value="{{ c_request.request_id }}">
-<!--                 <input type="hidden" id="pet_id" name="pet_id" value="{{ c_request.pet.pet_id }}">
-                <input type="hidden" id="seeker_id" name="seeker_id" value="{{ c_request.seeker_id }}"> -->
-
-                <label>Message:</label><br />
-                <textarea cols="60" rows="8" id="message" name="message"></textarea><br/>
-                <input type="submit" id="add_msg" value="Add Message">
-            </form>
-        </ul>
+            {% endfor %}
+        {% endif %}
+        <form id="msgForm" action="/add_message" method="POST">
+            <input type="hidden" id="request_id" name="request_id" value="{{ c_request.request_id }}">
+            <label>Message:</label><br />
+            <textarea cols="60" rows="8" id="message" name="message"></textarea><br/>
+            <input type="submit" id="add_msg" value="Add Message">
+        </form>
+    </ul>
         <script>
         "use strict";
 
@@ -54,9 +77,7 @@
             evt.preventDefault();
 
             var requestInputs = {
-                // "pet_id" : $("#pet_id").val(),
                 "request_id" : $("#request_id").val(),
-                // "seeker_id" : $("#seeker_id").val(),
                 "message" : $("#message").val()
             };
 
@@ -67,7 +88,7 @@
         $("#msgForm").on("submit", submitConnectRequest);
 
     </script>
-    {% endif %}
+
 
 
 {% endblock %}

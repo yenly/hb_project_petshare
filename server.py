@@ -267,8 +267,6 @@ def add_message_by_request_id():
     """User adds message to connection request by using request_id."""
 
     user_id = session['user_id']
-    # pet_id = request.form.get("pet_id")
-    # seeker_id = request.form.get("seeker_id")
     request_id = request.form.get("request_id")
     message = request.form.get("message")
 
@@ -338,24 +336,18 @@ def get_connections(user_info):
 def change_connect_status():
     """Update status on connection request."""
 
-    connect_status_dict = {}
+    request_id = request.form.get("request_id")
+    connection_status = request.form.get("connection_status")
 
-    for item in request.form:
-        request_info = item.split("_")
-        connect_status_dict[request_info[-1]] = request.form.get(item)
+    QUERY = """UPDATE connections SET connection_status = :connection_status
+            WHERE request_id = :request_id"""
 
-    for connect_request in connect_status_dict:
-        request_id = connect_request
-        connection_status = connect_status_dict[connect_request]
-
-        QUERY = """UPDATE connections SET connection_status = :connection_status
-                WHERE request_id = :request_id"""
-
-        db.cursor = db.session.execute(QUERY, {'request_id': request_id,
-                                               'connection_status': connection_status})
+    db.cursor = db.session.execute(QUERY, {'request_id': request_id,
+                                           'connection_status': connection_status})
     db.session.commit()
 
-    return "Connections table updated. Woohoo!"
+    return jsonify({'connection_status': connection_status,
+                    'connect': 'success'})
 
 
 @app.route('/connect_request/<int:id>')
