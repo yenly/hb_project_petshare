@@ -8,29 +8,45 @@
     {% include 'nav_top.html' %}
     <div class="container">
         <h1>Hi, I'm {{ pet.name }}!</h1>
+        <div class="row">
+            <div class="col-md-7">
 
-        {% if pet.image_url %}
-        <img src="{{ pet.image_url }}" alt="{{ pet.name }}" />
-        {% endif %}
 
-        <h4>Age: {{ pet.age }}, Gender: {{ pet.gender }}, Breed: {{ pet.breed }}, Size: {{ pet.size }}</h4>
-        <p>{{ pet.character_details }}</p>
+                {% if pet.image_url %}
+                <img src="{{ pet.image_url }}" alt="{{ pet.name }}" style="width: 500px;" />
+                {% endif %}
 
-        <h4>Health Details</h4>
-        <p>{{ pet.health_details }}</p>
+                <p>Age: {{ pet.age }}, Gender: {{ pet.gender }}, Breed: {{ pet.breed }}, Size: {{ pet.size }}</p>
+                <p>{{ pet.character_details }}</p>
 
-        <h3>My owner is <a href="/user/{{ owner.user_id }}">{{ owner.first_name }} {{ owner.last_name }}</a>.</h3>
 
-        <div>
-        <form id="connectForm" action="/connect" method="POST">
-            <input type="hidden" id="pet_id" name="pet_id" value="{{ pet.pet_id }}">
-            <input type="hidden" id="owner_id" name="owner_id" value="{{ pet.owner.owner_id }}">
-            <label>Request to Connect: </label><br>
-            <small>What is your story? Share a little about your self to {{ owner.first_name }}.</small><br />
-            <textarea cols="60" rows="8" id="connect_message" name="connect_message"></textarea><br/>
-            <input class="btn btn-primary" type="submit" id="connect_request" value="Connect with {{ pet.name }}">
-        </form>
+                {% if pet.health_details %}
+                <h4>Health Details</h4>
+                <p>{{ pet.health_details }}</p>
+                {% endif %}
+
+            </div>
+
+            <div class="col-md-5">
+                <h4>My owner is <a href="/user/{{ owner.user_id }}">{{ owner.first_name }} {{ owner.last_name }}</a>.</h4>
+
+                <div>
+                <form id="connectForm" action="/connect" method="POST">
+                    <input type="hidden" id="pet_id" name="pet_id" value="{{ pet.pet_id }}">
+                    <input type="hidden" id="owner_id" name="owner_id" value="{{ pet.owner.owner_id }}">
+                    <label>Request to Connect: </label> <br>
+                    <small>(What is your story? Share a little about your self to {{ owner.first_name }}.)</small><br>
+                    <textarea cols="35" rows="8" id="connect_message" name="connect_message"></textarea><br/>
+                    <input class="btn btn-primary" type="submit" id="connect_request" value="Connect with {{ pet.name }}">
+                </form>
+                </div>
+
+            </div>
         </div>
+
+
+
+
 
 
         <script>

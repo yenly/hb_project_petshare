@@ -16,6 +16,10 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ member.first_name }} <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#">Update Profile</a></li>
+                {% if member.owner %}
+                <li><a href="#">My Pet's Profile</a></li>
+                {% endif %}
+                <li><a href="/member">Connection Requests</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#">Log out</a></li>
               </ul>
