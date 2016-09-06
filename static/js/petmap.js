@@ -33,6 +33,7 @@ var infoWindow = new google.maps.InfoWindow({
 
 var jsonUrl = "/petmap.json?ani_type=" + ani_type;
 
+
 // Retrieving the information with AJAX
 $.get(jsonUrl, function (pets) {
 
@@ -61,6 +62,7 @@ $.get(jsonUrl, function (pets) {
         marker = new google.maps.Marker({
             position: zipcode[pet.zipcode],
             map: map,
+            icon: "/static/images/paw_icon.png"
         });
 
 
