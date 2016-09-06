@@ -1,21 +1,21 @@
-<!doctype html>
-<html>
-    <head>
-        <title>Find your furry BFF!</title>
+{% extends 'base.html' %}
+
+{% block title %}
+    Pet Search Map
+{% endblock %}
+
+{% block content %}
+    {% include 'nav_top.html' %}
+    <div class="container">
+        <h2>Search Results</h2>
         <script src="https://code.jquery.com/jquery.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
         <script src="/static/js/petmap.js"></script>
 
-
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
         <style>
-          html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-          }
+
           #map {
-            height: 100%;
+            height: 800px;
+            width: 100%;
           }
 
         </style>
@@ -23,10 +23,9 @@
             var ani_type = "{{ ani_type }}";
             var user_city = "{{ user_city }}";
         </script>
-    </head>
-    <body>
+
         <div id="map"></div>
 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_S3nVEBAYCnmkO2R2gDPgUueJC89uSjs&callback=initMap" async defer></script>
-    </body>
-</html>
+    </div>
+{% endblock %}

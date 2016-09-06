@@ -2,3 +2,8 @@ body {
   min-height: 2000px;
   padding-top: 70px;
 }
+
+.navbar-brand {
+    background: url('/static/images/petshare_logo_sm.png') top left no-repeat;
+    padding-left: 50px;
+}
