@@ -71,3 +71,8 @@ TWILIO_NUMBER
 ### Future Features
 * Allow for safe communication between pet seeker and owner during vetting stage using Twilio masked phone number api - TXT/Voice communication available for a week.
 * Once seeker and owner is connected, scheduling component to help manage care for pet
+
+## About the Developer
+
+#### Yenly Ma
+[LinkedIn] (https://www.linkedin.com/in/yenlyma)
