@@ -7,7 +7,7 @@ body {
     background: url('/static/images/petshare_logo_sm.png') top left no-repeat;
     /*padding-left: 50px;*/
     padding: 18px 0 0 41px;
-    font-family: 'Coiny', cursive;
+    font-family: 'Coiny';
     font-size: 28px;
 }
 
@@ -23,12 +23,6 @@ body {
 
 .navbar-default .navbar-nav>li>a  {
     color: #fff;
-}
-
-.btn-primary {
-   /* background-color: #ee3d6e;
-    border-color: #ee3d6e;
-    border-radius: 15px;*/
 }
 
 .search_results {

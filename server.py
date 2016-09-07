@@ -53,9 +53,9 @@ def login():
 
     # TO DO: build out pasword testing logic
 
-    msg = "Welcome back", user.first_name
+    # msg = "Welcome back", user.first_name
 
-    flash(msg)
+    # flash(msg)
 
     return redirect('/member')
 
@@ -67,6 +67,8 @@ def member():
     user_id = session['user_id']
 
     user = User.query.get(user_id)
+
+    member = get_user()
 
     user_type = []
     user_pet = ""
@@ -91,7 +93,7 @@ def member():
     #call get_connections passing user type
     request_list = get_connections(user_type)
 
-    return render_template("member.html", user=user, pet=user_pet, request_list=request_list)
+    return render_template("member.html", user=user, pet=user_pet, request_list=request_list, member=member)
 
 
 @app.route('/user/<int:id>')
@@ -100,12 +102,27 @@ def user_profile(id):
 
     user = User.query.get(id)
 
-    return render_template("profile.html", user=user)
+    # logged in user
+    member = get_user()
+
+    return render_template("profile.html", user=user, member=member)
+
+
+def get_user():
+    """Get user id from session, Query db for user info and return user"""
+    user_id = session['user_id']
+
+    user = User.query.get(user_id)
+
+    return user
 
 
 @app.route('/pet_profile/<int:id>')
 def pet_profile(id):
     """Display pet profile."""
+
+    # logged in user
+    member = get_user()
 
     pet = Pet.query.get(id)
 
@@ -113,36 +130,7 @@ def pet_profile(id):
 
     pet_photos = pet.photos
 
-    return render_template("pet_profile.html", pet=pet, owner=owner, pet_photos=pet_photos)
-
-
-@app.route('/display_cats')
-def display_cats():
-    """Query db for all cats in user area and return list of profiles.
-
-    Returns cats profiles in json."""
-
-    # user_city = session['user_city']
-
-    user_city = "Oakland"
-
-    cats_dict = find_pets('cat', user_city)
-
-    return jsonify(cats_dict)
-
-
-@app.route('/display_dogs')
-def display_dogs():
-    """Query db for all dogs in user area and return list of profiles.
-
-    Returns dog profiles in json.
-    """
-
-    user_city = session['user_city']
-
-    dog_dict = find_pets('dog', user_city)
-
-    return jsonify(dog_dict)
+    return render_template("pet_profile.html", pet=pet, owner=owner, pet_photos=pet_photos, member=member)
 
 
 @app.route('/display_pets/<ani_type>')
@@ -196,7 +184,10 @@ def find_pets(ani_type, location):
 def pet_search():
     """Dynamic search using angularjs."""
 
-    return render_template("search.html")
+    # logged in user
+    member = get_user()
+
+    return render_template("search.html", member=member)
 
 
 @app.route('/search_map/<ani_type>')
@@ -204,8 +195,10 @@ def search_map(ani_type):
     """Display search results as markers on google map."""
 
     user_city = session['user_city']
+     # logged in user
+    member = get_user()
 
-    return render_template("search_map.html", ani_type=ani_type, user_city=user_city)
+    return render_template("search_map.html", ani_type=ani_type, user_city=user_city, member=member)
 
 
 @app.route('/petmap.json')
@@ -378,7 +371,10 @@ def display_connect_request(id):
 
     user = User.query.filter(User.user_id == user_id).first()
 
-    return render_template("connection.html", c_request=c_request, pet=pet, user=user)
+    # logged in user
+    member = get_user()
+
+    return render_template("connection.html", c_request=c_request, pet=pet, user=user, member=member)
 
 
 if __name__ == "__main__":

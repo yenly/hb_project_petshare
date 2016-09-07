@@ -77,28 +77,18 @@ class ServerTestsDatabase(unittest.TestCase):
                                   follow_redirects=True)
 
         self.assertEquals(200, result.status_code)
-        self.assertIn("Welcome back, Charlie!", result.data)
-
-    def test_display_dogs(self):
-        """Test db query for dogs in pet seeker's city. -TODO: fix"""
-
-        result = self.client.get('/display_dogs')
-        self.assertEquals(200, result.status_code)
-        self.assertIn("Snoopy", result.data)
+        self.assertIn("Charlie", result.data)
 
     def test_petmapjson(self):
-        """Test db query for dogs in pet seeker's city. -TODO: fix"""
+        """Test db query for dogs in pet seeker's city."""
 
-        result = self.client.get('/petmap.json')
+        with self.client as c:
+            with c.session_transaction() as session:
+                session['user_city'] = "San Francisco"
+
+        result = self.client.get('/petmap.json?ani_type=dog')
         self.assertEquals(200, result.status_code)
         self.assertIn("94121", result.data)
-
-    def test_display_cats(self):
-        """Test db query for cats in pet seeker's city. -TODO: fix"""
-
-        result = self.client.get('/display_cats')
-        self.assertEquals(200, result.status_code)
-        self.assertIn("Heathcliff", result.data)
 
     def test_display_pets(self):
         """Test db query for cats in pet seeker's city."""
@@ -123,7 +113,7 @@ class ServerTestsDatabase(unittest.TestCase):
 
         result = self.client.get('/member')
         self.assertEquals(200, result.status_code)
-        self.assertIn("Welcome back, Charlie!", result.data)
+        self.assertIn("Charlie", result.data)
 
     def test_connect_request(self):
         """Test to see connection request displays all information."""
@@ -147,6 +137,41 @@ class ServerTestsDatabase(unittest.TestCase):
 
         self.assertEquals(200, result.status_code)
         self.assertIn("success", result.data)
+
+    def test_change_connect_status(self):
+        """Test change status inserts into db."""
+
+        result = self.client.post('/change_connect_status',
+                                  data={"request_id": 1,
+                                        "connection_status": "Pending Review"},
+                                  follow_redirects=True)
+
+        self.assertEquals(200, result.status_code)
+        self.assertIn("success", result.data)
+
+    def test_pet_search(self):
+        """Test pet search route renders page with member logged in."""
+
+        with self.client as c:
+                with c.session_transaction() as session:
+                    session['user_id'] = 2
+
+        result = self.client.get('/pet_search')
+        self.assertEquals(200, result.status_code)
+        self.assertIn("Linus", result.data)
+
+    def test_search_map(self):
+        """Test variables are sent to google maps"""
+        with self.client as c:
+                with c.session_transaction() as session:
+                    session['user_id'] = 2
+                    session['user_city'] = "San Francisco"
+
+        result = self.client.get('/search_map/dog')
+        self.assertEquals(200, result.status_code)
+        self.assertIn("San Francisco", result.data)
+        self.assertIn("dog", result.data)
+
 
 
 # def load_tests(loader, tests, ignore):
