@@ -17,6 +17,10 @@ Pet seekers can log in and search through the database of available pets to conn
 
 <img src="static/images/petsearchmap.png">
 
+#### Pet Profile
+
+<img src="static/images/petprofile.png">
+
 
 ### Technology Stack
 
@@ -63,3 +67,7 @@ TWILIO_ACCOUNT_SID
 TWILIO_AUTH_TOKEN
 TWILIO_NUMBER
 ```
+
+### Future Features
+* Allow for safe communication between pet seeker and owner during vetting stage using Twilio masked phone number api - TXT/Voice communication available for a week.
+* Once seeker and owner is connected, scheduling component to help manage care for pet
