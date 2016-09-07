@@ -44,3 +44,29 @@ body {
 .search_results li img {
     width: 220px;
 }
+
+.pet_owner_photo {
+    width: 150px;
+    float: right;
+    border-radius: 75px;
+    border: 5px solid #ccc;
+}
+
+.pet_photos {
+    list-style: none;
+    margin-left: -40px;
+}
+
+.pet_photos li {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    float: left;
+    border: 1px solid #000;
+    margin: 10px 15px 10px 0;
+    border-radius: 10px;
+}
+
+.pet_photos li img {
+    height: 200px;
+}

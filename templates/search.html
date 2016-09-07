@@ -9,16 +9,13 @@
         <script src="/static/js/petshare.js"></script>
         {% include 'nav_top.html' %}
         <div ng-app="petShareApp" class="container" ng-controller="searchController">
+            {% raw %}
             <button class="btn btn-default" ng-click="DisplayPets('cat')">Search for Cats</button>
             <button class="btn btn-default" ng-click="DisplayPets('dog')">Search for Dogs</button>
-            <p>Search criteria: <span ng-bind="searchTerm"></span> <span ng-bind="city"></span>
-
-
-            </p>
+            <span ng-bind="searchTerm"></span>  <a href="/search_map/{{ani_type}}">Map View</a>
 
 
             <div>
-                {% raw %}<a href="/search_map/{{ani_type}}">Map View</a>
                 <ul class="search_results">
                     <li ng-repeat="pet in pets">
                         <img ng-src="{{pet.image_url}}" alt="{{pet.name}}" />
@@ -28,11 +25,11 @@
 
                     </li>
                 </ul>
-                {% endraw %}
+
             </div>
 
 
-
+            {% endraw %}
 
         </div>
 {% endblock %}

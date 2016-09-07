@@ -62,7 +62,7 @@ $.get(jsonUrl, function (pets) {
         marker = new google.maps.Marker({
             position: zipcode[pet.zipcode],
             map: map,
-            icon: "/static/images/paw_icon.png"
+            icon: "/static/images/opaw_icon.png"
         });
 
 
