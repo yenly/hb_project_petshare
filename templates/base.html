@@ -6,7 +6,7 @@
         </title>
         <!-- Bootstrap -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-        <!-- <link href="/static/css/carousel.css" rel="stylesheet"> -->
+        <link href="/static/css/carousel.css" rel="stylesheet">
 
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Coiny|Lato:400,900" rel="stylesheet">
@@ -23,16 +23,6 @@
     <body>
 
         {% block content %} CONTENT GOES HERE {% endblock %}
-
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-          {% endif %}
-        {% endwith %}
 
     </body>
 </html>
